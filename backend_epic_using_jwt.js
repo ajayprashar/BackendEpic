@@ -44,6 +44,68 @@ const csv = require('csv-parse/sync');
 const util = require('util');
 
 /**
+ * Logger Class
+ * ============
+ * Handles logging to a file and directory listing
+ */
+class Logger {
+    constructor() {
+        const timestamp = new Date().toISOString();
+        const divider = '\n' + '='.repeat(80) + '\n' + 
+                       `New Session Started: ${timestamp}` + 
+                       '\n' + '='.repeat(80) + '\n';
+        
+        // Append divider to log file
+        fs.appendFileSync('backend_epic.log', divider);
+        
+        // Replace console.log with file logging
+        const logStream = fs.createWriteStream('backend_epic.log', { flags: 'a' });
+        console.log = (...args) => {
+            const message = util.format(...args) + '\n';
+            logStream.write(message);
+        };
+        
+        // Replace console.error with file logging
+        console.error = (...args) => {
+            const message = 'ERROR: ' + util.format(...args) + '\n';
+            logStream.write(message);
+        };
+    }
+
+    listExportedFiles() {
+        const exportDir = 'epic_data_export';
+        if (fs.existsSync(exportDir)) {
+            const files = fs.readdirSync(exportDir);
+            console.log('\nExported Files:');
+            console.log('-'.repeat(40));
+            files.forEach(file => {
+                const stats = fs.statSync(path.join(exportDir, file));
+                console.log(`${file} (${(stats.size/1024).toFixed(2)} KB)`);
+            });
+            console.log('-'.repeat(40));
+        }
+    }
+
+    clearExportDirectory() {
+        const exportDir = 'epic_data_export';
+        console.log(`\nClearing export directory: ${exportDir}`);
+        
+        if (fs.existsSync(exportDir)) {
+            const files = fs.readdirSync(exportDir);
+            files.forEach(file => {
+                const filePath = path.join(exportDir, file);
+                fs.unlinkSync(filePath);
+                console.log(`Deleted: ${file}`);
+            });
+            console.log('Export directory cleared');
+        } else {
+            fs.mkdirSync(exportDir, { recursive: true });
+            console.log('Created empty export directory');
+        }
+    }
+}
+
+/**
  * Configuration Management
  * ======================
  * Handles loading and processing of configuration values from INI file.
@@ -732,65 +794,3 @@ async function main() {
 
 // Application entry point
 main();
-
-/**
- * Logger Class
- * ============
- * Handles logging to a file and directory listing
- */
-class Logger {
-    constructor() {
-        const timestamp = new Date().toISOString();
-        const divider = '\n' + '='.repeat(80) + '\n' + 
-                       `New Session Started: ${timestamp}` + 
-                       '\n' + '='.repeat(80) + '\n';
-        
-        // Append divider to log file
-        fs.appendFileSync('backend_epic.log', divider);
-        
-        // Replace console.log with file logging
-        const logStream = fs.createWriteStream('backend_epic.log', { flags: 'a' });
-        console.log = (...args) => {
-            const message = util.format(...args) + '\n';
-            logStream.write(message);
-        };
-        
-        // Replace console.error with file logging
-        console.error = (...args) => {
-            const message = 'ERROR: ' + util.format(...args) + '\n';
-            logStream.write(message);
-        };
-    }
-
-    listExportedFiles() {
-        const exportDir = 'epic_data_export';
-        if (fs.existsSync(exportDir)) {
-            const files = fs.readdirSync(exportDir);
-            console.log('\nExported Files:');
-            console.log('-'.repeat(40));
-            files.forEach(file => {
-                const stats = fs.statSync(path.join(exportDir, file));
-                console.log(`${file} (${(stats.size/1024).toFixed(2)} KB)`);
-            });
-            console.log('-'.repeat(40));
-        }
-    }
-
-    clearExportDirectory() {
-        const exportDir = 'epic_data_export';
-        console.log(`\nClearing export directory: ${exportDir}`);
-        
-        if (fs.existsSync(exportDir)) {
-            const files = fs.readdirSync(exportDir);
-            files.forEach(file => {
-                const filePath = path.join(exportDir, file);
-                fs.unlinkSync(filePath);
-                console.log(`Deleted: ${file}`);
-            });
-            console.log('Export directory cleared');
-        } else {
-            fs.mkdirSync(exportDir, { recursive: true });
-            console.log('Created empty export directory');
-        }
-    }
-}
