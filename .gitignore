@@ -1,0 +1,18 @@
+# Node modules
+node_modules/
+
+# EPIC FHIR data exports
+epic_data_export/*
+!epic_data_export/.gitkeep
+
+# Log files
+backend_epic.log
+
+# Private keys and credentials
+*.key
+*.pem
+*.ini
+
+# IDE and system files
+.DS_Store
+.vscode/ 
