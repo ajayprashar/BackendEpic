@@ -1,36 +1,55 @@
 /**
- * EPIC FHIR Backend Authentication Demo
- * ====================================
+ * EPIC FHIR Backend Authentication Implementation
+ * ============================================
  * Author: Ajay Prashar
  * Date: 12/30/2024
  * Version: 1.0.0
  * 
  * Description:
- * This application demonstrates the backend authentication process for EPIC's FHIR API
- * using JWT (JSON Web Tokens). It implements the OAuth 2.0 client credentials flow
- * with JWT assertion as specified in EPIC's documentation.
+ * This application implements Epic's OAuth 2.0 backend authentication flow using 
+ * JSON Web Tokens (JWT) for system-to-system integration with Epic's FHIR API.
+ * 
+ * Epic Documentation References:
+ * - Authentication: https://fhir.epic.com/Documentation?docId=oauth2
+ * - JWT Requirements: https://fhir.epic.com/Documentation?docId=jwt
+ * - Non-Production Access: https://fhir.epic.com/Documentation?docId=testpatients
+ * - FHIR API Endpoints: https://fhir.epic.com/Documentation?docId=epiconfhir
  * 
  * Authentication Flow:
- * 1. Generate/Load RSA Key Pair
- * 2. Create JWT with required claims
- * 3. Request access token using JWT
- * 4. Use access token for FHIR API requests
+ * 1. Generate/Load RSA Key Pair (Epic Auth Guide - Key Requirements)
+ * 2. Create JWT with required claims (Epic Auth Guide - JWT Claims)
+ * 3. Request access token using JWT assertion (Epic Auth Guide - Token Request)
+ * 4. Use access token for FHIR API requests (Epic API Guide - Authentication)
  * 
  * Key Components:
- * - ConfigManager: Handles configuration loading and variable resolution
- * - KeyManager: Manages RSA key pair generation and storage
- * - JWTManager: Creates properly formatted JWTs for authentication
- * - EpicClient: Handles API communication with EPIC's FHIR server
+ * - ConfigManager: Configuration loading and variable resolution
+ * - KeyManager: RSA key pair generation/storage (Epic Auth Guide - Key Management)
+ * - JWTManager: JWT creation and signing (Epic Auth Guide - JWT Format)
+ * - EpicClient: FHIR API communication (Epic API Guide - REST Implementation)
+ * 
+ * Resource Types Implemented:
+ * - Patient (Epic FHIR API - Patient Resource)
+ * - Observation (Epic FHIR API - Observation Resource)
+ * - Condition (Epic FHIR API - Condition Resource)
+ * - AllergyIntolerance (Epic FHIR API - AllergyIntolerance Resource)
+ * - DocumentReference (Epic FHIR API - DocumentReference Resource)
+ * - MedicationRequest (Epic FHIR API - MedicationRequest Resource)
+ * - Procedure (Epic FHIR API - Procedure Resource)
+ * - Immunization (Epic FHIR API - Immunization Resource)
+ * - DiagnosticReport (Epic FHIR API - DiagnosticReport Resource)
+ * - Goal (Epic FHIR API - Goal Resource)
+ * - Device (Epic FHIR API - Device Resource)
  * 
  * Dependencies:
  * - fs: File system operations
  * - path: Path manipulation
- * - crypto: RSA key pair generation
+ * - crypto: RSA key pair generation (Epic Auth Guide - Key Generation)
  * - ini: Configuration file parsing
- * - axios: HTTP requests
+ * - axios: HTTP requests to Epic endpoints
  * - jsonwebtoken: JWT creation and signing
- * - uuid: Unique identifier generation for JWT
- * - csv: CSV parsing
+ * - uuid: Unique identifier generation for JWT jti claim
+ * - csv: Patient roster and resources list parsing
+ * - nodemailer: Email notifications via ProtonMail Bridge
  */
 
 const fs = require('fs');
