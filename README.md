@@ -4,7 +4,7 @@
 This application implements Epic's OAuth 2.0 backend authentication flow using JSON Web Tokens (JWT) for system-to-system integration with Epic's FHIR API. It retrieves patient data for multiple FHIR resources and exports them as NDJSON files. The application is designed to facilitate secure access to patient data while adhering to Epic's guidelines and best practices.
 
 ## Architecture Diagram
-![Architecture Diagram](images/architecture_diagram.png)
+![Architecture Diagram](/architecture_diagram.png)
 
 ## Features
 - OAuth 2.0 client credentials flow with JWT assertion
