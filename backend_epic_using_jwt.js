@@ -502,28 +502,31 @@ class EpicClient {
     async getResourceData(accessToken, resourceType, patientId) {
         console.log(`Querying ${resourceType} data for patient ${patientId}...`);
         
-        const baseEndpoint = this.config.epic_endpoint.replace(/\/$/, '');
-        const queryParams = new URLSearchParams();
-        queryParams.append('patient', patientId);
-        queryParams.append('_format', this.config.data_export.format);
-        queryParams.append('_count', this.config.api_settings.page_size);
+        // Initialize query parameters
+        const queryParams = new URLSearchParams({
+            '_format': this.config.data_export.format,
+            '_count': this.config.api_settings.page_size
+        });
 
-        // Handle special cases for different resources
-        let endpoint = `${baseEndpoint}/${resourceType}`;
-        if (resourceType === 'Patient') {
-            endpoint = `${baseEndpoint}/Patient/${patientId}`;
-        } else if (resourceType === 'Observation') {
-            // Handle different observation types with category parameter
-            queryParams.append('patient', patientId);
-            queryParams.append('category', this.config.lab_data_category);
-        }
+        // Build base URL
+        const baseUrl = this.config.epic_endpoint.replace(/\/$/, '');
+        let url;
         
-        queryParams.append('_format', 'application/fhir+json');
-        queryParams.append('_count', '100');
+        if (resourceType === 'Patient') {
+            url = `${baseUrl}/Patient/${patientId}`;
+        } else {
+            url = `${baseUrl}/${resourceType}`;
+            queryParams.append('patient', patientId);
+            
+            // Add category parameter for Observations
+            if (resourceType === 'Observation') {
+                queryParams.append('category', this.config.lab_data_category);
+            }
+        }
 
         try {
             let allResults = [];
-            let nextUrl = `${endpoint}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+            let nextUrl = `${url}?${queryParams.toString()}`;
             let pageCount = 0;
 
             while (nextUrl && pageCount < this.config.api_settings.max_pages) {
@@ -534,7 +537,7 @@ class EpicClient {
                 const response = await axios.get(nextUrl, {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
-                        'Accept': 'application/fhir+json'
+                        'Accept': this.config.data_export.format
                     }
                 });
 
@@ -568,7 +571,6 @@ class EpicClient {
                 console.endGroup(`Page ${pageCount}`);
             }
 
-            // Keep indentation level for total results message
             console.log(`\nTotal ${resourceType} results retrieved: ${allResults.length}`);
             return allResults;
 
@@ -617,12 +619,16 @@ class EpicClient {
                         patient.fhir_id
                     );
                     allResourceResults = allResourceResults.concat(data);
-                    console.log(`Retrieved ${data.length} records`);
+                    console.log(`Retrieved ${data.length} records for ${resource.resource}`);
                 } catch (error) {
-                    console.error(`Error fetching ${resource.resource} for patient ${patient.fhir_id}:`, error.message);
-                    if (error.response) {
-                        console.error('Response:', error.response.data);
-                    }
+                    const errorDetails = {
+                        resource: resource.resource,
+                        patient: patient.fhir_id,
+                        message: error.message,
+                        status: error.response?.status,
+                        data: error.response?.data
+                    };
+                    console.error('Error fetching data:', errorDetails);
                 }
                 console.endGroup(`Patient: ${patient.name}`);
             }
