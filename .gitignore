@@ -15,4 +15,7 @@ backend_epic.log
 
 # IDE and system files
 .DS_Store
-.vscode/ 
+.vscode/
+
+# Environment variables
+.env 

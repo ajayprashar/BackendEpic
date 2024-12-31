@@ -1,28 +1,21 @@
 
 ================================================================================
-New Session Started: 2024-12-30T22:17:38.612Z
+New Session Started: 2024-12-31T00:53:41.547Z
 ================================================================================
 Starting EPIC FHIR Backend Authentication Demo...
 
 Clearing export directory: epic_data_export
-Deleted: AllergyIntolerance_data_2024-12-30T22-03-42-475Z.ndjson
-Deleted: Binary_data_2024-12-30T22-03-43-018Z.ndjson
-Deleted: CarePlan_data_2024-12-30T22-03-43-563Z.ndjson
-Deleted: Condition_data_2024-12-30T22-03-44-987Z.ndjson
-Deleted: Device_data_2024-12-30T22-03-45-646Z.ndjson
-Deleted: DiagnosticReport_data_2024-12-30T22-03-46-684Z.ndjson
-Deleted: DocumentReference_data_2024-12-30T22-03-50-050Z.ndjson
-Deleted: Goal_data_2024-12-30T22-03-50-842Z.ndjson
-Deleted: Immunization_data_2024-12-30T22-03-51-537Z.ndjson
-Deleted: MedicationOrder_data_2024-12-30T22-03-52-511Z.ndjson
-Deleted: MedicationRequest_data_2024-12-30T22-03-53-491Z.ndjson
-Deleted: MedicationStatement_data_2024-12-30T22-03-53-930Z.ndjson
-Deleted: Medication_data_2024-12-30T22-03-52-074Z.ndjson
-Deleted: Observation (Labs)_data_2024-12-30T22-03-54-392Z.ndjson
-Deleted: Observation (Smoking History)_data_2024-12-30T22-03-54-871Z.ndjson
-Deleted: Observation (Vitals)_data_2024-12-30T22-03-55-379Z.ndjson
-Deleted: Patient_data_2024-12-30T22-03-55-934Z.ndjson
-Deleted: Procedure _data_2024-12-30T22-03-56-960Z.ndjson
+Deleted: AllergyIntolerance_data_2024-12-31T00-44-06-690Z.ndjson
+Deleted: Condition_data_2024-12-31T00-44-08-508Z.ndjson
+Deleted: Device_data_2024-12-31T00-44-09-136Z.ndjson
+Deleted: DiagnosticReport_data_2024-12-31T00-44-10-253Z.ndjson
+Deleted: DocumentReference_data_2024-12-31T00-44-13-380Z.ndjson
+Deleted: Goal_data_2024-12-31T00-44-14-221Z.ndjson
+Deleted: Immunization_data_2024-12-31T00-44-14-969Z.ndjson
+Deleted: MedicationRequest_data_2024-12-31T00-44-16-487Z.ndjson
+Deleted: Observation_data_2024-12-31T00-44-17-528Z.ndjson
+Deleted: Patient_data_2024-12-31T00-44-18-394Z.ndjson
+Deleted: Procedure_data_2024-12-31T00-44-19-396Z.ndjson
 Export directory cleared
 Loading configuration...
 
@@ -51,6 +44,11 @@ lab_data_check_interval: 5000 (Source: INI file)
 lab_data_timeout: 150000 (Source: INI file)
 epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file)
 epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file)
+email.smtp_host: 127.0.0.1 (Source: INI file)
+email.smtp_port: 1025 (Source: INI file)
+email.smtp_secure: false (Source: INI file)
+email.notification_to: ajay@aprashar.com (Source: INI file)
+email.notification_from: ajay@aprashar.com (Source: INI file)
 
 Configuration values after resolution:
 app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
@@ -77,6 +75,11 @@ lab_data_check_interval: 5000 (Source: INI file)
 lab_data_timeout: 150000 (Source: INI file)
 epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution)
 epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution)
+email.smtp_host: 127.0.0.1 (Source: INI file)
+email.smtp_port: 1025 (Source: INI file)
+email.smtp_secure: false (Source: INI file)
+email.notification_to: ajay@aprashar.com (Source: INI file)
+email.notification_from: ajay@aprashar.com (Source: INI file)
 Checking for existing key pair...
 Existing key pair found
 Requesting access token...
@@ -86,15 +89,15 @@ JWT Claims: {
   iss: 'e6adc0f2-7e22-4a86-9f11-5b8bae6e5190',
   sub: 'e6adc0f2-7e22-4a86-9f11-5b8bae6e5190',
   aud: 'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
-  jti: 'f42335c8-7720-4a2c-8b7a-6b72f14b75ba',
-  exp: 1735597358,
-  nbf: 1735597058,
-  iat: 1735597058
+  jti: 'c0ab75c9-977b-4828-9073-47961caf0e06',
+  exp: 1735606721,
+  nbf: 1735606421,
+  iat: 1735606421
 }
-JWT will expire at: 2024-12-30T22:22:38.000Z
+JWT will expire at: 2024-12-31T00:58:41.000Z
 Using token endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
 Access token received: {
-  access_token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1cm46b2lkOjEuMi44NDAuMTE0MzUwLjEuMTMuMC4xLjcuMy42ODg4ODQuMTAwIiwiY2xpZW50X2lkIjoiZTZhZGMwZjItN2UyMi00YTg2LTlmMTEtNWI4YmFlNmU1MTkwIiwiZXBpYy5lY2kiOiJ1cm46ZXBpYzpPcGVuLkVwaWMtY3VycmVudCIsImVwaWMubWV0YWRhdGEiOiJUTjF2b3l4ZUlnR3dKVjBOTkdUZzNacDJnTUNNai1lUm9BaTNyR09ScXdSa1RHZFVJaGhZbUN2QVBJaUxZcnk1ZFdOb21GZ3o5dVBrTjVGOEt2cEFZai15Ri1OM2VQVXBncEZyc2gzWEdPNXhRd0xoa2NkR3hWWFg4QjhzZDkxMyIsImVwaWMudG9rZW50eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1NjAwNjU5LCJpYXQiOjE3MzU1OTcwNTksImlzcyI6InVybjpvaWQ6MS4yLjg0MC4xMTQzNTAuMS4xMy4wLjEuNy4zLjY4ODg4NC4xMDAiLCJqdGkiOiJhYzM3MzNmNC0wZDliLTQxMjctYTE0ZC1kOTJmNTNmOGE1ZWMiLCJuYmYiOjE3MzU1OTcwNTksInN1YiI6ImV2TnAtS2hZd09PcUFabjFwWjJlbnVBMyJ9.URqAmKq3gzMFENh4uiMJLzj7qfNku-9fwAoMullwSpXnpbVKIzphe2ZUk_-XE2oOQAw-wTgnLevzwjRDlyUu7OZCVzxPt0PIEYeNNItROqrelvgGQG9nJQOdvQ8Ju_ty1vhVeEgYfMcZOYchaBCzPFJ4-rqYTpvt2w4VSxCdZbeFGLtZp_Pw3AgtjxPqVdAqpXT1lQDxOYw4TH7DWHIZjL528XnixjS3fiXiwShfTl6lkO6e5x0Yedc6GU-DWC7rsdvDxRzU2B-JH1KAOeQ0nYowf2CTgEfjdNm4reRv4hfty1JqbXHctTZpzFOVIMVgy_NExC96Z5jXewraKCV3KQ',
+  access_token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1cm46b2lkOjEuMi44NDAuMTE0MzUwLjEuMTMuMC4xLjcuMy42ODg4ODQuMTAwIiwiY2xpZW50X2lkIjoiZTZhZGMwZjItN2UyMi00YTg2LTlmMTEtNWI4YmFlNmU1MTkwIiwiZXBpYy5lY2kiOiJ1cm46ZXBpYzpPcGVuLkVwaWMtY3VycmVudCIsImVwaWMubWV0YWRhdGEiOiJmcFYzTWlsbDNqRHhQRHJKWmJ1VW5CY3lhMU9JNWtrYVhkTzc4ZDJEVFNORnZSREVRNkpab3BqM2ZWMU4xdHd0c3ZBV1AyV1c3MTMzcU8tdUdobnRkTFVyc1R4NjlDN3ROWHN1OFBqTTFuY3JqVVJwZU9rV0ZtVzVMeFBfOU5wViIsImVwaWMudG9rZW50eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1NjEwMDIxLCJpYXQiOjE3MzU2MDY0MjEsImlzcyI6InVybjpvaWQ6MS4yLjg0MC4xMTQzNTAuMS4xMy4wLjEuNy4zLjY4ODg4NC4xMDAiLCJqdGkiOiJkMWE3NGYyNC02NDgzLTRmODctYmZkMi0zYjUxMjkwYjQyMTAiLCJuYmYiOjE3MzU2MDY0MjEsInN1YiI6ImV2TnAtS2hZd09PcUFabjFwWjJlbnVBMyJ9.PNJcDQP37ld7bS2XV4BV_RFrqXiT_MH_Pjc9yFq9Kjh8bxCVH9eQHcLfOhEGJYkS6J5g-pveIUTLONSCDJawGpeUz1DzHwo4ecBCe9YWkCsMuqA7D4LtRIZbtfjA_r-6Jt_bxqsgbn1sRAjH0p2Xry8yYeNVf-LoUi2sa8bIcpkOzQ4Jbv-3ByrtWRLo7ax2qJOQcDdSCqdZMjDs7kSH2BkgioHrFYoNm4FTg4HjoKQeD_gMljaNnyB0UZqUwdWLQ2EJb8iH4UMSJ54YRz1esdSXPeSjXjcpkeI6JLrm_AFEKlYRKXq1URM8IHEmEccjg5IXo-O8_9WzPLmr3JaEuQ',
   token_type: 'Bearer',
   expires_in: 3600,
   scope: 'system/Account.read system/AdverseEvent.read system/AllergyIntolerance.Read system/AllergyIntolerance.read system/AllergyIntolerance.write system/Appointment.Read system/Appointment.Write system/Appointment.read system/Binary.Read system/Binary.read system/BodyStructure.read system/CarePlan.Read system/CarePlan.read system/CareTeam.read system/Communication.read system/Communication.write system/Condition.Read system/Condition.read system/Condition.write system/Consent.read system/Contract.read system/Coverage.read system/Device.Read system/Device.read system/DeviceRequest.read system/DeviceUseStatement.read system/DiagnosticReport.Read system/DiagnosticReport.read system/DocumentReference.Read system/DocumentReference.read system/DocumentReference.write system/Encounter.read system/Endpoint.read system/EpisodeOfCare.read system/ExplanationOfBenefit.read system/FamilyMemberHistory.Read system/FamilyMemberHistory.read system/Flag.read system/Goal.Read system/Goal.read system/Goal.write system/Group.read system/Immunization.Read system/Immunization.read system/ImmunizationRecommendation.read system/List.read system/Location.read system/Media.read system/Medication.Read system/Medication.read system/MedicationAdministration.read system/MedicationDispense.read system/MedicationOrder.Read system/MedicationRequest.read system/MedicationStatement.Read system/MedicationStatement.read system/NutritionOrder.read system/Observation.Read system/Observation.read system/Observation.write system/Organization.read system/Patient.Read system/Patient.read system/Patient.write system/Practitioner.Read system/Practitioner.read system/PractitionerRole.read system/Procedure.Read system/Procedure.read system/ProcedureRequest.read system/Provenance.read system/Questionnaire.read system/QuestionnaireResponse.Read system/QuestionnaireResponse.read system/QuestionnaireResponse.write system/RelatedPerson.read system/RequestGroup.read system/ResearchStudy.read system/ResearchSubject.read system/Schedule.read system/ServiceRequest.read system/Slot.read system/Specimen.read system/Substance.read system/Task.read system/Task.write system/ValueSet.Read'
@@ -103,2496 +106,898 @@ Getting data for all resources and patients...
 Loading patient roster from CSV...
 Loaded 7 patients from roster
 Loading resources list from CSV...
-Loaded 18 resources from list
-
-Processing AllergyIntolerance data...
-Querying AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+Loaded 11 resources from list
+[START] Resource Processing
+  [START] Resource: AllergyIntolerance
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 1
-Retrieved 1 AllergyIntolerance records for patient Camila Lopez
-Querying AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 1
-Retrieved 1 AllergyIntolerance records for patient Derrick Lin
-Querying AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 1
-Retrieved 1 AllergyIntolerance records for patient Desiree Powell
-Querying AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 2
-Retrieved 2 AllergyIntolerance records for patient Elijah Davis
-Querying AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 1
-Retrieved 1 AllergyIntolerance records for patient Linda Ross
-Querying AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 1
-Retrieved 1 AllergyIntolerance records for patient Olivia Roberts
-Querying AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total AllergyIntolerance results retrieved: 2
-Retrieved 2 AllergyIntolerance records for patient Warren McGinnis 
-
-Exported 9 AllergyIntolerance records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2024-12-30T22-17-39-923Z.ndjson
-
-Processing Binary data...
-Querying Binary data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 400
-Querying Binary data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 400
-Querying Binary data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 400
-Querying Binary data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 400
-Querying Binary data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 400
-Querying Binary data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 400
-Querying Binary data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Binary?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Binary data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'not-supported',
-      details: [Object],
-      diagnostics: 'A search on Binary is not supported.'
-    }
-  ]
-}
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 400
-
-Exported 0 Binary records to: C:\FHIR\BackendEpic\epic_data_export\Binary_data_2024-12-30T22-17-40-473Z.ndjson
-
-Processing CarePlan data...
-Querying CarePlan data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 400
-Querying CarePlan data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 400
-Querying CarePlan data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 400
-Querying CarePlan data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 400
-Querying CarePlan data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 400
-Querying CarePlan data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 400
-Querying CarePlan data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting CarePlan data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires a category for searching. Use 38717003 for longitudinal, 734163000 for encounter, 736271009 for outpatient, 736353004 for inpatient, 738906000 for dental, 736378000 for oncology, 719091000000102 for questionnaires due, 959871000000107 for anticoagulation, inpatient-pathway for inpatient pathway, 409073007 for education, or care-path for Care Path.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 400
-
-Exported 0 CarePlan records to: C:\FHIR\BackendEpic\epic_data_export\CarePlan_data_2024-12-30T22-17-41-047Z.ndjson
-
-Processing Condition data...
-Querying Condition data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 9 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Warren McGinnis 
+    Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2024-12-31T00-53-42-600Z.ndjson
+  [END] Resource: AllergyIntolerance
+  [START] Resource: Condition
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Condition data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 9 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 9
-Retrieved 9 Condition records for patient Camila Lopez
-Querying Condition data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 3 results on this page
-No more pages available
-
+      Retrieved 9 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Condition data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 3 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 3
-Retrieved 3 Condition records for patient Derrick Lin
-Querying Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 3 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 1
-Retrieved 1 Condition records for patient Desiree Powell
-Querying Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 4 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 4 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 4
-Retrieved 4 Condition records for patient Elijah Davis
-Querying Condition data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 4 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Condition data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 2
-Retrieved 2 Condition records for patient Linda Ross
-Querying Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 2
-Retrieved 2 Condition records for patient Olivia Roberts
-Querying Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Condition results retrieved: 2
-Retrieved 2 Condition records for patient Warren McGinnis 
-
-Exported 23 Condition records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2024-12-30T22-17-42-492Z.ndjson
-
-Processing Device data...
-Querying Device data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Warren McGinnis 
+    Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2024-12-31T00-53-44-265Z.ndjson
+  [END] Resource: Condition
+  [START] Resource: Device
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Device data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 1
-Retrieved 1 Device records for patient Camila Lopez
-Querying Device data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Device data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 1
-Retrieved 1 Device records for patient Derrick Lin
-Querying Device data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Device data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 1
-Retrieved 1 Device records for patient Desiree Powell
-Querying Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 1
-Retrieved 1 Device records for patient Elijah Davis
-Querying Device data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Device data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 1
-Retrieved 1 Device records for patient Linda Ross
-Querying Device data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Device data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 2
-Retrieved 2 Device records for patient Olivia Roberts
-Querying Device data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Device data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Device results retrieved: 1
-Retrieved 1 Device records for patient Warren McGinnis 
-
-Exported 8 Device records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2024-12-30T22-17-43-216Z.ndjson
-
-Processing DiagnosticReport data...
-Querying DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 7 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Warren McGinnis 
+    Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2024-12-31T00-53-44-987Z.ndjson
+  [END] Resource: Device
+  [START] Resource: DiagnosticReport
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 7 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 7
-Retrieved 7 DiagnosticReport records for patient Camila Lopez
-Querying DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 7 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 1
-Retrieved 1 DiagnosticReport records for patient Derrick Lin
-Querying DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 1
-Retrieved 1 DiagnosticReport records for patient Desiree Powell
-Querying DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 1
-Retrieved 1 DiagnosticReport records for patient Elijah Davis
-Querying DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 1
-Retrieved 1 DiagnosticReport records for patient Linda Ross
-Querying DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 1
-Retrieved 1 DiagnosticReport records for patient Olivia Roberts
-Querying DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DiagnosticReport results retrieved: 2
-Retrieved 2 DiagnosticReport records for patient Warren McGinnis 
-
-Exported 14 DiagnosticReport records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2024-12-30T22-17-44-417Z.ndjson
-
-Processing DocumentReference data...
-Querying DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 74 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Warren McGinnis 
+    Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2024-12-31T00-53-46-138Z.ndjson
+  [END] Resource: DiagnosticReport
+  [START] Resource: DocumentReference
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 74 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 74
-Retrieved 74 DocumentReference records for patient Camila Lopez
-Querying DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 20 results on this page
-No more pages available
-
+      Retrieved 74 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 20 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 20
-Retrieved 20 DocumentReference records for patient Derrick Lin
-Querying DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 13 results on this page
-No more pages available
-
+      Retrieved 20 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 13 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 13
-Retrieved 13 DocumentReference records for patient Desiree Powell
-Querying DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 17 results on this page
-No more pages available
-
+      Retrieved 13 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 17 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 17
-Retrieved 17 DocumentReference records for patient Elijah Davis
-Querying DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 13 results on this page
-No more pages available
-
+      Retrieved 17 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 13 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 13
-Retrieved 13 DocumentReference records for patient Linda Ross
-Querying DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 3 results on this page
-No more pages available
-
+      Retrieved 13 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 3 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 3
-Retrieved 3 DocumentReference records for patient Olivia Roberts
-Querying DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 17 results on this page
-No more pages available
-
+      Retrieved 3 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 17 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total DocumentReference results retrieved: 17
-Retrieved 17 DocumentReference records for patient Warren McGinnis 
-
-Exported 157 DocumentReference records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2024-12-30T22-17-47-942Z.ndjson
-
-Processing Goal data...
-Querying Goal data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 12 results on this page
-No more pages available
-
+      Retrieved 17 records
+    [END] Patient: Warren McGinnis 
+    Exported 157 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2024-12-31T00-53-49-320Z.ndjson
+  [END] Resource: DocumentReference
+  [START] Resource: Goal
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Goal data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 12 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 12
-Retrieved 12 Goal records for patient Camila Lopez
-Querying Goal data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 12 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Goal data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 2
-Retrieved 2 Goal records for patient Derrick Lin
-Querying Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 1
-Retrieved 1 Goal records for patient Desiree Powell
-Querying Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 1
-Retrieved 1 Goal records for patient Elijah Davis
-Querying Goal data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Goal data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 1
-Retrieved 1 Goal records for patient Linda Ross
-Querying Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 1
-Retrieved 1 Goal records for patient Olivia Roberts
-Querying Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Goal results retrieved: 1
-Retrieved 1 Goal records for patient Warren McGinnis 
-
-Exported 19 Goal records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2024-12-30T22-17-48-789Z.ndjson
-
-Processing Immunization data...
-Querying Immunization data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Warren McGinnis 
+    Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2024-12-31T00-53-50-153Z.ndjson
+  [END] Resource: Goal
+  [START] Resource: Immunization
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Immunization data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 1
-Retrieved 1 Immunization records for patient Camila Lopez
-Querying Immunization data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Immunization data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 1
-Retrieved 1 Immunization records for patient Derrick Lin
-Querying Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 7 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 7 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 7
-Retrieved 7 Immunization records for patient Desiree Powell
-Querying Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 7 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 1
-Retrieved 1 Immunization records for patient Elijah Davis
-Querying Immunization data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Immunization data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 1
-Retrieved 1 Immunization records for patient Linda Ross
-Querying Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 1
-Retrieved 1 Immunization records for patient Olivia Roberts
-Querying Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total Immunization results retrieved: 1
-Retrieved 1 Immunization records for patient Warren McGinnis 
-
-Exported 13 Immunization records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2024-12-30T22-17-49-610Z.ndjson
-
-Processing Medication data...
-Querying Medication data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 400
-Querying Medication data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 400
-Querying Medication data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 400
-Querying Medication data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 400
-Querying Medication data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 400
-Querying Medication data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 400
-Querying Medication data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Medication?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Medication data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Only an _ID search is allowed.'
-    }
-  ]
-}
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 400
-
-Exported 0 Medication records to: C:\FHIR\BackendEpic\epic_data_export\Medication_data_2024-12-30T22-17-50-195Z.ndjson
-
-Processing MedicationOrder data...
-Querying MedicationOrder data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 404
-Querying MedicationOrder data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 404
-Querying MedicationOrder data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 404
-Querying MedicationOrder data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 404
-Querying MedicationOrder data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 404
-Querying MedicationOrder data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 404
-Querying MedicationOrder data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationOrder?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationOrder data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 404
-
-Exported 0 MedicationOrder records to: C:\FHIR\BackendEpic\epic_data_export\MedicationOrder_data_2024-12-30T22-17-50-631Z.ndjson
-
-Processing MedicationRequest data...
-Querying MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Warren McGinnis 
+    Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2024-12-31T00-53-50-833Z.ndjson
+  [END] Resource: Immunization
+  [START] Resource: MedicationRequest
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 1
-Retrieved 1 MedicationRequest records for patient Camila Lopez
-Querying MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 1
-Retrieved 1 MedicationRequest records for patient Derrick Lin
-Querying MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 2
-Retrieved 2 MedicationRequest records for patient Desiree Powell
-Querying MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 1
-Retrieved 1 MedicationRequest records for patient Elijah Davis
-Querying MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 2
-Retrieved 2 MedicationRequest records for patient Linda Ross
-Querying MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 2 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 1
-Retrieved 1 MedicationRequest records for patient Olivia Roberts
-Querying MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
 Total MedicationRequest results retrieved: 1
-Retrieved 1 MedicationRequest records for patient Warren McGinnis 
-
-Exported 9 MedicationRequest records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2024-12-30T22-17-51-887Z.ndjson
-
-Processing MedicationStatement data...
-Querying MedicationStatement data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 404
-Querying MedicationStatement data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 404
-Querying MedicationStatement data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 404
-Querying MedicationStatement data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 404
-Querying MedicationStatement data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 404
-Querying MedicationStatement data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 404
-Querying MedicationStatement data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationStatement?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting MedicationStatement data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 404
-
-Exported 0 MedicationStatement records to: C:\FHIR\BackendEpic\epic_data_export\MedicationStatement_data_2024-12-30T22-17-52-323Z.ndjson
-
-Processing Observation (Labs) data...
-Querying Observation (Labs) data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 404
-Querying Observation (Labs) data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 404
-Querying Observation (Labs) data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 404
-Querying Observation (Labs) data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 404
-Querying Observation (Labs) data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 404
-Querying Observation (Labs) data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 404
-Querying Observation (Labs) data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Labs)?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Labs) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 404
-
-Exported 0 Observation (Labs) records to: C:\FHIR\BackendEpic\epic_data_export\Observation (Labs)_data_2024-12-30T22-17-52-769Z.ndjson
-
-Processing Observation (Smoking History) data...
-Querying Observation (Smoking History) data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 404
-Querying Observation (Smoking History) data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 404
-Querying Observation (Smoking History) data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 404
-Querying Observation (Smoking History) data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 404
-Querying Observation (Smoking History) data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 404
-Querying Observation (Smoking History) data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 404
-Querying Observation (Smoking History) data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Smoking History)?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Smoking History) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 404
-
-Exported 0 Observation (Smoking History) records to: C:\FHIR\BackendEpic\epic_data_export\Observation (Smoking History)_data_2024-12-30T22-17-53-218Z.ndjson
-
-Processing Observation (Vitals) data...
-Querying Observation (Vitals) data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 404
-Querying Observation (Vitals) data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 404
-Querying Observation (Vitals) data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 404
-Querying Observation (Vitals) data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 404
-Querying Observation (Vitals) data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 404
-Querying Observation (Vitals) data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 404
-Querying Observation (Vitals) data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation (Vitals)?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Observation (Vitals) data: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>404 - File or directory not found.</title>
-<style type="text/css">
-<!--
-body{margin:0;font-size:.7em;font-family:Verdana, Arial, Helvetica, sans-serif;background:#EEEEEE;}
-fieldset{padding:0 15px 10px 15px;} 
-h1{font-size:2.4em;margin:0;color:#FFF;}
-h2{font-size:1.7em;margin:0;color:#CC0000;} 
-h3{font-size:1.2em;margin:10px 0 0 0;color:#000000;} 
-#header{width:96%;margin:0 0 0 0;padding:6px 2% 6px 2%;font-family:"trebuchet MS", Verdana, sans-serif;color:#FFF;
-background-color:#555555;}
-#content{margin:0 0 0 2%;position:relative;}
-.content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
--->
-</style>
-</head>
-<body>
-<div id="header"><h1>Server Error</h1></div>
-<div id="content">
- <div class="content-container"><fieldset>
-  <h2>404 - File or directory not found.</h2>
-  <h3>The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.</h3>
- </fieldset></div>
-</div>
-</body>
-</html>
-
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 404
-
-Exported 0 Observation (Vitals) records to: C:\FHIR\BackendEpic\epic_data_export\Observation (Vitals)_data_2024-12-30T22-17-53-666Z.ndjson
-
-Processing Patient data...
-Querying Patient data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient erXuFYUfucBZaryVksYEcMg3: Request failed with status code 400
-Querying Patient data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eq081-VQEgP8drUUqCWzHfw3: Request failed with status code 400
-Querying Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eAB3mDIBBcyUKviyzrxsnAw3: Request failed with status code 400
-Querying Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient egqBHVfQlt4Bw3XGXoxVxHg3: Request failed with status code 400
-Querying Patient data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eIXesllypH3M9tAA5WdJftQ3: Request failed with status code 400
-Querying Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient eh2xYHuzl9nkSFVvV3osUHg3: Request failed with status code 400
-Querying Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-ERROR: Error getting Patient data: {
-  resourceType: 'OperationOutcome',
-  issue: [
-    {
-      severity: 'information',
-      code: 'invalid',
-      details: [Object],
-      diagnostics: 'Unknown parameter: PATIENT. Parameter has been ignored.'
-    },
-    {
-      severity: 'fatal',
-      code: 'business-rule',
-      details: [Object],
-      diagnostics: 'This resource requires demographics or _id parameter for searching.',
-      location: [Array],
-      expression: [Array]
-    }
-  ]
-}
-ERROR: Error processing patient e0w0LEDCYtfckT6N.CkJKCw3: Request failed with status code 400
-
-Exported 0 Patient records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2024-12-30T22-17-54-223Z.ndjson
-
-Processing Procedure  data...
-Querying Procedure  data for patient erXuFYUfucBZaryVksYEcMg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 3 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 3
-Retrieved 3 Procedure  records for patient Camila Lopez
-Querying Procedure  data for patient eq081-VQEgP8drUUqCWzHfw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 1
-Retrieved 1 Procedure  records for patient Derrick Lin
-Querying Procedure  data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 1
-Retrieved 1 Procedure  records for patient Desiree Powell
-Querying Procedure  data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 1
-Retrieved 1 Procedure  records for patient Elijah Davis
-Querying Procedure  data for patient eIXesllypH3M9tAA5WdJftQ3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 1
-Retrieved 1 Procedure  records for patient Linda Ross
-Querying Procedure  data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 1 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 1
-Retrieved 1 Procedure  records for patient Olivia Roberts
-Querying Procedure  data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-
-Fetching page 1...
-URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure ?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
-Retrieved 2 results on this page
-No more pages available
-
-Total Procedure  results retrieved: 2
-Retrieved 2 Procedure  records for patient Warren McGinnis 
-
-Exported 10 Procedure  records to: C:\FHIR\BackendEpic\epic_data_export\Procedure _data_2024-12-30T22-17-55-171Z.ndjson
-
+      Retrieved 1 records
+    [END] Patient: Warren McGinnis 
+    Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2024-12-31T00-53-51-785Z.ndjson
+  [END] Resource: MedicationRequest
+  [START] Resource: Observation
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Observation data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=erXuFYUfucBZaryVksYEcMg3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 5 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 5
+      Retrieved 5 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Observation data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=eq081-VQEgP8drUUqCWzHfw3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Observation data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=eAB3mDIBBcyUKviyzrxsnAw3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Observation data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=egqBHVfQlt4Bw3XGXoxVxHg3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Observation data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=eIXesllypH3M9tAA5WdJftQ3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Observation data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=eh2xYHuzl9nkSFVvV3osUHg3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Observation data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?patient=e0w0LEDCYtfckT6N.CkJKCw3&category=laboratory&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Observation results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Warren McGinnis 
+    Exported 11 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2024-12-31T00-53-52-774Z.ndjson
+  [END] Resource: Observation
+  [START] Resource: Patient
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Patient data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/erXuFYUfucBZaryVksYEcMg3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Patient data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eq081-VQEgP8drUUqCWzHfw3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eAB3mDIBBcyUKviyzrxsnAw3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/egqBHVfQlt4Bw3XGXoxVxHg3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Patient data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eIXesllypH3M9tAA5WdJftQ3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eh2xYHuzl9nkSFVvV3osUHg3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/e0w0LEDCYtfckT6N.CkJKCw3?_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved single resource
+      [END] Page 1
+      
+Total Patient results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Warren McGinnis 
+    Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2024-12-31T00-53-53-640Z.ndjson
+  [END] Resource: Patient
+  [START] Resource: Procedure
+    [START] Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+      Querying Procedure data for patient erXuFYUfucBZaryVksYEcMg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=erXuFYUfucBZaryVksYEcMg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 3 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 3
+      Retrieved 3 records
+    [END] Patient: Camila Lopez
+    [START] Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+      Querying Procedure data for patient eq081-VQEgP8drUUqCWzHfw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=eq081-VQEgP8drUUqCWzHfw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Derrick Lin
+    [START] Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+      Querying Procedure data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=eAB3mDIBBcyUKviyzrxsnAw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Desiree Powell
+    [START] Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+      Querying Procedure data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=egqBHVfQlt4Bw3XGXoxVxHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Elijah Davis
+    [START] Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+      Querying Procedure data for patient eIXesllypH3M9tAA5WdJftQ3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=eIXesllypH3M9tAA5WdJftQ3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Linda Ross
+    [START] Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+      Querying Procedure data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=eh2xYHuzl9nkSFVvV3osUHg3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 1 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 1
+      Retrieved 1 records
+    [END] Patient: Olivia Roberts
+    [START] Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+      Querying Procedure data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+      [START] Page 1
+        URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?patient=e0w0LEDCYtfckT6N.CkJKCw3&_format=application%2Ffhir%2Bjson&_count=100
+        Retrieved 2 results on this page
+        No more pages available
+      [END] Page 1
+      
+Total Procedure results retrieved: 2
+      Retrieved 2 records
+    [END] Patient: Warren McGinnis 
+    Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2024-12-31T00-53-54-651Z.ndjson
+  [END] Resource: Procedure
+[END] Resource Processing
 Completed processing all resources
 
 Exported Files:
 ----------------------------------------
-AllergyIntolerance_data_2024-12-30T22-17-39-923Z.ndjson (11.31 KB)
-Binary_data_2024-12-30T22-17-40-473Z.ndjson (0.00 KB)
-CarePlan_data_2024-12-30T22-17-41-047Z.ndjson (0.00 KB)
-Condition_data_2024-12-30T22-17-42-492Z.ndjson (26.94 KB)
-Device_data_2024-12-30T22-17-43-216Z.ndjson (4.93 KB)
-DiagnosticReport_data_2024-12-30T22-17-44-417Z.ndjson (18.68 KB)
-DocumentReference_data_2024-12-30T22-17-47-942Z.ndjson (208.82 KB)
-Goal_data_2024-12-30T22-17-48-789Z.ndjson (16.34 KB)
-Immunization_data_2024-12-30T22-17-49-610Z.ndjson (9.79 KB)
-MedicationOrder_data_2024-12-30T22-17-50-631Z.ndjson (0.00 KB)
-MedicationRequest_data_2024-12-30T22-17-51-887Z.ndjson (22.03 KB)
-MedicationStatement_data_2024-12-30T22-17-52-323Z.ndjson (0.00 KB)
-Medication_data_2024-12-30T22-17-50-195Z.ndjson (0.00 KB)
-Observation (Labs)_data_2024-12-30T22-17-52-769Z.ndjson (0.00 KB)
-Observation (Smoking History)_data_2024-12-30T22-17-53-218Z.ndjson (0.00 KB)
-Observation (Vitals)_data_2024-12-30T22-17-53-666Z.ndjson (0.00 KB)
-Patient_data_2024-12-30T22-17-54-223Z.ndjson (0.00 KB)
-Procedure _data_2024-12-30T22-17-55-171Z.ndjson (10.53 KB)
+AllergyIntolerance_data_2024-12-31T00-53-42-600Z.ndjson (11.31 KB)
+Condition_data_2024-12-31T00-53-44-265Z.ndjson (26.94 KB)
+Device_data_2024-12-31T00-53-44-987Z.ndjson (4.93 KB)
+DiagnosticReport_data_2024-12-31T00-53-46-138Z.ndjson (18.68 KB)
+DocumentReference_data_2024-12-31T00-53-49-320Z.ndjson (208.82 KB)
+Goal_data_2024-12-31T00-53-50-153Z.ndjson (16.34 KB)
+Immunization_data_2024-12-31T00-53-50-833Z.ndjson (9.79 KB)
+MedicationRequest_data_2024-12-31T00-53-51-785Z.ndjson (22.03 KB)
+Observation_data_2024-12-31T00-53-52-774Z.ndjson (9.45 KB)
+Patient_data_2024-12-31T00-53-53-640Z.ndjson (23.58 KB)
+Procedure_data_2024-12-31T00-53-54-651Z.ndjson (10.53 KB)
 ----------------------------------------
 
 Demo completed successfully
+Completion email sent via ProtonMail Bridge

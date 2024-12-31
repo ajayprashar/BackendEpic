@@ -6,8 +6,11 @@
   "dependencies": {
     "axios": "^1.7.9",
     "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7",
     "ini": "^4.1.1",
     "jsonwebtoken": "^9.0.2",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.16",
     "uuid": "^9.0.1"
   },
   "scripts": {

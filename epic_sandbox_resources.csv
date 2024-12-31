@@ -1,19 +1,12 @@
-resource
-AllergyIntolerance
-Binary
-CarePlan
-Condition
-Device
-DiagnosticReport
-DocumentReference
-Goal
-Immunization
-Medication
-MedicationOrder
-MedicationRequest
-MedicationStatement
-Observation (Labs)
-Observation (Smoking History)
-Observation (Vitals)
-Patient
-Procedure 
+resource,
+AllergyIntolerance,
+Condition,
+Device,
+DiagnosticReport,
+DocumentReference,
+Goal,
+Immunization,
+MedicationRequest,
+Observation,
+Patient,
+Procedure, 
