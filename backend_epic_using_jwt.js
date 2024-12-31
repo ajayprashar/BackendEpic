@@ -502,20 +502,20 @@ class EpicClient {
     async getResourceData(accessToken, resourceType, patientId) {
         console.log(`Querying ${resourceType} data for patient ${patientId}...`);
         
-        // Handle special cases for different resources
-        let endpoint = `${this.config.epic_endpoint}${resourceType}`;
+        const baseEndpoint = this.config.epic_endpoint.replace(/\/$/, '');
         const queryParams = new URLSearchParams();
-        
-        // Handle Patient resource differently
+        queryParams.append('patient', patientId);
+        queryParams.append('_format', this.config.data_export.format);
+        queryParams.append('_count', this.config.api_settings.page_size);
+
+        // Handle special cases for different resources
+        let endpoint = `${baseEndpoint}${resourceType}`;
         if (resourceType === 'Patient') {
-            endpoint = `${this.config.epic_endpoint}Patient/${patientId}`;
+            endpoint = `${baseEndpoint}Patient/${patientId}`;
         } else if (resourceType === 'Observation') {
             // Handle different observation types with category parameter
             queryParams.append('patient', patientId);
             queryParams.append('category', this.config.lab_data_category);
-        } else {
-            // Standard resource query
-            queryParams.append('patient', patientId);
         }
         
         queryParams.append('_format', 'application/fhir+json');
@@ -526,7 +526,7 @@ class EpicClient {
             let nextUrl = `${endpoint}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
             let pageCount = 0;
 
-            while (nextUrl && pageCount < 100) {
+            while (nextUrl && pageCount < this.config.api_settings.max_pages) {
                 pageCount++;
                 console.startGroup(`Page ${pageCount}`);
                 console.log('URL:', nextUrl);
@@ -579,6 +579,17 @@ class EpicClient {
         }
     }
 
+    async saveResourceData(resourceType, data) {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `${resourceType}_data_${timestamp}.ndjson`;
+        const filepath = path.join(this.config.epic_data_export_folder, filename);
+
+        const ndjsonData = data.map(result => JSON.stringify(result)).join('\n');
+        fs.writeFileSync(filepath, ndjsonData);
+        
+        console.log(`Exported ${data.length} records to: ${filepath}`);
+    }
+
     async getAllResourceData(accessToken) {
         console.log('Getting data for all resources and patients...');
         
@@ -611,17 +622,7 @@ class EpicClient {
             }
 
             // Save results for this resource type
-            const exportDir = this.config.epic_data_export_folder;
-            fs.mkdirSync(exportDir, { recursive: true });
-
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            const filename = `${resource.resource}_data_${timestamp}.ndjson`;
-            const filepath = path.join(exportDir, filename);
-
-            const ndjsonData = allResourceResults.map(result => JSON.stringify(result)).join('\n');
-            fs.writeFileSync(filepath, ndjsonData);
-            
-            console.log(`Exported ${allResourceResults.length} records to: ${filepath}`);
+            await this.saveResourceData(resource.resource, allResourceResults);
             console.endGroup(`Resource: ${resource.resource}`);
         }
         
