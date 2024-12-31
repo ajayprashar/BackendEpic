@@ -511,7 +511,7 @@ class EpicClient {
         // Handle special cases for different resources
         let endpoint = `${baseEndpoint}/${resourceType}`;
         if (resourceType === 'Patient') {
-            endpoint = `${baseEndpoint}Patient/${patientId}`;
+            endpoint = `${baseEndpoint}/Patient/${patientId}`;
         } else if (resourceType === 'Observation') {
             // Handle different observation types with category parameter
             queryParams.append('patient', patientId);
@@ -573,8 +573,11 @@ class EpicClient {
             return allResults;
 
         } catch (error) {
-            console.error(`Error getting ${resourceType} data:`, 
-                error.response?.data || error.message);
+            console.error(`Error fetching ${resourceType} for patient ${patientId}:`, {
+                message: error.message,
+                status: error.response?.status,
+                data: error.response?.data
+            });
             throw error;
         }
     }
