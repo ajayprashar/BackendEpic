@@ -1,12 +1,12 @@
-resource,
-AllergyIntolerance,
-Condition,
-Device,
-DiagnosticReport,
-DocumentReference,
-Goal,
-Immunization,
-MedicationRequest,
-Observation,
-Patient,
-Procedure, 
+resource,description
+AllergyIntolerance,Patient allergies and intolerances
+Condition,Patient conditions and diagnoses
+Device,Medical devices and implants
+DiagnosticReport,Clinical diagnostic reports
+DocumentReference,Clinical documents and notes
+Goal,Patient care goals
+Immunization,Vaccination records
+MedicationRequest,Medication prescriptions
+Observation,Lab results and vital signs
+Patient,Basic patient demographics
+Procedure,Medical procedures performed 

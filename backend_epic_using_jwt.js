@@ -44,7 +44,10 @@ const csv = require('csv-parse/sync');
 const util = require('util');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const logger = require('./logger'); // Ensure this path is correct
+
+const scriptName = path.basename(process.argv[1]);
+
+let logger = null;
 
 /**
  * Logger Class
@@ -70,7 +73,7 @@ class Logger {
             const indent = '  '.repeat(this.indentLevel);
             const message = indent + util.format(...args) + '\n';
             this.logStream.write(message);
-            originalLog(...args); // Keep console output for development
+            originalLog(...args);
         };
         
         // Replace console.error with indented file logging
@@ -79,33 +82,8 @@ class Logger {
             const indent = '  '.repeat(this.indentLevel);
             const message = indent + 'ERROR: ' + util.format(...args) + '\n';
             this.logStream.write(message);
-            originalError(...args); // Keep console output for development
+            originalError(...args);
         };
-
-        // Add group methods to console
-        console.startGroup = (name) => {
-            console.log(`[START] ${name}`);
-            this.indentLevel++;
-        };
-
-        console.endGroup = (name) => {
-            this.indentLevel--;
-            console.log(`[END] ${name}`);
-        };
-    }
-
-    listExportedFiles() {
-        const exportDir = 'epic_data_export';
-        if (fs.existsSync(exportDir)) {
-            const files = fs.readdirSync(exportDir);
-            console.log('\nExported Files:');
-            console.log('-'.repeat(40));
-            files.forEach(file => {
-                const stats = fs.statSync(path.join(exportDir, file));
-                console.log(`${file} (${(stats.size/1024).toFixed(2)} KB)`);
-            });
-            console.log('-'.repeat(40));
-        }
     }
 
     clearExportDirectory() {
@@ -127,6 +105,10 @@ class Logger {
     }
 }
 
+// Load configuration from INI file
+const configPath = path.resolve(__dirname, 'backend_epic_using_jwt.ini');
+const config = ini.parse(fs.readFileSync(configPath, 'utf-8'));
+
 /**
  * Configuration Management
  * ======================
@@ -141,36 +123,33 @@ class Logger {
 class ConfigManager {
     constructor() {
         this.configPath = 'backend_epic_using_jwt.ini';
-        this.config = null;
     }
 
     async loadConfig() {
         console.log('Loading configuration...');
         try {
-            let configSource = 'INI file';
-            
             if (!fs.existsSync(this.configPath)) {
-                console.log('No configuration file found, creating with defaults...');
-                await this.createDefaultConfig();
-                configSource = 'Default values';
+                throw new Error('Configuration file not found: ' + this.configPath);
             }
-            
+
             const configFile = fs.readFileSync(this.configPath, 'utf-8');
-            this.config = ini.parse(configFile);
-            
+            const config = ini.parse(configFile);
+
             // Log original values before resolution
             console.log('\nConfiguration values before resolution:');
-            this.logConfigValues(this.config, configSource);
-            
-            // Resolve environment variables
-            const originalConfig = JSON.parse(JSON.stringify(this.config));
-            this.config = this.resolveVariables(this.config);
-            
-            // Log which values were changed by resolution
+            this.logConfigValues(config, 'INI file');
+
+            // Resolve variables
+            const resolvedConfig = this.resolveVariables(config);
+
+            // Log resolved values
             console.log('\nConfiguration values after resolution:');
-            this.logConfigValues(this.config, configSource, originalConfig);
-            
-            return this.config;
+            this.logConfigValues(resolvedConfig, 'Variable substitution');
+
+            // Validate required configurations
+            this.validateConfig(resolvedConfig);
+
+            return resolvedConfig;
         } catch (error) {
             console.error('Error loading configuration:', error);
             throw error;
@@ -211,22 +190,55 @@ class ConfigManager {
     }
 
     resolveVariables(config) {
-        const resolve = (obj) => {
-            const resolved = {};
+        // First, flatten the config object
+        function flattenConfig(obj, prefix = '') {
+            const flattened = {};
             for (const [key, value] of Object.entries(obj)) {
+                const fullKey = prefix ? `${prefix}.${key}` : key;
                 if (typeof value === 'object' && value !== null) {
-                    resolved[key] = resolve(value);
-                } else if (typeof value === 'string') {
-                    resolved[key] = value.replace(/\${([^}]+)}/g, (_, name) => {
-                        return this.config[name] || process.env[name] || '';
-                    });
+                    Object.assign(flattened, flattenConfig(value, fullKey));
                 } else {
-                    resolved[key] = value;
+                    flattened[fullKey] = value;
                 }
             }
-            return resolved;
-        };
-        return resolve(config);
+            return flattened;
+        }
+
+        // Flatten the config
+        const flatConfig = flattenConfig(config);
+        
+        // First pass: resolve variables
+        const resolved = {};
+        for (const [key, value] of Object.entries(flatConfig)) {
+            if (typeof value === 'string') {
+                resolved[key] = value.replace(/\${([^}]+)}/g, (match, varName) => {
+                    // Look for the variable in both flattened paths
+                    const fullPath = `paths.${varName}`;
+                    return flatConfig[fullPath] || flatConfig[varName] || match;
+                });
+            } else {
+                resolved[key] = value;
+            }
+        }
+
+        // Second pass: reconstruct paths
+        const result = {};
+        for (const [key, value] of Object.entries(resolved)) {
+            const parts = key.split('.');
+            let current = result;
+            for (let i = 0; i < parts.length - 1; i++) {
+                current[parts[i]] = current[parts[i]] || {};
+                current = current[parts[i]];
+            }
+            // For paths, ensure proper path joining
+            if (key.startsWith('paths.') || key.includes('_folder') || key.includes('_path')) {
+                current[parts[parts.length - 1]] = path.normalize(value);
+            } else {
+                current[parts[parts.length - 1]] = value;
+            }
+        }
+
+        return result;
     }
 
     async createDefaultConfig() {
@@ -274,24 +286,22 @@ epic_endpoint = ${defaultConfig.epic_endpoint}
     }
 
     validateConfig(config) {
-        const requiredFields = [
-            'test_patient_id',
-            'epic_endpoint',
-            'client_id',
-            'token_endpoint',
-            'jwt_expiry_minutes'
-        ];
-        
-        for (const field of requiredFields) {
-            if (!config[field]) {
-                throw new Error(`Missing required configuration field: ${field}`);
+        const required = {
+            paths: ['app_folder_name', 'private_key', 'public_key'],
+            oauth_settings: ['client_id', 'token_endpoint'],
+            jwt_settings: ['jwt_algorithm', 'jwt_expiry_minutes'],
+            epic_settings: ['epic_endpoint']
+        };
+
+        for (const [section, fields] of Object.entries(required)) {
+            if (!config[section]) {
+                throw new Error(`Missing required configuration section: ${section}`);
             }
-        }
-        
-        // Validate that jwt_expiry_minutes is a positive number
-        const expiryMinutes = parseInt(config.jwt_expiry_minutes);
-        if (isNaN(expiryMinutes) || expiryMinutes <= 0) {
-            throw new Error('jwt_expiry_minutes must be a positive number');
+            for (const field of fields) {
+                if (!config[section][field]) {
+                    throw new Error(`Missing required configuration: ${section}.${field}`);
+                }
+            }
         }
     }
 }
@@ -310,36 +320,53 @@ epic_endpoint = ${defaultConfig.epic_endpoint}
  */
 class KeyManager {
     constructor(config) {
-        this.config = config;
+        if (!config.paths) {
+            throw new Error('Configuration missing required paths section');
+        }
+
+        // Make sure we're accessing the nested paths correctly
+        this.privateKeyPath = path.resolve(config.paths.private_key);
+        this.publicKeyPath = path.resolve(config.paths.public_key);
+        this.base64PublicKeyPath = path.resolve(config.paths.base64_public_key);
+
+        this.rsaKeySize = parseInt(config.rsa_settings.rsa_key_size) || 2048;
+        this.rsaPublicEncoding = config.rsa_settings.rsa_public_encoding || 'spki';
+        this.rsaPrivateEncoding = config.rsa_settings.rsa_private_encoding || 'pkcs8';
     }
 
     async generateKeyPair() {
         console.log('Checking for existing key pair...');
         
-        if (!fs.existsSync(this.config.private_key)) {
+        if (!this.privateKeyPath) {
+            throw new Error('Private key path is not defined in configuration');
+        }
+
+        const dir = path.dirname(this.privateKeyPath);
+        if (!fs.existsSync(dir)) {
+            console.log(`Creating directory: ${dir}`);
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        if (!fs.existsSync(this.privateKeyPath)) {
             console.log('Generating new RSA key pair...');
+            
             const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-                modulusLength: 2048,
+                modulusLength: this.rsaKeySize,
                 publicKeyEncoding: {
-                    type: 'spki',
+                    type: this.rsaPublicEncoding,
                     format: 'pem'
                 },
                 privateKeyEncoding: {
-                    type: 'pkcs8',
+                    type: this.rsaPrivateEncoding,
                     format: 'pem'
                 }
             });
 
-            // Ensure directory exists
-            fs.mkdirSync(path.dirname(this.config.private_key), { recursive: true });
+            fs.writeFileSync(this.privateKeyPath, privateKey);
+            fs.writeFileSync(this.publicKeyPath, publicKey);
             
-            // Save keys
-            fs.writeFileSync(this.config.private_key, privateKey);
-            fs.writeFileSync(this.config.public_key, publicKey);
-            
-            // Create base64 encoded public key
             const base64PublicKey = Buffer.from(publicKey).toString('base64');
-            fs.writeFileSync(this.config.base64_public_key, base64PublicKey);
+            fs.writeFileSync(this.base64PublicKeyPath, base64PublicKey);
             
             console.log('Key pair generated and saved successfully');
         } else {
@@ -372,22 +399,29 @@ class KeyManager {
  */
 class JWTManager {
     constructor(config) {
-        this.config = config;
-        this.privateKey = fs.readFileSync(this.config.private_key);
+        if (!config.paths || !config.oauth_settings) {
+            throw new Error('Configuration missing required paths or oauth_settings section');
+        }
+
+        this.privateKey = fs.readFileSync(config.paths.private_key, 'utf8');
+        this.clientId = config.oauth_settings.client_id;
+        this.tokenEndpoint = config.oauth_settings.token_endpoint;
+        this.algorithm = config.jwt_settings.jwt_algorithm || 'RS384';
+        this.expiryMinutes = parseInt(config.jwt_settings.jwt_expiry_minutes) || 5;
     }
 
     generateJWT() {
         console.log('Generating JWT...');
         
         const currentTime = Math.floor(Date.now() / 1000);
-        const expiryMinutes = parseInt(this.config.jwt_expiry_minutes) || 5; // Default to 5 if not specified
+        const expiryMinutes = parseInt(this.expiryMinutes) || 5; // Default to 5 if not specified
         
         console.log(`Setting JWT expiry to ${expiryMinutes} minutes from now`);
         
         const claims = {
-            iss: this.config.client_id,
-            sub: this.config.client_id,
-            aud: this.config.token_endpoint,
+            iss: this.clientId,
+            sub: this.clientId,
+            aud: this.tokenEndpoint,
             jti: uuidv4(),
             exp: currentTime + (expiryMinutes * 60), // Convert minutes to seconds
             nbf: currentTime,
@@ -398,9 +432,9 @@ class JWTManager {
         console.log(`JWT will expire at: ${new Date(claims.exp * 1000).toISOString()}`);
 
         const token = jwt.sign(claims, this.privateKey, {
-            algorithm: 'RS384',
+            algorithm: this.algorithm,
             header: {
-                alg: 'RS384',
+                alg: this.algorithm,
                 typ: 'JWT'
             }
         });
@@ -429,51 +463,73 @@ class JWTManager {
  */
 class EpicClient {
     constructor(config) {
+        if (!config) {
+            throw new Error('Configuration object is required');
+        }
         this.config = config;
         this.jwtManager = new JWTManager(config);
         this.exportedFiles = [];
+        this.epicEndpoint = config.epic_settings.epic_endpoint;
+        this.tokenEndpoint = config.oauth_settings.token_endpoint;
+        
+        // Add these lines to get the paths from config
+        this.patientRosterPath = config.data_sources.epic_sandbox_roster;
+        this.resourcesListPath = config.data_sources.epic_sandbox_resources;
+        
+        // Validate required paths
+        if (!this.patientRosterPath) {
+            throw new Error('Patient roster path not found in configuration');
+        }
+        if (!this.resourcesListPath) {
+            throw new Error('Resources list path not found in configuration');
+        }
     }
 
     async getAccessToken() {
-        console.log('Requesting access token...');
-        
-        const jwt = this.jwtManager.generateJWT();
-        
-        // Use token endpoint from configuration
-        console.log(`Using token endpoint: ${this.config.token_endpoint}`);
-        
-        const params = new URLSearchParams();
-        params.append('grant_type', 'client_credentials');
-        params.append('client_assertion_type', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer');
-        params.append('client_assertion', jwt);
-
         try {
-            const response = await axios.post(this.config.token_endpoint, params, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            });
+            console.log('Requesting access token...');
+            const jwt = await this.jwtManager.generateJWT();
             
-            console.log('Access token received:', response.data);
+            console.log('Using token endpoint:', this.tokenEndpoint);
+            
+            const response = await axios.post(this.tokenEndpoint, 
+                new URLSearchParams({
+                    grant_type: this.config.oauth_settings.grant_type,
+                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
+                    client_assertion: jwt
+                }), {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            );
+
+            if (!response.data.access_token) {
+                throw new Error('No access token received in response');
+            }
+
             return response.data.access_token;
         } catch (error) {
-            console.error(`Error getting access token from ${this.config.token_endpoint}:`, 
-                          error.response?.data || error.message);
+            console.error('Error getting access token from', this.tokenEndpoint + ':', error.message);
             throw error;
         }
     }
 
     async loadPatientRoster() {
-        console.log('Loading patient roster from CSV...');
-        const rosterPath = this.config.epic_sandbox_roster;
-        
         try {
+            console.log('Loading patient roster from CSV...');
+            const rosterPath = this.patientRosterPath;
+            
+            if (!fs.existsSync(rosterPath)) {
+                throw new Error(`Patient roster file not found at: ${rosterPath}`);
+            }
+
             const fileContent = fs.readFileSync(rosterPath, 'utf-8');
             const records = csv.parse(fileContent, {
                 columns: true,
                 skip_empty_lines: true
             });
-            
+
             console.log(`Loaded ${records.length} patients from roster`);
             return records;
         } catch (error) {
@@ -483,26 +539,30 @@ class EpicClient {
     }
 
     async loadResourcesList() {
-        logger.info('Loading resources list from CSV...');
-        const resourcesPath = this.config.epic_sandbox_resources;
-        
         try {
+            console.log('Loading resources list from CSV...');
+            const resourcesPath = this.resourcesListPath;
+            
+            if (!fs.existsSync(resourcesPath)) {
+                throw new Error(`Resources list file not found at: ${resourcesPath}`);
+            }
+
             const fileContent = fs.readFileSync(resourcesPath, 'utf-8');
             const records = csv.parse(fileContent, {
                 columns: true,
                 skip_empty_lines: true
             });
-            
-            logger.info(`Loaded ${records.length} resources from list`);
+
+            console.log(`Loaded ${records.length} resources from list`);
             return records;
         } catch (error) {
-            logger.error('Error loading resources list:', error.message);
+            console.error('Error loading resources list:', error.message);
             throw error;
         }
     }
 
     async getResourceData(accessToken, resourceType, patientId) {
-        logger.info(`Querying ${resourceType} data for patient ${patientId}...`);
+        console.log(`Querying ${resourceType} data for patient ${patientId}...`);
         
         // Initialize query parameters
         const queryParams = new URLSearchParams({
@@ -511,7 +571,7 @@ class EpicClient {
         });
 
         // Build base URL
-        const baseUrl = this.config.epic_endpoint.replace(/\/$/, '');
+        const baseUrl = this.epicEndpoint.replace(/\/$/, '');
         let url;
         
         if (resourceType === 'Patient') {
@@ -533,7 +593,7 @@ class EpicClient {
 
             while (nextUrl && pageCount < this.config.api_settings.max_pages) {
                 pageCount++;
-                logger.info(`Page ${pageCount}: URL: ${nextUrl}`);
+                console.log(`Page ${pageCount}: URL: ${nextUrl}`);
                 
                 const response = await axios.get(nextUrl, {
                     headers: {
@@ -545,7 +605,7 @@ class EpicClient {
                 // Handle single resource response (like Patient)
                 if (!response.data.entry && response.data.resourceType === resourceType) {
                     allResults.push(response.data);
-                    logger.info('Retrieved single resource');
+                    console.log('Retrieved single resource');
                     break;
                 }
 
@@ -553,7 +613,7 @@ class EpicClient {
                 if (response.data.entry) {
                     const results = response.data.entry.map(e => e.resource);
                     allResults = allResults.concat(results);
-                    logger.info(`Retrieved ${results.length} results on this page`);
+                    console.log(`Retrieved ${results.length} results on this page`);
                 }
 
                 // Check for next page
@@ -566,15 +626,15 @@ class EpicClient {
                 }
                 
                 if (!nextUrl) {
-                    logger.info('No more pages available');
+                    console.log('No more pages available');
                 }
             }
 
-            logger.info(`Total ${resourceType} results retrieved: ${allResults.length}`);
+            console.log(`Total ${resourceType} results retrieved: ${allResults.length}`);
             return allResults;
 
         } catch (error) {
-            logger.error(`Error fetching ${resourceType} for patient ${patientId}:`, {
+            console.error(`Error fetching ${resourceType} for patient ${patientId}:`, {
                 message: error.message,
                 status: error.response?.status,
                 data: error.response?.data
@@ -584,37 +644,38 @@ class EpicClient {
     }
 
     async saveResourceData(resourceType, data) {
-        try {
-            // Ensure export directory exists
-            const exportDir = path.resolve('epic_data_export');
-            await fs.promises.mkdir(exportDir, { recursive: true });
-
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            const filename = `${resourceType}_data_${timestamp}.ndjson`;
-            const filepath = path.join(exportDir, filename);
-            
-            await fs.promises.writeFile(filepath, data.map(JSON.stringify).join('\n'));
-            
-            // Get file size
-            const stats = await fs.promises.stat(filepath);
-            const fileSizeKB = (stats.size/1024).toFixed(2);
-            
-            // Add to exportedFiles array
-            this.exportedFiles.push({
-                name: filename,
-                size: fileSizeKB
-            });
-            
-            logger.info(`Exported ${data.length} records to: ${filepath}`);
-        } catch (error) {
-            logger.error(`Error saving resource data: ${error.message}`);
-            throw error;
+        if (!data || data.length === 0) {
+            return;
         }
+
+        const timestamp = new Date().toISOString().replace(/:/g, '-');
+        const fileName = `${resourceType}_data_${timestamp}.ndjson`;
+        const filePath = path.join(this.config.paths.epic_data_export_folder, fileName);
+        
+        // Convert data to NDJSON format
+        const ndjsonData = data.map(item => JSON.stringify(item)).join('\n');
+        
+        // Write to file
+        fs.writeFileSync(filePath, ndjsonData);
+        
+        // Calculate file size in KB
+        const stats = fs.statSync(filePath);
+        const fileSizeInKB = (stats.size / 1024).toFixed(2);
+        
+        // Add to exported files list with full path
+        this.exportedFiles.push({
+            name: fileName,
+            size: fileSizeInKB,
+            path: filePath
+        });
+        
+        console.log(`Exported ${data.length} records to: ${filePath}`);
     }
 
     async getResourceDataForPatient(resourceType, patientId, accessToken) {
         try {
-            let url = `${this.config.epic_endpoint}${resourceType}`;
+            console.log(`Fetching ${resourceType} data for patient ${patientId}`);
+            let url = `${this.epicEndpoint}${resourceType}`;
             const params = new URLSearchParams({
                 _format: 'application/fhir+json',
                 _count: this.config.api_settings.page_size
@@ -622,7 +683,7 @@ class EpicClient {
 
             // Special handling for Patient resource
             if (resourceType === 'Patient') {
-                url = `${this.config.epic_endpoint}Patient/${patientId}`;
+                url = `${this.epicEndpoint}Patient/${patientId}`;
             } 
             // Special handling for Observation resource
             else if (resourceType === 'Observation') {
@@ -635,8 +696,8 @@ class EpicClient {
                 params.append('patient', patientId);
             }
 
-            logger.info(`Querying ${resourceType} data for patient ${patientId}...`);
-            logger.info(`Page 1: URL: ${url}?${params}`);
+            console.log(`Querying ${resourceType} data for patient ${patientId}...`);
+            console.log(`Page 1: URL: ${url}?${params}`);
 
             const response = await axios.get(`${url}?${params}`, {
                 headers: {
@@ -651,15 +712,15 @@ class EpicClient {
                 // Handle both array responses and single resource responses
                 if (response.data.resourceType === 'Bundle' && Array.isArray(response.data.entry)) {
                     results = response.data.entry.map(entry => entry.resource);
-                    logger.info(`Retrieved ${results.length} results on this page`);
+                    console.log(`Retrieved ${results.length} results on this page`);
                 } else if (response.data.resourceType === resourceType) {
                     results = [response.data];
-                    logger.info('Retrieved single resource');
+                    console.log('Retrieved single resource');
                 }
             }
 
-            logger.info(`Total ${resourceType} results retrieved: ${results.length}`);
-            logger.info(`Retrieved ${results.length} records for ${resourceType}`);
+            console.log(`Total ${resourceType} results retrieved: ${results.length}`);
+            console.log(`Retrieved ${results.length} records for ${resourceType}`);
 
             return results;
 
@@ -667,7 +728,7 @@ class EpicClient {
             const errorMessage = error.response?.data?.issue?.[0]?.details?.text || 
                                error.response?.data?.issue?.[0]?.diagnostics ||
                                error.message;
-            logger.error(`Error fetching ${resourceType} data for patient ${patientId}: ${errorMessage}`);
+            console.error(`Error fetching ${resourceType} data for patient ${patientId}: ${errorMessage}`);
             return [];
         }
     }
@@ -676,18 +737,20 @@ class EpicClient {
         try {
             this.exportedFiles = [];
             
-            logger.info('Getting data for all resources and patients...');
+            console.log('\nStarting data retrieval process...');
             const patients = await this.loadPatientRoster();
             const resources = await this.loadResourcesList();
             
-            logger.info('Starting Resource Processing');
+            console.log('\nProcessing resources for each patient:');
+            console.log('=====================================');
             
             for (const resource of resources) {
-                logger.info(`Processing Resource: ${resource.resource}`);
+                console.log(`\nResource: ${resource.resource}`);
+                console.log(`Description: ${resource.description}`);
                 let allResourceResults = [];
                 
                 for (const patient of patients) {
-                    logger.info(`Processing Patient: ${patient.name} (${patient.fhir_id})`);
+                    console.log(`\n  Patient: ${patient.name} (${patient.fhir_id})`);
                     try {
                         const patientData = await this.getResourceDataForPatient(
                             resource.resource, 
@@ -696,28 +759,51 @@ class EpicClient {
                         );
                         if (patientData && patientData.length > 0) {
                             allResourceResults = allResourceResults.concat(patientData);
+                            console.log(`  ✓ Retrieved ${patientData.length} records`);
+                        } else {
+                            console.log('  ✓ No records found');
                         }
                     } catch (error) {
-                        logger.error(`Error fetching data for resource: ${resource.resource}, patient: ${patient.fhir_id}`, error.message);
+                        console.error(`  ✗ Error: ${error.message}`);
                     }
                 }
                 
                 if (allResourceResults.length > 0) {
                     await this.saveResourceData(resource.resource, allResourceResults);
+                    console.log(`\n✓ Completed ${resource.resource}: ${allResourceResults.length} total records`);
+                } else {
+                    console.log(`\n- Skipped ${resource.resource}: No data found`);
                 }
-                logger.info(`Finished Resource: ${resource.resource}`);
             }
             
-            logger.info('Completed processing all resources');
-            logExportSummary(this.exportedFiles);
-            logger.info('Demo completed successfully');
+            console.log('\nData Retrieval Summary');
+            console.log('====================');
+            this.logExportSummary(this.exportedFiles);
             
             return this.exportedFiles;
             
         } catch (error) {
-            logger.error('Error in getAllResourceData:', error);
+            console.error('\nError in data retrieval process:', error.message);
             throw error;
         }
+    }
+
+    logExportSummary(files) {
+        if (files.length === 0) {
+            console.log('No files were exported');
+            return;
+        }
+        
+        console.log('\nExported Files Summary (Filename | Size | Path | Records)');
+        console.log('================================================');
+        files.forEach(file => {
+            // Count lines in the file
+            const content = fs.readFileSync(file.path, 'utf8');
+            const lineCount = content.split('\n').filter(line => line.trim()).length;
+            
+            // Output pipe-delimited format with spaces
+            console.log(`${file.name} | ${file.size} KB | ${file.path} | ${lineCount}`);
+        });
     }
 }
 
@@ -733,33 +819,37 @@ class EpicClient {
  * 
  * Error handling wraps the entire process to catch and log any failures
  */
-async function sendCompletionEmail(success, startTime, endTime, exportedFiles) {
+async function sendCompletionEmail(success, startTime, endTime, exportedFiles, config) {
+    if (!config.email?.smtp_user || !config.email?.smtp_pass) {
+        console.error('Email configuration missing - check smtp_user and smtp_pass in INI file');
+        return;
+    }
+
     const transporter = nodemailer.createTransport({
-        host: '127.0.0.1',
-        port: 1025,
-        secure: false,
+        host: config.email.smtp_host,
+        port: parseInt(config.email.smtp_port),
+        secure: config.email.smtp_secure === 'true',
         auth: {
-            user: process.env.PROTON_MAIL_USER,
-            pass: process.env.PROTON_MAIL_PASS
+            user: config.email.smtp_user,
+            pass: config.email.smtp_pass
         },
         tls: {
-            rejectUnauthorized: false,
-            ciphers: 'SSLv3'
+            rejectUnauthorized: false
         }
     });
 
-    const exportDir = path.resolve('epic_data_export');
+    const exportDir = path.resolve(config.paths.epic_data_export_folder);
     const filesList = exportedFiles.map(file => 
         `${file.name} (${file.size} KB)`
     ).join('\n    ');
 
     const mailOptions = {
-        from: process.env.PROTON_MAIL_USER,
-        to: 'ajay@aprashar.com',
+        from: config.email.notification_from,
+        to: config.email.notification_to,
         subject: `EPIC FHIR Sync ${success ? 'Success' : 'Failed'}`,
         text: `
-EPIC FHIR Sync Job Report
-========================
+${scriptName} Report
+${'='.repeat(scriptName.length + 7)}
 Start Time: ${startTime}
 End Time: ${endTime}
 Duration: ${Math.round((new Date(endTime) - new Date(startTime))/1000)} seconds
@@ -780,7 +870,7 @@ For more details, check the logs at the paths above.
 
     try {
         await transporter.sendMail(mailOptions);
-        console.log('Completion email sent via ProtonMail Bridge');
+        console.log('Completion email sent successfully');
     } catch (error) {
         console.error('Error sending email:', error);
         console.error('Error details:', error.message);
@@ -788,48 +878,66 @@ For more details, check the logs at the paths above.
 }
 
 function logExportSummary(files) {
-    logger.info('=== Begin Export Summary ===');
+    console.log('=== Begin Export Summary ===');
     files.forEach(file => {
-        logger.info(`Exported: ${file.name} (${file.size} KB)`);
+        console.log(`Exported: ${file.name} (${file.size} KB)`);
     });
-    logger.info('=== End Export Summary ===');
+    console.log('=== End Export Summary ===');
 }
 
 async function main() {
     const startTime = new Date().toISOString();
     let success = false;
     let exportedFiles = [];
+    let config = null;
     
     try {
         // Initialize logger first
         const logger = new Logger();
         
-        console.log('Starting EPIC FHIR Backend Authentication Demo...');
+        console.log(`Starting ${scriptName}...`);
         
         // Clear export directory before starting
         logger.clearExportDirectory();
         
-        // Initialize configuration and get access token
+        // Initialize configuration
+        console.log('Loading configuration...');
         const configManager = new ConfigManager();
-        const config = await configManager.loadConfig();
+        config = await configManager.loadConfig();
+        
+        // Initialize key manager
+        console.log('Initializing key manager...');
         const keyManager = new KeyManager(config);
         await keyManager.generateKeyPair();
-        const epicClient = new EpicClient(config);
-        const accessToken = await epicClient.getAccessToken();
         
-        // Get data for all resources and patients, and capture the exported files
+        // Initialize EPIC client
+        console.log('Initializing EPIC client...');
+        const epicClient = new EpicClient(config);
+        
+        // Get access token
+        console.log('Requesting access token...');
+        const accessToken = await epicClient.getAccessToken();
+        console.log('Access token received successfully');
+        
+        // Get data for all resources and patients
+        console.log('Retrieving resource data...');
         exportedFiles = await epicClient.getAllResourceData(accessToken);
         
         success = true;
-        console.log('\nDemo completed successfully');
+        console.log(`\n${scriptName} completed successfully`);
 
     } catch (error) {
-        console.error('Application error:', error);
+        console.error('Application error:', error.message);
+        if (error.response) {
+            console.error('Response data:', error.response.data);
+            console.error('Response status:', error.response.status);
+        }
         success = false;
     } finally {
-        // Send completion email regardless of success/failure
         const endTime = new Date().toISOString();
-        await sendCompletionEmail(success, startTime, endTime, exportedFiles);
+        if (config) {
+            await sendCompletionEmail(success, startTime, endTime, exportedFiles, config);
+        }
         
         if (!success) {
             process.exit(1);

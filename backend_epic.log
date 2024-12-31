@@ -1,43 +1,57 @@
 
 ================================================================================
-New Session Started: 2024-12-31T15:31:10.790Z
+New Session Started: 2024-12-31T17:54:03.649Z
 ================================================================================
-Starting EPIC FHIR Backend Authentication Demo...
+Starting backend_epic_using_jwt.js...
 
 Clearing export directory: epic_data_export
+Deleted: AllergyIntolerance_data_2024-12-31T17-48-43.277Z.ndjson
+Deleted: Condition_data_2024-12-31T17-48-44.493Z.ndjson
+Deleted: Device_data_2024-12-31T17-48-45.138Z.ndjson
+Deleted: DiagnosticReport_data_2024-12-31T17-48-45.927Z.ndjson
+Deleted: DocumentReference_data_2024-12-31T17-48-49.224Z.ndjson
+Deleted: Goal_data_2024-12-31T17-48-49.894Z.ndjson
+Deleted: Immunization_data_2024-12-31T17-48-50.544Z.ndjson
+Deleted: MedicationRequest_data_2024-12-31T17-48-51.359Z.ndjson
+Deleted: Observation_data_2024-12-31T17-48-54.888Z.ndjson
+Deleted: Patient_data_2024-12-31T17-48-55.670Z.ndjson
+Deleted: Procedure_data_2024-12-31T17-48-56.563Z.ndjson
 Export directory cleared
+Loading configuration...
 Loading configuration...
 
 Configuration values before resolution:
-app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
-epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
-private_key: ${app_folder_name}\private.key (Source: INI file)
-public_key: ${app_folder_name}\public.key (Source: INI file)
-base64_public_key: ${app_folder_name}\base64_public_key.pem (Source: INI file)
-rsa_key_size: 2048 (Source: INI file)
-rsa_public_encoding: spki (Source: INI file)
-rsa_private_encoding: pkcs8 (Source: INI file)
-jwt_algorithm: RS384 (Source: INI file)
-jwt_expiry_minutes: 5 (Source: INI file)
-client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file)
-token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file)
-grant_type: client_credentials (Source: INI file)
-client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file)
-test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file)
-epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file)
-lab_data_category: laboratory (Source: INI file)
-lab_data_format: application/fhir+ndjson (Source: INI file)
-lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file)
-lab_data_max_attempts: 30 (Source: INI file)
-lab_data_check_interval: 5000 (Source: INI file)
-lab_data_timeout: 150000 (Source: INI file)
-epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file)
-epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file)
+paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
+paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
+paths.private_key: ${app_folder_name}\private.key (Source: INI file)
+paths.public_key: ${app_folder_name}\public.key (Source: INI file)
+paths.base64_public_key: ${app_folder_name}\base64_public_key.pem (Source: INI file)
+rsa_settings.rsa_key_size: 2048 (Source: INI file)
+rsa_settings.rsa_public_encoding: spki (Source: INI file)
+rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file)
+jwt_settings.jwt_algorithm: RS384 (Source: INI file)
+jwt_settings.jwt_expiry_minutes: 5 (Source: INI file)
+oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file)
+oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file)
+oauth_settings.grant_type: client_credentials (Source: INI file)
+oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file)
+epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file)
+epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file)
+lab_data_settings.lab_data_category: laboratory (Source: INI file)
+lab_data_settings.lab_data_format: application/fhir+ndjson (Source: INI file)
+lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file)
+lab_data_settings.lab_data_max_attempts: 30 (Source: INI file)
+lab_data_settings.lab_data_check_interval: 5000 (Source: INI file)
+lab_data_settings.lab_data_timeout: 150000 (Source: INI file)
+data_sources.epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file)
+data_sources.epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file)
 email.smtp_host: 127.0.0.1 (Source: INI file)
 email.smtp_port: 1025 (Source: INI file)
 email.smtp_secure: false (Source: INI file)
-email.notification_to: test@localhost (Source: INI file)
-email.notification_from: noreply@localhost (Source: INI file)
+email.smtp_user: ajay@aprashar.com (Source: INI file)
+email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: INI file)
+email.notification_to: ajay@aprashar.com (Source: INI file)
+email.notification_from: ajay@aprashar.com (Source: INI file)
 api_settings.page_size: 100 (Source: INI file)
 api_settings.max_pages: 100 (Source: INI file)
 data_export.format: application/fhir+json (Source: INI file)
@@ -48,45 +62,50 @@ file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Sour
 file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file)
 
 Configuration values after resolution:
-app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
-epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution)
-private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution)
-public_key: C:\FHIR\BackendEpic\public.key (Source: Variable substitution)
-base64_public_key: C:\FHIR\BackendEpic\base64_public_key.pem (Source: Variable substitution)
-rsa_key_size: 2048 (Source: INI file)
-rsa_public_encoding: spki (Source: INI file)
-rsa_private_encoding: pkcs8 (Source: INI file)
-jwt_algorithm: RS384 (Source: INI file)
-jwt_expiry_minutes: 5 (Source: INI file)
-client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file)
-token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file)
-grant_type: client_credentials (Source: INI file)
-client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file)
-test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file)
-epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Environment variable)
-lab_data_category: laboratory (Source: INI file)
-lab_data_format: application/fhir+ndjson (Source: INI file)
-lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file)
-lab_data_max_attempts: 30 (Source: INI file)
-lab_data_check_interval: 5000 (Source: INI file)
-lab_data_timeout: 150000 (Source: INI file)
-epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution)
-epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution)
-email.smtp_host: 127.0.0.1 (Source: INI file)
-email.smtp_port: 1025 (Source: INI file)
-email.smtp_secure: false (Source: INI file)
-email.notification_to: test@localhost (Source: INI file)
-email.notification_from: noreply@localhost (Source: INI file)
-api_settings.page_size: 100 (Source: INI file)
-api_settings.max_pages: 100 (Source: INI file)
-data_export.format: application/fhir+json (Source: INI file)
-data_export.ndjson_format: application/fhir+ndjson (Source: INI file)
-data_export.json_format: application/json (Source: INI file)
-data_export.default_count: 100 (Source: INI file)
-file_patterns.resource_data_file: _data_.ndjson (Source: Variable substitution)
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file)
+paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution)
+paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution)
+paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution)
+paths.public_key: C:\FHIR\BackendEpic\public.key (Source: Variable substitution)
+paths.base64_public_key: C:\FHIR\BackendEpic\base64_public_key.pem (Source: Variable substitution)
+rsa_settings.rsa_key_size: 2048 (Source: Variable substitution)
+rsa_settings.rsa_public_encoding: spki (Source: Variable substitution)
+rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution)
+jwt_settings.jwt_algorithm: RS384 (Source: Variable substitution)
+jwt_settings.jwt_expiry_minutes: 5 (Source: Variable substitution)
+oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: Variable substitution)
+oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: Variable substitution)
+oauth_settings.grant_type: client_credentials (Source: Variable substitution)
+oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: Variable substitution)
+epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Variable substitution)
+epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: Variable substitution)
+lab_data_settings.lab_data_category: laboratory (Source: Variable substitution)
+lab_data_settings.lab_data_format: application/fhir+ndjson (Source: Variable substitution)
+lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: Variable substitution)
+lab_data_settings.lab_data_max_attempts: 30 (Source: Variable substitution)
+lab_data_settings.lab_data_check_interval: 5000 (Source: Variable substitution)
+lab_data_settings.lab_data_timeout: 150000 (Source: Variable substitution)
+data_sources.epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution)
+data_sources.epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution)
+email.smtp_host: 127.0.0.1 (Source: Variable substitution)
+email.smtp_port: 1025 (Source: Variable substitution)
+email.smtp_secure: false (Source: Variable substitution)
+email.smtp_user: ajay@aprashar.com (Source: Variable substitution)
+email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: Variable substitution)
+email.notification_to: ajay@aprashar.com (Source: Variable substitution)
+email.notification_from: ajay@aprashar.com (Source: Variable substitution)
+api_settings.page_size: 100 (Source: Variable substitution)
+api_settings.max_pages: 100 (Source: Variable substitution)
+data_export.format: application/fhir+json (Source: Variable substitution)
+data_export.ndjson_format: application/fhir+ndjson (Source: Variable substitution)
+data_export.json_format: application/json (Source: Variable substitution)
+data_export.default_count: 100 (Source: Variable substitution)
+file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution)
+file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution)
+Initializing key manager...
 Checking for existing key pair...
 Existing key pair found
+Initializing EPIC client...
+Requesting access token...
 Requesting access token...
 Generating JWT...
 Setting JWT expiry to 5 minutes from now
@@ -94,535 +113,800 @@ JWT Claims: {
   iss: 'e6adc0f2-7e22-4a86-9f11-5b8bae6e5190',
   sub: 'e6adc0f2-7e22-4a86-9f11-5b8bae6e5190',
   aud: 'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
-  jti: 'b4ceabf7-b85f-4e77-9440-d32de0e7857f',
-  exp: 1735659370,
-  nbf: 1735659070,
-  iat: 1735659070
+  jti: '2d7950ce-a8d0-4c4a-9326-5a5190c66add',
+  exp: 1735667943,
+  nbf: 1735667643,
+  iat: 1735667643
 }
-JWT will expire at: 2024-12-31T15:36:10.000Z
+JWT will expire at: 2024-12-31T17:59:03.000Z
 Using token endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-Access token received: {
-  access_token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1cm46b2lkOjEuMi44NDAuMTE0MzUwLjEuMTMuMC4xLjcuMy42ODg4ODQuMTAwIiwiY2xpZW50X2lkIjoiZTZhZGMwZjItN2UyMi00YTg2LTlmMTEtNWI4YmFlNmU1MTkwIiwiZXBpYy5lY2kiOiJ1cm46ZXBpYzpPcGVuLkVwaWMtY3VycmVudCIsImVwaWMubWV0YWRhdGEiOiIxZEJocjhJMU14ak9GaWc3OW0yZjFtVG4xd1ZpMkxJQ3pJRVFSTGN3a29KZnJGMHFVT2VYUno1Qk41bjUtTW1OcS1mejBNMFhJYk5qTzliczFaQXpEbHp6YlJyd09qaHQ2dGxvZkJmYWJaRUFheUczcDU3MGtHT0dvWEVOZmdveCIsImVwaWMudG9rZW50eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1NjYyNjcxLCJpYXQiOjE3MzU2NTkwNzEsImlzcyI6InVybjpvaWQ6MS4yLjg0MC4xMTQzNTAuMS4xMy4wLjEuNy4zLjY4ODg4NC4xMDAiLCJqdGkiOiIyNmYzMTZhMy01NjUyLTRiYTItYTk2Ny0xYjg1OGRmMzVjZmIiLCJuYmYiOjE3MzU2NTkwNzEsInN1YiI6ImV2TnAtS2hZd09PcUFabjFwWjJlbnVBMyJ9.eaRTLHQBirHvTgf-v4_7qvQlv4IVdZsZ1y0X83TGMt6q7mE5u16oZmnj-lt_i2VGFIJJKfgueMaRjQR7loc24P50XKncvXYvYN7dRxlhRitchP_3JiVGyWxgJNwcDaFzdA3i1rZTO1Lv5U4otDm49PLKlC4ub3RWOVfVv_w704QNKztD-RP7dC3lzF7TcBreIGx16ndX6UifpH8OYzbQcZRNC6OX0uGx2xU9O_0nCDuxFddEZUzwRobxqU55YkWqWwubMEuLEssg5eEZUah40MbQ59rPCEqE_tvBKszSDqC1CTC5hfXK1_WJtUDLR40W4Prl7_BKs17AEYk7PxLapw',
-  token_type: 'Bearer',
-  expires_in: 3600,
-  scope: 'system/Account.read system/AdverseEvent.read system/AllergyIntolerance.Read system/AllergyIntolerance.read system/AllergyIntolerance.write system/Appointment.Read system/Appointment.Write system/Appointment.read system/Binary.Read system/Binary.read system/BodyStructure.read system/CarePlan.Read system/CarePlan.read system/CareTeam.read system/Communication.read system/Communication.write system/Condition.Read system/Condition.read system/Condition.write system/Consent.read system/Contract.read system/Coverage.read system/Device.Read system/Device.read system/DeviceRequest.read system/DeviceUseStatement.read system/DiagnosticReport.Read system/DiagnosticReport.read system/DocumentReference.Read system/DocumentReference.read system/DocumentReference.write system/Encounter.read system/Endpoint.read system/EpisodeOfCare.read system/ExplanationOfBenefit.read system/FamilyMemberHistory.Read system/FamilyMemberHistory.read system/Flag.read system/Goal.Read system/Goal.read system/Goal.write system/Group.read system/Immunization.Read system/Immunization.read system/ImmunizationRecommendation.read system/List.read system/Location.read system/Media.read system/Medication.Read system/Medication.read system/MedicationAdministration.read system/MedicationDispense.read system/MedicationOrder.Read system/MedicationRequest.read system/MedicationStatement.Read system/MedicationStatement.read system/NutritionOrder.read system/Observation.Read system/Observation.read system/Observation.write system/Organization.read system/Patient.Read system/Patient.read system/Patient.write system/Practitioner.Read system/Practitioner.read system/PractitionerRole.read system/Procedure.Read system/Procedure.read system/ProcedureRequest.read system/Provenance.read system/Questionnaire.read system/QuestionnaireResponse.Read system/QuestionnaireResponse.read system/QuestionnaireResponse.write system/RelatedPerson.read system/RequestGroup.read system/ResearchStudy.read system/ResearchSubject.read system/Schedule.read system/ServiceRequest.read system/Slot.read system/Specimen.read system/Substance.read system/Task.read system/Task.write system/ValueSet.Read'
-}
-2024-12-31T15:31:11.353Z [INFO]: Getting data for all resources and patients...
+Access token received successfully
+Retrieving resource data...
+
+Starting data retrieval process...
 Loading patient roster from CSV...
 Loaded 7 patients from roster
-2024-12-31T15:31:11.357Z [INFO]: Loading resources list from CSV...
-2024-12-31T15:31:11.358Z [INFO]: Loaded 11 resources from list
-2024-12-31T15:31:11.358Z [INFO]: Starting Resource Processing
-2024-12-31T15:31:11.358Z [INFO]: Processing Resource: AllergyIntolerance
-2024-12-31T15:31:11.359Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:11.359Z [INFO]: Querying AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:11.359Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:11.477Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:11.478Z [INFO]: Total AllergyIntolerance results retrieved: 1
-2024-12-31T15:31:11.478Z [INFO]: Retrieved 1 records for AllergyIntolerance
-2024-12-31T15:31:11.478Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:11.478Z [INFO]: Querying AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:11.479Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:11.572Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:11.572Z [INFO]: Total AllergyIntolerance results retrieved: 1
-2024-12-31T15:31:11.572Z [INFO]: Retrieved 1 records for AllergyIntolerance
-2024-12-31T15:31:11.572Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:11.573Z [INFO]: Querying AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:11.573Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:11.674Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:11.674Z [INFO]: Total AllergyIntolerance results retrieved: 1
-2024-12-31T15:31:11.674Z [INFO]: Retrieved 1 records for AllergyIntolerance
-2024-12-31T15:31:11.675Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:11.675Z [INFO]: Querying AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:11.675Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:11.826Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:11.827Z [INFO]: Total AllergyIntolerance results retrieved: 2
-2024-12-31T15:31:11.827Z [INFO]: Retrieved 2 records for AllergyIntolerance
-2024-12-31T15:31:11.827Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:11.827Z [INFO]: Querying AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:11.828Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:11.920Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:11.921Z [INFO]: Total AllergyIntolerance results retrieved: 1
-2024-12-31T15:31:11.921Z [INFO]: Retrieved 1 records for AllergyIntolerance
-2024-12-31T15:31:11.921Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:11.921Z [INFO]: Querying AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:11.922Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:12.012Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:12.013Z [INFO]: Total AllergyIntolerance results retrieved: 1
-2024-12-31T15:31:12.013Z [INFO]: Retrieved 1 records for AllergyIntolerance
-2024-12-31T15:31:12.014Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:12.014Z [INFO]: Querying AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:12.014Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:12.133Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:12.133Z [INFO]: Total AllergyIntolerance results retrieved: 2
-2024-12-31T15:31:12.134Z [INFO]: Retrieved 2 records for AllergyIntolerance
-2024-12-31T15:31:12.137Z [INFO]: Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2024-12-31T15-31-12-135Z.ndjson
-2024-12-31T15:31:12.137Z [INFO]: Finished Resource: AllergyIntolerance
-2024-12-31T15:31:12.138Z [INFO]: Processing Resource: Condition
-2024-12-31T15:31:12.138Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:12.138Z [INFO]: Querying Condition data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:12.138Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:12.565Z [INFO]: Retrieved 9 results on this page
-2024-12-31T15:31:12.565Z [INFO]: Total Condition results retrieved: 9
-2024-12-31T15:31:12.565Z [INFO]: Retrieved 9 records for Condition
-2024-12-31T15:31:12.566Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:12.566Z [INFO]: Querying Condition data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:12.566Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:12.743Z [INFO]: Retrieved 3 results on this page
-2024-12-31T15:31:12.743Z [INFO]: Total Condition results retrieved: 3
-2024-12-31T15:31:12.744Z [INFO]: Retrieved 3 records for Condition
-2024-12-31T15:31:12.744Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:12.744Z [INFO]: Querying Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:12.744Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:12.897Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:12.897Z [INFO]: Total Condition results retrieved: 1
-2024-12-31T15:31:12.898Z [INFO]: Retrieved 1 records for Condition
-2024-12-31T15:31:12.898Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:12.898Z [INFO]: Querying Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:12.898Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:13.141Z [INFO]: Retrieved 4 results on this page
-2024-12-31T15:31:13.142Z [INFO]: Total Condition results retrieved: 4
-2024-12-31T15:31:13.142Z [INFO]: Retrieved 4 records for Condition
-2024-12-31T15:31:13.142Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:13.142Z [INFO]: Querying Condition data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:13.143Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:13.336Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:13.337Z [INFO]: Total Condition results retrieved: 2
-2024-12-31T15:31:13.337Z [INFO]: Retrieved 2 records for Condition
-2024-12-31T15:31:13.337Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:13.337Z [INFO]: Querying Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:13.337Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:13.496Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:13.496Z [INFO]: Total Condition results retrieved: 2
-2024-12-31T15:31:13.496Z [INFO]: Retrieved 2 records for Condition
-2024-12-31T15:31:13.496Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:13.497Z [INFO]: Querying Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:13.497Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:13.682Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:13.682Z [INFO]: Total Condition results retrieved: 2
-2024-12-31T15:31:13.682Z [INFO]: Retrieved 2 records for Condition
-2024-12-31T15:31:13.684Z [INFO]: Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2024-12-31T15-31-13-683Z.ndjson
-2024-12-31T15:31:13.684Z [INFO]: Finished Resource: Condition
-2024-12-31T15:31:13.684Z [INFO]: Processing Resource: Device
-2024-12-31T15:31:13.684Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:13.684Z [INFO]: Querying Device data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:13.685Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:13.794Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:13.795Z [INFO]: Total Device results retrieved: 1
-2024-12-31T15:31:13.795Z [INFO]: Retrieved 1 records for Device
-2024-12-31T15:31:13.795Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:13.795Z [INFO]: Querying Device data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:13.795Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:13.886Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:13.887Z [INFO]: Total Device results retrieved: 1
-2024-12-31T15:31:13.887Z [INFO]: Retrieved 1 records for Device
-2024-12-31T15:31:13.887Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:13.887Z [INFO]: Querying Device data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:13.887Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:13.971Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:13.971Z [INFO]: Total Device results retrieved: 1
-2024-12-31T15:31:13.972Z [INFO]: Retrieved 1 records for Device
-2024-12-31T15:31:13.972Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:13.972Z [INFO]: Querying Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:13.972Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:14.067Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:14.067Z [INFO]: Total Device results retrieved: 1
-2024-12-31T15:31:14.067Z [INFO]: Retrieved 1 records for Device
-2024-12-31T15:31:14.068Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:14.068Z [INFO]: Querying Device data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:14.068Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:14.151Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:14.151Z [INFO]: Total Device results retrieved: 1
-2024-12-31T15:31:14.152Z [INFO]: Retrieved 1 records for Device
-2024-12-31T15:31:14.152Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:14.152Z [INFO]: Querying Device data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:14.152Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:14.314Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:14.315Z [INFO]: Total Device results retrieved: 2
-2024-12-31T15:31:14.315Z [INFO]: Retrieved 2 records for Device
-2024-12-31T15:31:14.316Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:14.316Z [INFO]: Querying Device data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:14.316Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:14.401Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:14.402Z [INFO]: Total Device results retrieved: 1
-2024-12-31T15:31:14.402Z [INFO]: Retrieved 1 records for Device
-2024-12-31T15:31:14.404Z [INFO]: Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2024-12-31T15-31-14-402Z.ndjson
-2024-12-31T15:31:14.404Z [INFO]: Finished Resource: Device
-2024-12-31T15:31:14.404Z [INFO]: Processing Resource: DiagnosticReport
-2024-12-31T15:31:14.404Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:14.404Z [INFO]: Querying DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:14.405Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:15.090Z [INFO]: Retrieved 7 results on this page
-2024-12-31T15:31:15.090Z [INFO]: Total DiagnosticReport results retrieved: 7
-2024-12-31T15:31:15.090Z [INFO]: Retrieved 7 records for DiagnosticReport
-2024-12-31T15:31:15.091Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:15.091Z [INFO]: Querying DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:15.091Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:15.174Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:15.174Z [INFO]: Total DiagnosticReport results retrieved: 1
-2024-12-31T15:31:15.174Z [INFO]: Retrieved 1 records for DiagnosticReport
-2024-12-31T15:31:15.174Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:15.174Z [INFO]: Querying DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:15.174Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:15.254Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:15.255Z [INFO]: Total DiagnosticReport results retrieved: 1
-2024-12-31T15:31:15.255Z [INFO]: Retrieved 1 records for DiagnosticReport
-2024-12-31T15:31:15.255Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:15.255Z [INFO]: Querying DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:15.255Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:15.344Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:15.344Z [INFO]: Total DiagnosticReport results retrieved: 1
-2024-12-31T15:31:15.344Z [INFO]: Retrieved 1 records for DiagnosticReport
-2024-12-31T15:31:15.344Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:15.344Z [INFO]: Querying DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:15.345Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:15.431Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:15.432Z [INFO]: Total DiagnosticReport results retrieved: 1
-2024-12-31T15:31:15.432Z [INFO]: Retrieved 1 records for DiagnosticReport
-2024-12-31T15:31:15.432Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:15.432Z [INFO]: Querying DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:15.433Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:15.518Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:15.518Z [INFO]: Total DiagnosticReport results retrieved: 1
-2024-12-31T15:31:15.518Z [INFO]: Retrieved 1 records for DiagnosticReport
-2024-12-31T15:31:15.519Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:15.519Z [INFO]: Querying DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:15.519Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:15.667Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:15.668Z [INFO]: Total DiagnosticReport results retrieved: 2
-2024-12-31T15:31:15.668Z [INFO]: Retrieved 2 records for DiagnosticReport
-2024-12-31T15:31:15.670Z [INFO]: Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2024-12-31T15-31-15-669Z.ndjson
-2024-12-31T15:31:15.670Z [INFO]: Finished Resource: DiagnosticReport
-2024-12-31T15:31:15.670Z [INFO]: Processing Resource: DocumentReference
-2024-12-31T15:31:15.670Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:15.670Z [INFO]: Querying DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:15.671Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:17.557Z [INFO]: Retrieved 78 results on this page
-2024-12-31T15:31:17.557Z [INFO]: Total DocumentReference results retrieved: 78
-2024-12-31T15:31:17.557Z [INFO]: Retrieved 78 records for DocumentReference
-2024-12-31T15:31:17.557Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:17.557Z [INFO]: Querying DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:17.558Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:17.856Z [INFO]: Retrieved 20 results on this page
-2024-12-31T15:31:17.856Z [INFO]: Total DocumentReference results retrieved: 20
-2024-12-31T15:31:17.856Z [INFO]: Retrieved 20 records for DocumentReference
-2024-12-31T15:31:17.856Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:17.857Z [INFO]: Querying DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:17.857Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:18.076Z [INFO]: Retrieved 13 results on this page
-2024-12-31T15:31:18.076Z [INFO]: Total DocumentReference results retrieved: 13
-2024-12-31T15:31:18.076Z [INFO]: Retrieved 13 records for DocumentReference
-2024-12-31T15:31:18.076Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:18.076Z [INFO]: Querying DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:18.077Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:18.460Z [INFO]: Retrieved 17 results on this page
-2024-12-31T15:31:18.461Z [INFO]: Total DocumentReference results retrieved: 17
-2024-12-31T15:31:18.461Z [INFO]: Retrieved 17 records for DocumentReference
-2024-12-31T15:31:18.461Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:18.461Z [INFO]: Querying DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:18.461Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:18.722Z [INFO]: Retrieved 13 results on this page
-2024-12-31T15:31:18.722Z [INFO]: Total DocumentReference results retrieved: 13
-2024-12-31T15:31:18.722Z [INFO]: Retrieved 13 records for DocumentReference
-2024-12-31T15:31:18.723Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:18.723Z [INFO]: Querying DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:18.723Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:18.962Z [INFO]: Retrieved 3 results on this page
-2024-12-31T15:31:18.962Z [INFO]: Total DocumentReference results retrieved: 3
-2024-12-31T15:31:18.962Z [INFO]: Retrieved 3 records for DocumentReference
-2024-12-31T15:31:18.963Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:18.963Z [INFO]: Querying DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:18.963Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:19.308Z [INFO]: Retrieved 17 results on this page
-2024-12-31T15:31:19.309Z [INFO]: Total DocumentReference results retrieved: 17
-2024-12-31T15:31:19.310Z [INFO]: Retrieved 17 records for DocumentReference
-2024-12-31T15:31:19.320Z [INFO]: Exported 161 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2024-12-31T15-31-19-310Z.ndjson
-2024-12-31T15:31:19.321Z [INFO]: Finished Resource: DocumentReference
-2024-12-31T15:31:19.321Z [INFO]: Processing Resource: Goal
-2024-12-31T15:31:19.321Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:19.321Z [INFO]: Querying Goal data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:19.321Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:19.549Z [INFO]: Retrieved 12 results on this page
-2024-12-31T15:31:19.549Z [INFO]: Total Goal results retrieved: 12
-2024-12-31T15:31:19.549Z [INFO]: Retrieved 12 records for Goal
-2024-12-31T15:31:19.549Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:19.550Z [INFO]: Querying Goal data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:19.550Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:19.646Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:19.646Z [INFO]: Total Goal results retrieved: 2
-2024-12-31T15:31:19.647Z [INFO]: Retrieved 2 records for Goal
-2024-12-31T15:31:19.647Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:19.647Z [INFO]: Querying Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:19.647Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:19.726Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:19.726Z [INFO]: Total Goal results retrieved: 1
-2024-12-31T15:31:19.726Z [INFO]: Retrieved 1 records for Goal
-2024-12-31T15:31:19.726Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:19.726Z [INFO]: Querying Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:19.727Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:19.816Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:19.816Z [INFO]: Total Goal results retrieved: 1
-2024-12-31T15:31:19.817Z [INFO]: Retrieved 1 records for Goal
-2024-12-31T15:31:19.817Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:19.817Z [INFO]: Querying Goal data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:19.817Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:19.897Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:19.898Z [INFO]: Total Goal results retrieved: 1
-2024-12-31T15:31:19.898Z [INFO]: Retrieved 1 records for Goal
-2024-12-31T15:31:19.898Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:19.898Z [INFO]: Querying Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:19.898Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:19.983Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:19.983Z [INFO]: Total Goal results retrieved: 1
-2024-12-31T15:31:19.983Z [INFO]: Retrieved 1 records for Goal
-2024-12-31T15:31:19.984Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:19.984Z [INFO]: Querying Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:19.984Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:20.092Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.092Z [INFO]: Total Goal results retrieved: 1
-2024-12-31T15:31:20.092Z [INFO]: Retrieved 1 records for Goal
-2024-12-31T15:31:20.094Z [INFO]: Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2024-12-31T15-31-20-093Z.ndjson
-2024-12-31T15:31:20.094Z [INFO]: Finished Resource: Goal
-2024-12-31T15:31:20.094Z [INFO]: Processing Resource: Immunization
-2024-12-31T15:31:20.095Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:20.095Z [INFO]: Querying Immunization data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:20.095Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:20.291Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.291Z [INFO]: Total Immunization results retrieved: 1
-2024-12-31T15:31:20.291Z [INFO]: Retrieved 1 records for Immunization
-2024-12-31T15:31:20.292Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:20.292Z [INFO]: Querying Immunization data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:20.292Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:20.371Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.372Z [INFO]: Total Immunization results retrieved: 1
-2024-12-31T15:31:20.372Z [INFO]: Retrieved 1 records for Immunization
-2024-12-31T15:31:20.372Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:20.372Z [INFO]: Querying Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:20.372Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:20.515Z [INFO]: Retrieved 7 results on this page
-2024-12-31T15:31:20.515Z [INFO]: Total Immunization results retrieved: 7
-2024-12-31T15:31:20.515Z [INFO]: Retrieved 7 records for Immunization
-2024-12-31T15:31:20.515Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:20.516Z [INFO]: Querying Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:20.516Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:20.593Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.593Z [INFO]: Total Immunization results retrieved: 1
-2024-12-31T15:31:20.593Z [INFO]: Retrieved 1 records for Immunization
-2024-12-31T15:31:20.593Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:20.594Z [INFO]: Querying Immunization data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:20.594Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:20.684Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.684Z [INFO]: Total Immunization results retrieved: 1
-2024-12-31T15:31:20.684Z [INFO]: Retrieved 1 records for Immunization
-2024-12-31T15:31:20.684Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:20.684Z [INFO]: Querying Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:20.684Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:20.764Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.764Z [INFO]: Total Immunization results retrieved: 1
-2024-12-31T15:31:20.764Z [INFO]: Retrieved 1 records for Immunization
-2024-12-31T15:31:20.764Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:20.764Z [INFO]: Querying Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:20.764Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:20.842Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:20.842Z [INFO]: Total Immunization results retrieved: 1
-2024-12-31T15:31:20.842Z [INFO]: Retrieved 1 records for Immunization
-2024-12-31T15:31:20.844Z [INFO]: Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2024-12-31T15-31-20-843Z.ndjson
-2024-12-31T15:31:20.844Z [INFO]: Finished Resource: Immunization
-2024-12-31T15:31:20.844Z [INFO]: Processing Resource: MedicationRequest
-2024-12-31T15:31:20.844Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:20.844Z [INFO]: Querying MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:20.845Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:21.609Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:21.609Z [INFO]: Total MedicationRequest results retrieved: 1
-2024-12-31T15:31:21.610Z [INFO]: Retrieved 1 records for MedicationRequest
-2024-12-31T15:31:21.610Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:21.610Z [INFO]: Querying MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:21.610Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:21.738Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:21.738Z [INFO]: Total MedicationRequest results retrieved: 1
-2024-12-31T15:31:21.738Z [INFO]: Retrieved 1 records for MedicationRequest
-2024-12-31T15:31:21.739Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:21.739Z [INFO]: Querying MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:21.739Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:21.878Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:21.879Z [INFO]: Total MedicationRequest results retrieved: 2
-2024-12-31T15:31:21.879Z [INFO]: Retrieved 2 records for MedicationRequest
-2024-12-31T15:31:21.879Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:21.879Z [INFO]: Querying MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:21.879Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:22.001Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:22.001Z [INFO]: Total MedicationRequest results retrieved: 1
-2024-12-31T15:31:22.002Z [INFO]: Retrieved 1 records for MedicationRequest
-2024-12-31T15:31:22.002Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:22.002Z [INFO]: Querying MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:22.002Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:22.183Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:22.183Z [INFO]: Total MedicationRequest results retrieved: 2
-2024-12-31T15:31:22.183Z [INFO]: Retrieved 2 records for MedicationRequest
-2024-12-31T15:31:22.183Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:22.183Z [INFO]: Querying MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:22.183Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:22.261Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:22.262Z [INFO]: Total MedicationRequest results retrieved: 1
-2024-12-31T15:31:22.262Z [INFO]: Retrieved 1 records for MedicationRequest
-2024-12-31T15:31:22.262Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:22.262Z [INFO]: Querying MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:22.262Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:22.341Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:22.342Z [INFO]: Total MedicationRequest results retrieved: 1
-2024-12-31T15:31:22.342Z [INFO]: Retrieved 1 records for MedicationRequest
-2024-12-31T15:31:22.343Z [INFO]: Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2024-12-31T15-31-22-342Z.ndjson
-2024-12-31T15:31:22.344Z [INFO]: Finished Resource: MedicationRequest
-2024-12-31T15:31:22.344Z [INFO]: Processing Resource: Observation
-2024-12-31T15:31:22.344Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:22.344Z [INFO]: Querying Observation data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:22.344Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:23.435Z [INFO]: Retrieved 101 results on this page
-2024-12-31T15:31:23.435Z [INFO]: Total Observation results retrieved: 101
-2024-12-31T15:31:23.435Z [INFO]: Retrieved 101 records for Observation
-2024-12-31T15:31:23.435Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:23.435Z [INFO]: Querying Observation data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:23.436Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:24.382Z [INFO]: Retrieved 101 results on this page
-2024-12-31T15:31:24.383Z [INFO]: Total Observation results retrieved: 101
-2024-12-31T15:31:24.383Z [INFO]: Retrieved 101 records for Observation
-2024-12-31T15:31:24.383Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:24.383Z [INFO]: Querying Observation data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:24.383Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:25.206Z [INFO]: Retrieved 101 results on this page
-2024-12-31T15:31:25.206Z [INFO]: Total Observation results retrieved: 101
-2024-12-31T15:31:25.206Z [INFO]: Retrieved 101 records for Observation
-2024-12-31T15:31:25.207Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:25.207Z [INFO]: Querying Observation data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:25.207Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:25.354Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:25.354Z [INFO]: Total Observation results retrieved: 1
-2024-12-31T15:31:25.354Z [INFO]: Retrieved 1 records for Observation
-2024-12-31T15:31:25.354Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:25.355Z [INFO]: Querying Observation data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:25.355Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:25.554Z [INFO]: Retrieved 10 results on this page
-2024-12-31T15:31:25.555Z [INFO]: Total Observation results retrieved: 10
-2024-12-31T15:31:25.555Z [INFO]: Retrieved 10 records for Observation
-2024-12-31T15:31:25.555Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:25.555Z [INFO]: Querying Observation data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:25.555Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:25.715Z [INFO]: Retrieved 8 results on this page
-2024-12-31T15:31:25.715Z [INFO]: Total Observation results retrieved: 8
-2024-12-31T15:31:25.715Z [INFO]: Retrieved 8 records for Observation
-2024-12-31T15:31:25.715Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:25.716Z [INFO]: Querying Observation data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:25.716Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3&category=vital-signs%2Claboratory&_sort=-date
-2024-12-31T15:31:26.393Z [INFO]: Retrieved 74 results on this page
-2024-12-31T15:31:26.393Z [INFO]: Total Observation results retrieved: 74
-2024-12-31T15:31:26.394Z [INFO]: Retrieved 74 records for Observation
-2024-12-31T15:31:26.398Z [INFO]: Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2024-12-31T15-31-26-394Z.ndjson
-2024-12-31T15:31:26.399Z [INFO]: Finished Resource: Observation
-2024-12-31T15:31:26.399Z [INFO]: Processing Resource: Patient
-2024-12-31T15:31:26.399Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:26.399Z [INFO]: Querying Patient data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:26.399Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/erXuFYUfucBZaryVksYEcMg3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:26.764Z [INFO]: Retrieved single resource
-2024-12-31T15:31:26.765Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:26.765Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:26.765Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:26.765Z [INFO]: Querying Patient data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:26.766Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eq081-VQEgP8drUUqCWzHfw3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:26.866Z [INFO]: Retrieved single resource
-2024-12-31T15:31:26.867Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:26.867Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:26.867Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:26.867Z [INFO]: Querying Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:26.867Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eAB3mDIBBcyUKviyzrxsnAw3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:26.966Z [INFO]: Retrieved single resource
-2024-12-31T15:31:26.966Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:26.966Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:26.966Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:26.967Z [INFO]: Querying Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:26.967Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/egqBHVfQlt4Bw3XGXoxVxHg3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:27.071Z [INFO]: Retrieved single resource
-2024-12-31T15:31:27.071Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:27.071Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:27.071Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:27.072Z [INFO]: Querying Patient data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:27.072Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eIXesllypH3M9tAA5WdJftQ3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:27.184Z [INFO]: Retrieved single resource
-2024-12-31T15:31:27.184Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:27.184Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:27.185Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:27.185Z [INFO]: Querying Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:27.185Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eh2xYHuzl9nkSFVvV3osUHg3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:27.295Z [INFO]: Retrieved single resource
-2024-12-31T15:31:27.295Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:27.296Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:27.296Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:27.296Z [INFO]: Querying Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:27.296Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/e0w0LEDCYtfckT6N.CkJKCw3?_format=application%2Ffhir%2Bjson&_count=100
-2024-12-31T15:31:27.426Z [INFO]: Retrieved single resource
-2024-12-31T15:31:27.426Z [INFO]: Total Patient results retrieved: 1
-2024-12-31T15:31:27.426Z [INFO]: Retrieved 1 records for Patient
-2024-12-31T15:31:27.428Z [INFO]: Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2024-12-31T15-31-27-427Z.ndjson
-2024-12-31T15:31:27.428Z [INFO]: Finished Resource: Patient
-2024-12-31T15:31:27.428Z [INFO]: Processing Resource: Procedure
-2024-12-31T15:31:27.428Z [INFO]: Processing Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
-2024-12-31T15:31:27.428Z [INFO]: Querying Procedure data for patient erXuFYUfucBZaryVksYEcMg3...
-2024-12-31T15:31:27.428Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-2024-12-31T15:31:27.915Z [INFO]: Retrieved 3 results on this page
-2024-12-31T15:31:27.916Z [INFO]: Total Procedure results retrieved: 3
-2024-12-31T15:31:27.916Z [INFO]: Retrieved 3 records for Procedure
-2024-12-31T15:31:27.916Z [INFO]: Processing Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
-2024-12-31T15:31:27.916Z [INFO]: Querying Procedure data for patient eq081-VQEgP8drUUqCWzHfw3...
-2024-12-31T15:31:27.916Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-2024-12-31T15:31:28.036Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:28.036Z [INFO]: Total Procedure results retrieved: 1
-2024-12-31T15:31:28.036Z [INFO]: Retrieved 1 records for Procedure
-2024-12-31T15:31:28.036Z [INFO]: Processing Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
-2024-12-31T15:31:28.036Z [INFO]: Querying Procedure data for patient eAB3mDIBBcyUKviyzrxsnAw3...
-2024-12-31T15:31:28.036Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-2024-12-31T15:31:28.153Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:28.154Z [INFO]: Total Procedure results retrieved: 1
-2024-12-31T15:31:28.154Z [INFO]: Retrieved 1 records for Procedure
-2024-12-31T15:31:28.154Z [INFO]: Processing Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
-2024-12-31T15:31:28.155Z [INFO]: Querying Procedure data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
-2024-12-31T15:31:28.155Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-2024-12-31T15:31:28.283Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:28.283Z [INFO]: Total Procedure results retrieved: 1
-2024-12-31T15:31:28.284Z [INFO]: Retrieved 1 records for Procedure
-2024-12-31T15:31:28.284Z [INFO]: Processing Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
-2024-12-31T15:31:28.284Z [INFO]: Querying Procedure data for patient eIXesllypH3M9tAA5WdJftQ3...
-2024-12-31T15:31:28.284Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-2024-12-31T15:31:28.402Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:28.403Z [INFO]: Total Procedure results retrieved: 1
-2024-12-31T15:31:28.403Z [INFO]: Retrieved 1 records for Procedure
-2024-12-31T15:31:28.403Z [INFO]: Processing Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
-2024-12-31T15:31:28.403Z [INFO]: Querying Procedure data for patient eh2xYHuzl9nkSFVvV3osUHg3...
-2024-12-31T15:31:28.403Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-2024-12-31T15:31:28.520Z [INFO]: Retrieved 1 results on this page
-2024-12-31T15:31:28.520Z [INFO]: Total Procedure results retrieved: 1
-2024-12-31T15:31:28.520Z [INFO]: Retrieved 1 records for Procedure
-2024-12-31T15:31:28.520Z [INFO]: Processing Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
-2024-12-31T15:31:28.521Z [INFO]: Querying Procedure data for patient e0w0LEDCYtfckT6N.CkJKCw3...
-2024-12-31T15:31:28.521Z [INFO]: Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-2024-12-31T15:31:28.636Z [INFO]: Retrieved 2 results on this page
-2024-12-31T15:31:28.636Z [INFO]: Total Procedure results retrieved: 2
-2024-12-31T15:31:28.636Z [INFO]: Retrieved 2 records for Procedure
-2024-12-31T15:31:28.637Z [INFO]: Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2024-12-31T15-31-28-637Z.ndjson
+Loading resources list from CSV...
+Loaded 11 resources from list
 
-Demo completed successfully
-2024-12-31T15:31:28.638Z [INFO]: Finished Resource: Procedure
-2024-12-31T15:31:28.638Z [INFO]: Completed processing all resources
-2024-12-31T15:31:28.638Z [INFO]: === Begin Export Summary ===
-2024-12-31T15:31:28.638Z [INFO]: Exported: AllergyIntolerance_data_2024-12-31T15-31-12-135Z.ndjson (11.31 KB)
-2024-12-31T15:31:28.638Z [INFO]: Exported: Condition_data_2024-12-31T15-31-13-683Z.ndjson (26.94 KB)
-2024-12-31T15:31:28.638Z [INFO]: Exported: Device_data_2024-12-31T15-31-14-402Z.ndjson (4.93 KB)
-2024-12-31T15:31:28.638Z [INFO]: Exported: DiagnosticReport_data_2024-12-31T15-31-15-669Z.ndjson (18.68 KB)
-2024-12-31T15:31:28.638Z [INFO]: Exported: DocumentReference_data_2024-12-31T15-31-19-310Z.ndjson (218.54 KB)
-2024-12-31T15:31:28.638Z [INFO]: Exported: Goal_data_2024-12-31T15-31-20-093Z.ndjson (16.34 KB)
-2024-12-31T15:31:28.639Z [INFO]: Exported: Immunization_data_2024-12-31T15-31-20-843Z.ndjson (9.79 KB)
-2024-12-31T15:31:28.639Z [INFO]: Exported: MedicationRequest_data_2024-12-31T15-31-22-342Z.ndjson (22.03 KB)
-2024-12-31T15:31:28.639Z [INFO]: Exported: Observation_data_2024-12-31T15-31-26-394Z.ndjson (738.81 KB)
-2024-12-31T15:31:28.639Z [INFO]: Exported: Patient_data_2024-12-31T15-31-27-427Z.ndjson (23.58 KB)
-2024-12-31T15:31:28.639Z [INFO]: Exported: Procedure_data_2024-12-31T15-31-28-637Z.ndjson (10.53 KB)
-2024-12-31T15:31:28.639Z [INFO]: === End Export Summary ===
-2024-12-31T15:31:28.639Z [INFO]: Demo completed successfully
-Completion email sent via ProtonMail Bridge
+Processing resources for each patient:
+=====================================
+
+Resource: AllergyIntolerance
+Description: Patient allergies and intolerances
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3
+Querying AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 1 results on this page
+Total AllergyIntolerance results retrieved: 1
+Retrieved 1 records for AllergyIntolerance
+  ✓ Retrieved 1 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 1 results on this page
+Total AllergyIntolerance results retrieved: 1
+Retrieved 1 records for AllergyIntolerance
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 1 results on this page
+Total AllergyIntolerance results retrieved: 1
+Retrieved 1 records for AllergyIntolerance
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 2 results on this page
+Total AllergyIntolerance results retrieved: 2
+Retrieved 2 records for AllergyIntolerance
+  ✓ Retrieved 2 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 1 results on this page
+Total AllergyIntolerance results retrieved: 1
+Retrieved 1 records for AllergyIntolerance
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 1 results on this page
+Total AllergyIntolerance results retrieved: 1
+Retrieved 1 records for AllergyIntolerance
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 2 results on this page
+Total AllergyIntolerance results retrieved: 2
+Retrieved 2 records for AllergyIntolerance
+  ✓ Retrieved 2 records
+Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2024-12-31T17-54-05.041Z.ndjson
+
+✓ Completed AllergyIntolerance: 9 total records
+
+Resource: Condition
+Description: Patient conditions and diagnoses
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Condition data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Condition data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 9 results on this page
+Total Condition results retrieved: 9
+Retrieved 9 records for Condition
+  ✓ Retrieved 9 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Condition data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Condition data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 3 results on this page
+Total Condition results retrieved: 3
+Retrieved 3 records for Condition
+  ✓ Retrieved 3 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 1 results on this page
+Total Condition results retrieved: 1
+Retrieved 1 records for Condition
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 4 results on this page
+Total Condition results retrieved: 4
+Retrieved 4 records for Condition
+  ✓ Retrieved 4 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Condition data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Condition data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 2 results on this page
+Total Condition results retrieved: 2
+Retrieved 2 records for Condition
+  ✓ Retrieved 2 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 2 results on this page
+Total Condition results retrieved: 2
+Retrieved 2 records for Condition
+  ✓ Retrieved 2 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 2 results on this page
+Total Condition results retrieved: 2
+Retrieved 2 records for Condition
+  ✓ Retrieved 2 records
+Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2024-12-31T17-54-06.149Z.ndjson
+
+✓ Completed Condition: 23 total records
+
+Resource: Device
+Description: Medical devices and implants
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Device data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Device data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 1 results on this page
+Total Device results retrieved: 1
+Retrieved 1 records for Device
+  ✓ Retrieved 1 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Device data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Device data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 1 results on this page
+Total Device results retrieved: 1
+Retrieved 1 records for Device
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Device data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Device data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 1 results on this page
+Total Device results retrieved: 1
+Retrieved 1 records for Device
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 1 results on this page
+Total Device results retrieved: 1
+Retrieved 1 records for Device
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Device data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Device data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 1 results on this page
+Total Device results retrieved: 1
+Retrieved 1 records for Device
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Device data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Device data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 2 results on this page
+Total Device results retrieved: 2
+Retrieved 2 records for Device
+  ✓ Retrieved 2 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Device data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Device data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 1 results on this page
+Total Device results retrieved: 1
+Retrieved 1 records for Device
+  ✓ Retrieved 1 records
+Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2024-12-31T17-54-06.807Z.ndjson
+
+✓ Completed Device: 8 total records
+
+Resource: DiagnosticReport
+Description: Clinical diagnostic reports
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3
+Querying DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 7 results on this page
+Total DiagnosticReport results retrieved: 7
+Retrieved 7 records for DiagnosticReport
+  ✓ Retrieved 7 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 1 results on this page
+Total DiagnosticReport results retrieved: 1
+Retrieved 1 records for DiagnosticReport
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 1 results on this page
+Total DiagnosticReport results retrieved: 1
+Retrieved 1 records for DiagnosticReport
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 1 results on this page
+Total DiagnosticReport results retrieved: 1
+Retrieved 1 records for DiagnosticReport
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 1 results on this page
+Total DiagnosticReport results retrieved: 1
+Retrieved 1 records for DiagnosticReport
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 1 results on this page
+Total DiagnosticReport results retrieved: 1
+Retrieved 1 records for DiagnosticReport
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 2 results on this page
+Total DiagnosticReport results retrieved: 2
+Retrieved 2 records for DiagnosticReport
+  ✓ Retrieved 2 records
+Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2024-12-31T17-54-07.470Z.ndjson
+
+✓ Completed DiagnosticReport: 14 total records
+
+Resource: DocumentReference
+Description: Clinical documents and notes
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3
+Querying DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 82 results on this page
+Total DocumentReference results retrieved: 82
+Retrieved 82 records for DocumentReference
+  ✓ Retrieved 82 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 20 results on this page
+Total DocumentReference results retrieved: 20
+Retrieved 20 records for DocumentReference
+  ✓ Retrieved 20 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 13 results on this page
+Total DocumentReference results retrieved: 13
+Retrieved 13 records for DocumentReference
+  ✓ Retrieved 13 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 17 results on this page
+Total DocumentReference results retrieved: 17
+Retrieved 17 records for DocumentReference
+  ✓ Retrieved 17 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 13 results on this page
+Total DocumentReference results retrieved: 13
+Retrieved 13 records for DocumentReference
+  ✓ Retrieved 13 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 3 results on this page
+Total DocumentReference results retrieved: 3
+Retrieved 3 records for DocumentReference
+  ✓ Retrieved 3 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 17 results on this page
+Total DocumentReference results retrieved: 17
+Retrieved 17 records for DocumentReference
+  ✓ Retrieved 17 records
+Exported 165 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2024-12-31T17-54-10.177Z.ndjson
+
+✓ Completed DocumentReference: 165 total records
+
+Resource: Goal
+Description: Patient care goals
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Goal data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Goal data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 12 results on this page
+Total Goal results retrieved: 12
+Retrieved 12 records for Goal
+  ✓ Retrieved 12 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Goal data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Goal data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 2 results on this page
+Total Goal results retrieved: 2
+Retrieved 2 records for Goal
+  ✓ Retrieved 2 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 1 results on this page
+Total Goal results retrieved: 1
+Retrieved 1 records for Goal
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 1 results on this page
+Total Goal results retrieved: 1
+Retrieved 1 records for Goal
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Goal data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Goal data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 1 results on this page
+Total Goal results retrieved: 1
+Retrieved 1 records for Goal
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 1 results on this page
+Total Goal results retrieved: 1
+Retrieved 1 records for Goal
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 1 results on this page
+Total Goal results retrieved: 1
+Retrieved 1 records for Goal
+  ✓ Retrieved 1 records
+Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2024-12-31T17-54-10.925Z.ndjson
+
+✓ Completed Goal: 19 total records
+
+Resource: Immunization
+Description: Vaccination records
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Immunization data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Immunization data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 1 results on this page
+Total Immunization results retrieved: 1
+Retrieved 1 records for Immunization
+  ✓ Retrieved 1 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Immunization data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Immunization data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 1 results on this page
+Total Immunization results retrieved: 1
+Retrieved 1 records for Immunization
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 7 results on this page
+Total Immunization results retrieved: 7
+Retrieved 7 records for Immunization
+  ✓ Retrieved 7 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 1 results on this page
+Total Immunization results retrieved: 1
+Retrieved 1 records for Immunization
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Immunization data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Immunization data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 1 results on this page
+Total Immunization results retrieved: 1
+Retrieved 1 records for Immunization
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 1 results on this page
+Total Immunization results retrieved: 1
+Retrieved 1 records for Immunization
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 1 results on this page
+Total Immunization results retrieved: 1
+Retrieved 1 records for Immunization
+  ✓ Retrieved 1 records
+Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2024-12-31T17-54-11.598Z.ndjson
+
+✓ Completed Immunization: 13 total records
+
+Resource: MedicationRequest
+Description: Medication prescriptions
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3
+Querying MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 1 results on this page
+Total MedicationRequest results retrieved: 1
+Retrieved 1 records for MedicationRequest
+  ✓ Retrieved 1 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 1 results on this page
+Total MedicationRequest results retrieved: 1
+Retrieved 1 records for MedicationRequest
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 2 results on this page
+Total MedicationRequest results retrieved: 2
+Retrieved 2 records for MedicationRequest
+  ✓ Retrieved 2 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 1 results on this page
+Total MedicationRequest results retrieved: 1
+Retrieved 1 records for MedicationRequest
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 2 results on this page
+Total MedicationRequest results retrieved: 2
+Retrieved 2 records for MedicationRequest
+  ✓ Retrieved 2 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 1 results on this page
+Total MedicationRequest results retrieved: 1
+Retrieved 1 records for MedicationRequest
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 1 results on this page
+Total MedicationRequest results retrieved: 1
+Retrieved 1 records for MedicationRequest
+  ✓ Retrieved 1 records
+Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2024-12-31T17-54-12.406Z.ndjson
+
+✓ Completed MedicationRequest: 9 total records
+
+Resource: Observation
+Description: Lab results and vital signs
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Observation data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Observation data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 101 results on this page
+Total Observation results retrieved: 101
+Retrieved 101 records for Observation
+  ✓ Retrieved 101 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Observation data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Observation data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 101 results on this page
+Total Observation results retrieved: 101
+Retrieved 101 records for Observation
+  ✓ Retrieved 101 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Observation data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Observation data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 101 results on this page
+Total Observation results retrieved: 101
+Retrieved 101 records for Observation
+  ✓ Retrieved 101 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Observation data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Observation data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 1 results on this page
+Total Observation results retrieved: 1
+Retrieved 1 records for Observation
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Observation data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Observation data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 10 results on this page
+Total Observation results retrieved: 10
+Retrieved 10 records for Observation
+  ✓ Retrieved 10 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Observation data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Observation data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 8 results on this page
+Total Observation results retrieved: 8
+Retrieved 8 records for Observation
+  ✓ Retrieved 8 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Observation data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Observation data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3&category=vital-signs%2Claboratory&_sort=-date
+Retrieved 74 results on this page
+Total Observation results retrieved: 74
+Retrieved 74 records for Observation
+  ✓ Retrieved 74 records
+Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2024-12-31T17-54-15.856Z.ndjson
+
+✓ Completed Observation: 396 total records
+
+Resource: Patient
+Description: Basic patient demographics
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Patient data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Patient data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/erXuFYUfucBZaryVksYEcMg3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Patient data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Patient data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eq081-VQEgP8drUUqCWzHfw3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eAB3mDIBBcyUKviyzrxsnAw3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/egqBHVfQlt4Bw3XGXoxVxHg3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Patient data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Patient data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eIXesllypH3M9tAA5WdJftQ3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eh2xYHuzl9nkSFVvV3osUHg3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/e0w0LEDCYtfckT6N.CkJKCw3?_format=application%2Ffhir%2Bjson&_count=100
+Retrieved single resource
+Total Patient results retrieved: 1
+Retrieved 1 records for Patient
+  ✓ Retrieved 1 records
+Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2024-12-31T17-54-16.573Z.ndjson
+
+✓ Completed Patient: 7 total records
+
+Resource: Procedure
+Description: Medical procedures performed 
+
+  Patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+Fetching Procedure data for patient erXuFYUfucBZaryVksYEcMg3
+Querying Procedure data for patient erXuFYUfucBZaryVksYEcMg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
+Retrieved 3 results on this page
+Total Procedure results retrieved: 3
+Retrieved 3 records for Procedure
+  ✓ Retrieved 3 records
+
+  Patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+Fetching Procedure data for patient eq081-VQEgP8drUUqCWzHfw3
+Querying Procedure data for patient eq081-VQEgP8drUUqCWzHfw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
+Retrieved 1 results on this page
+Total Procedure results retrieved: 1
+Retrieved 1 records for Procedure
+  ✓ Retrieved 1 records
+
+  Patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+Fetching Procedure data for patient eAB3mDIBBcyUKviyzrxsnAw3
+Querying Procedure data for patient eAB3mDIBBcyUKviyzrxsnAw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
+Retrieved 1 results on this page
+Total Procedure results retrieved: 1
+Retrieved 1 records for Procedure
+  ✓ Retrieved 1 records
+
+  Patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+Fetching Procedure data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+Querying Procedure data for patient egqBHVfQlt4Bw3XGXoxVxHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
+Retrieved 1 results on this page
+Total Procedure results retrieved: 1
+Retrieved 1 records for Procedure
+  ✓ Retrieved 1 records
+
+  Patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+Fetching Procedure data for patient eIXesllypH3M9tAA5WdJftQ3
+Querying Procedure data for patient eIXesllypH3M9tAA5WdJftQ3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
+Retrieved 1 results on this page
+Total Procedure results retrieved: 1
+Retrieved 1 records for Procedure
+  ✓ Retrieved 1 records
+
+  Patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+Fetching Procedure data for patient eh2xYHuzl9nkSFVvV3osUHg3
+Querying Procedure data for patient eh2xYHuzl9nkSFVvV3osUHg3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
+Retrieved 1 results on this page
+Total Procedure results retrieved: 1
+Retrieved 1 records for Procedure
+  ✓ Retrieved 1 records
+
+  Patient: Warren McGinnis  (e0w0LEDCYtfckT6N.CkJKCw3)
+Fetching Procedure data for patient e0w0LEDCYtfckT6N.CkJKCw3
+Querying Procedure data for patient e0w0LEDCYtfckT6N.CkJKCw3...
+Page 1: URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
+Retrieved 2 results on this page
+Total Procedure results retrieved: 2
+Retrieved 2 records for Procedure
+  ✓ Retrieved 2 records
+Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2024-12-31T17-54-17.402Z.ndjson
+
+✓ Completed Procedure: 10 total records
+
+Data Retrieval Summary
+====================
+
+Exported Files Summary (Filename | Size | Path | Records)
+================================================
+AllergyIntolerance_data_2024-12-31T17-54-05.041Z.ndjson | 11.31 KB | C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2024-12-31T17-54-05.041Z.ndjson | 9
+Condition_data_2024-12-31T17-54-06.149Z.ndjson | 26.94 KB | C:\FHIR\BackendEpic\epic_data_export\Condition_data_2024-12-31T17-54-06.149Z.ndjson | 23
+Device_data_2024-12-31T17-54-06.807Z.ndjson | 4.93 KB | C:\FHIR\BackendEpic\epic_data_export\Device_data_2024-12-31T17-54-06.807Z.ndjson | 8
+DiagnosticReport_data_2024-12-31T17-54-07.470Z.ndjson | 18.68 KB | C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2024-12-31T17-54-07.470Z.ndjson | 14
+DocumentReference_data_2024-12-31T17-54-10.177Z.ndjson | 228.26 KB | C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2024-12-31T17-54-10.177Z.ndjson | 165
+Goal_data_2024-12-31T17-54-10.925Z.ndjson | 16.34 KB | C:\FHIR\BackendEpic\epic_data_export\Goal_data_2024-12-31T17-54-10.925Z.ndjson | 19
+Immunization_data_2024-12-31T17-54-11.598Z.ndjson | 9.79 KB | C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2024-12-31T17-54-11.598Z.ndjson | 13
+MedicationRequest_data_2024-12-31T17-54-12.406Z.ndjson | 22.03 KB | C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2024-12-31T17-54-12.406Z.ndjson | 9
+Observation_data_2024-12-31T17-54-15.856Z.ndjson | 738.81 KB | C:\FHIR\BackendEpic\epic_data_export\Observation_data_2024-12-31T17-54-15.856Z.ndjson | 396
+Patient_data_2024-12-31T17-54-16.573Z.ndjson | 23.58 KB | C:\FHIR\BackendEpic\epic_data_export\Patient_data_2024-12-31T17-54-16.573Z.ndjson | 7
+Procedure_data_2024-12-31T17-54-17.402Z.ndjson | 10.53 KB | C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2024-12-31T17-54-17.402Z.ndjson | 10
+
+backend_epic_using_jwt.js completed successfully
+Completion email sent successfully
