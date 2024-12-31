@@ -44,6 +44,7 @@ const csv = require('csv-parse/sync');
 const util = require('util');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const logger = require('./logger'); // Ensure this path is correct
 
 /**
  * Logger Class
@@ -430,6 +431,7 @@ class EpicClient {
     constructor(config) {
         this.config = config;
         this.jwtManager = new JWTManager(config);
+        this.exportedFiles = [];
     }
 
     async getAccessToken() {
@@ -481,7 +483,7 @@ class EpicClient {
     }
 
     async loadResourcesList() {
-        console.log('Loading resources list from CSV...');
+        logger.info('Loading resources list from CSV...');
         const resourcesPath = this.config.epic_sandbox_resources;
         
         try {
@@ -491,16 +493,16 @@ class EpicClient {
                 skip_empty_lines: true
             });
             
-            console.log(`Loaded ${records.length} resources from list`);
+            logger.info(`Loaded ${records.length} resources from list`);
             return records;
         } catch (error) {
-            console.error('Error loading resources list:', error.message);
+            logger.error('Error loading resources list:', error.message);
             throw error;
         }
     }
 
     async getResourceData(accessToken, resourceType, patientId) {
-        console.log(`Querying ${resourceType} data for patient ${patientId}...`);
+        logger.info(`Querying ${resourceType} data for patient ${patientId}...`);
         
         // Initialize query parameters
         const queryParams = new URLSearchParams({
@@ -531,8 +533,7 @@ class EpicClient {
 
             while (nextUrl && pageCount < this.config.api_settings.max_pages) {
                 pageCount++;
-                console.startGroup(`Page ${pageCount}`);
-                console.log('URL:', nextUrl);
+                logger.info(`Page ${pageCount}: URL: ${nextUrl}`);
                 
                 const response = await axios.get(nextUrl, {
                     headers: {
@@ -544,8 +545,7 @@ class EpicClient {
                 // Handle single resource response (like Patient)
                 if (!response.data.entry && response.data.resourceType === resourceType) {
                     allResults.push(response.data);
-                    console.log('Retrieved single resource');
-                    console.endGroup(`Page ${pageCount}`);
+                    logger.info('Retrieved single resource');
                     break;
                 }
 
@@ -553,7 +553,7 @@ class EpicClient {
                 if (response.data.entry) {
                     const results = response.data.entry.map(e => e.resource);
                     allResults = allResults.concat(results);
-                    console.log(`Retrieved ${results.length} results on this page`);
+                    logger.info(`Retrieved ${results.length} results on this page`);
                 }
 
                 // Check for next page
@@ -566,16 +566,15 @@ class EpicClient {
                 }
                 
                 if (!nextUrl) {
-                    console.log('No more pages available');
+                    logger.info('No more pages available');
                 }
-                console.endGroup(`Page ${pageCount}`);
             }
 
-            console.log(`\nTotal ${resourceType} results retrieved: ${allResults.length}`);
+            logger.info(`Total ${resourceType} results retrieved: ${allResults.length}`);
             return allResults;
 
         } catch (error) {
-            console.error(`Error fetching ${resourceType} for patient ${patientId}:`, {
+            logger.error(`Error fetching ${resourceType} for patient ${patientId}:`, {
                 message: error.message,
                 status: error.response?.status,
                 data: error.response?.data
@@ -585,61 +584,140 @@ class EpicClient {
     }
 
     async saveResourceData(resourceType, data) {
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const filename = `${resourceType}_data_${timestamp}.ndjson`;
-        const filepath = path.join(this.config.epic_data_export_folder, filename);
+        try {
+            // Ensure export directory exists
+            const exportDir = path.resolve('epic_data_export');
+            await fs.promises.mkdir(exportDir, { recursive: true });
 
-        const ndjsonData = data.map(result => JSON.stringify(result)).join('\n');
-        fs.writeFileSync(filepath, ndjsonData);
-        
-        console.log(`Exported ${data.length} records to: ${filepath}`);
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const filename = `${resourceType}_data_${timestamp}.ndjson`;
+            const filepath = path.join(exportDir, filename);
+            
+            await fs.promises.writeFile(filepath, data.map(JSON.stringify).join('\n'));
+            
+            // Get file size
+            const stats = await fs.promises.stat(filepath);
+            const fileSizeKB = (stats.size/1024).toFixed(2);
+            
+            // Add to exportedFiles array
+            this.exportedFiles.push({
+                name: filename,
+                size: fileSizeKB
+            });
+            
+            logger.info(`Exported ${data.length} records to: ${filepath}`);
+        } catch (error) {
+            logger.error(`Error saving resource data: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async getResourceDataForPatient(resourceType, patientId, accessToken) {
+        try {
+            let url = `${this.config.epic_endpoint}${resourceType}`;
+            const params = new URLSearchParams({
+                _format: 'application/fhir+json',
+                _count: this.config.api_settings.page_size
+            });
+
+            // Special handling for Patient resource
+            if (resourceType === 'Patient') {
+                url = `${this.config.epic_endpoint}Patient/${patientId}`;
+            } 
+            // Special handling for Observation resource
+            else if (resourceType === 'Observation') {
+                params.append('patient', patientId);
+                params.append('category', 'vital-signs,laboratory');
+                params.append('_sort', '-date');
+            }
+            // Default handling for other resources
+            else {
+                params.append('patient', patientId);
+            }
+
+            logger.info(`Querying ${resourceType} data for patient ${patientId}...`);
+            logger.info(`Page 1: URL: ${url}?${params}`);
+
+            const response = await axios.get(`${url}?${params}`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/fhir+json'
+                }
+            });
+
+            let results = [];
+            
+            if (response.data) {
+                // Handle both array responses and single resource responses
+                if (response.data.resourceType === 'Bundle' && Array.isArray(response.data.entry)) {
+                    results = response.data.entry.map(entry => entry.resource);
+                    logger.info(`Retrieved ${results.length} results on this page`);
+                } else if (response.data.resourceType === resourceType) {
+                    results = [response.data];
+                    logger.info('Retrieved single resource');
+                }
+            }
+
+            logger.info(`Total ${resourceType} results retrieved: ${results.length}`);
+            logger.info(`Retrieved ${results.length} records for ${resourceType}`);
+
+            return results;
+
+        } catch (error) {
+            const errorMessage = error.response?.data?.issue?.[0]?.details?.text || 
+                               error.response?.data?.issue?.[0]?.diagnostics ||
+                               error.message;
+            logger.error(`Error fetching ${resourceType} data for patient ${patientId}: ${errorMessage}`);
+            return [];
+        }
     }
 
     async getAllResourceData(accessToken) {
-        console.log('Getting data for all resources and patients...');
-        
-        // Load patients and resources lists
-        const patients = await this.loadPatientRoster();
-        const resources = await this.loadResourcesList();
-        
-        console.startGroup('Resource Processing');
-        
-        // Process each resource type
-        for (const resource of resources) {
-            console.startGroup(`Resource: ${resource.resource}`);
-            let allResourceResults = [];
+        try {
+            this.exportedFiles = [];
             
-            // Get data for each patient
-            for (const patient of patients) {
-                console.startGroup(`Patient: ${patient.name} (${patient.fhir_id})`);
-                try {
-                    const data = await this.getResourceData(
-                        accessToken, 
-                        resource.resource, 
-                        patient.fhir_id
-                    );
-                    allResourceResults = allResourceResults.concat(data);
-                    console.log(`Retrieved ${data.length} records for ${resource.resource}`);
-                } catch (error) {
-                    const errorDetails = {
-                        resource: resource.resource,
-                        patient: patient.fhir_id,
-                        message: error.message,
-                        status: error.response?.status,
-                        data: error.response?.data
-                    };
-                    console.error('Error fetching data:', errorDetails);
+            logger.info('Getting data for all resources and patients...');
+            const patients = await this.loadPatientRoster();
+            const resources = await this.loadResourcesList();
+            
+            logger.info('Starting Resource Processing');
+            
+            for (const resource of resources) {
+                logger.info(`Processing Resource: ${resource.resource}`);
+                let allResourceResults = [];
+                
+                for (const patient of patients) {
+                    logger.info(`Processing Patient: ${patient.name} (${patient.fhir_id})`);
+                    try {
+                        const patientData = await this.getResourceDataForPatient(
+                            resource.resource, 
+                            patient.fhir_id, 
+                            accessToken
+                        );
+                        if (patientData && patientData.length > 0) {
+                            allResourceResults = allResourceResults.concat(patientData);
+                        }
+                    } catch (error) {
+                        logger.error(`Error fetching data for resource: ${resource.resource}, patient: ${patient.fhir_id}`, error.message);
+                    }
                 }
-                console.endGroup(`Patient: ${patient.name}`);
+                
+                if (allResourceResults.length > 0) {
+                    await this.saveResourceData(resource.resource, allResourceResults);
+                }
+                logger.info(`Finished Resource: ${resource.resource}`);
             }
-
-            // Save results for this resource type
-            await this.saveResourceData(resource.resource, allResourceResults);
-            console.endGroup(`Resource: ${resource.resource}`);
+            
+            logger.info('Completed processing all resources');
+            logExportSummary(this.exportedFiles);
+            logger.info('Demo completed successfully');
+            
+            return this.exportedFiles;
+            
+        } catch (error) {
+            logger.error('Error in getAllResourceData:', error);
+            throw error;
         }
-        
-        console.endGroup('Resource Processing');
-        console.log('Completed processing all resources');
     }
 }
 
@@ -709,6 +787,14 @@ For more details, check the logs at the paths above.
     }
 }
 
+function logExportSummary(files) {
+    logger.info('=== Begin Export Summary ===');
+    files.forEach(file => {
+        logger.info(`Exported: ${file.name} (${file.size} KB)`);
+    });
+    logger.info('=== End Export Summary ===');
+}
+
 async function main() {
     const startTime = new Date().toISOString();
     let success = false;
@@ -731,21 +817,8 @@ async function main() {
         const epicClient = new EpicClient(config);
         const accessToken = await epicClient.getAccessToken();
         
-        // Get data for all resources and patients
-        await epicClient.getAllResourceData(accessToken);
-        
-        // List exported files
-        logger.listExportedFiles();
-        
-        // Get list of exported files for email
-        const exportDir = 'epic_data_export';
-        exportedFiles = fs.readdirSync(exportDir).map(file => {
-            const stats = fs.statSync(path.join(exportDir, file));
-            return {
-                name: file,
-                size: (stats.size/1024).toFixed(2)
-            };
-        });
+        // Get data for all resources and patients, and capture the exported files
+        exportedFiles = await epicClient.getAllResourceData(accessToken);
         
         success = true;
         console.log('\nDemo completed successfully');
