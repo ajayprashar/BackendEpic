@@ -509,7 +509,7 @@ class EpicClient {
         queryParams.append('_count', this.config.api_settings.page_size);
 
         // Handle special cases for different resources
-        let endpoint = `${baseEndpoint}${resourceType}`;
+        let endpoint = `${baseEndpoint}/${resourceType}`;
         if (resourceType === 'Patient') {
             endpoint = `${baseEndpoint}Patient/${patientId}`;
         } else if (resourceType === 'Observation') {
@@ -616,7 +616,10 @@ class EpicClient {
                     allResourceResults = allResourceResults.concat(data);
                     console.log(`Retrieved ${data.length} records`);
                 } catch (error) {
-                    console.error(`Error: ${error.message}`);
+                    console.error(`Error fetching ${resource.resource} for patient ${patient.fhir_id}:`, error.message);
+                    if (error.response) {
+                        console.error('Response:', error.response.data);
+                    }
                 }
                 console.endGroup(`Patient: ${patient.name}`);
             }
