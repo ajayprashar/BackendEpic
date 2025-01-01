@@ -122,6 +122,18 @@ class Logger {
             console.log('Created empty export directory');
         }
     }
+
+    logReport(reportString) {
+        const separator = '='.repeat(80);
+        const content = `
+${separator}
+Observation Analysis Report
+${separator}
+${reportString}
+${separator}
+`;
+        fs.appendFileSync('backend_epic.log', content);
+    }
 }
 
 // Load configuration from INI file
@@ -858,9 +870,15 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
     });
 
     const exportDir = path.resolve(config.paths.epic_data_export_folder);
-    const filesList = exportedFiles.map(file => 
-        `${file.name} (${file.size} KB)`
-    ).join('\n    ');
+    const observationFile = getLatestObservationFile(exportDir);
+    const observations = readNDJSON(observationFile);
+    const patientStats = analyzeObservations(observations);
+    const reportString = generateReport(patientStats);
+
+    // Log the report
+    console.log('\nObservation Analysis Report');
+    console.log('=========================');
+    console.log(reportString);
 
     const mailOptions = {
         from: config.email.notification_from,
@@ -874,25 +892,29 @@ End Time: ${endTime}
 Duration: ${Math.round((new Date(endTime) - new Date(startTime))/1000)} seconds
 Status: ${success ? 'Successful' : 'Failed'}
 
+Observation Analysis Report
+=========================
+${reportString}
+
 Export Directory:
 ${exportDir}
 
 Exported Files:
-    ${filesList}
+    ${exportedFiles.map(file => `${file.name} (${file.size} KB)`).join('\n    ')}
 
 Log File:
 ${path.resolve('backend_epic.log')}
-
-For more details, check the logs at the paths above.
         `
     };
 
     try {
         await transporter.sendMail(mailOptions);
         console.log('Completion email sent successfully');
+        return { success: true, reportString };
     } catch (error) {
         console.error('Error sending email:', error);
         console.error('Error details:', error.message);
+        return { success: false, reportString };
     }
 }
 
@@ -904,15 +926,225 @@ function logExportSummary(files) {
     console.log('=== End Export Summary ===');
 }
 
+// Function to read and parse NDJSON file
+function readNDJSON(filePath) {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return data.split('\n')
+        .filter(line => line.trim() !== '') // Filter out empty lines
+        .map(line => JSON.parse(line)); // Parse each line as JSON
+}
+
+// Function to get the latest Observation NDJSON file
+function getLatestObservationFile(directory) {
+    const files = fs.readdirSync(directory);
+    const observationFiles = files.filter(file => file.startsWith('Observation_data_'));
+    
+    if (observationFiles.length === 0) {
+        throw new Error('No Observation files found in the directory.');
+    }
+
+    // Sort files by timestamp in the filename
+    observationFiles.sort((a, b) => {
+        const timestampA = new Date(a.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)[1]);
+        const timestampB = new Date(b.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)[1]);
+        return timestampB - timestampA; // Sort descending
+    });
+
+    return path.join(directory, observationFiles[0]);
+}
+
+function analyzeObservations(observations) {
+    // Define standard reference ranges
+    const REFERENCE_RANGES = {
+        'BP': '90-140/60-90',
+        'Temp': '36.5-37.5',
+        'Pulse': '60-100',
+        'Cholesterol [Mass/volume] in Serum or Plasma': '<=200'
+    };
+
+    const patientStats = {};
+
+    // Process each observation
+    observations.forEach(obs => {
+        try {
+            if (obs.resourceType !== 'Observation') {
+                return;
+            }
+
+            const observationId = obs.id;
+            const observationType = obs.code?.coding?.[0]?.display || 'Unknown Type';
+            
+            // Get patient info
+            let patientId, patientName;
+            if (obs.subject?.reference) {
+                patientId = obs.subject.reference.split('/')[1];
+                patientName = obs.subject.display || 'Unknown Patient';
+            } else {
+                return;
+            }
+            
+            // Initialize patient stats if not exists
+            if (!patientStats[patientId]) {
+                patientStats[patientId] = {
+                    name: patientName,
+                    normalCount: 0,
+                    abnormalCount: 0,
+                    normalObservations: [],
+                    abnormalReadings: []
+                };
+            }
+
+            // Handle different observation types
+            let value, unit, referenceText;
+            
+            if (observationType === 'BP') {
+                // Special handling for blood pressure
+                const systolic = obs.component?.[0]?.valueQuantity?.value;
+                const diastolic = obs.component?.[1]?.valueQuantity?.value;
+                if (systolic && diastolic) {
+                    value = `${systolic}/${diastolic}`;
+                    unit = 'mmHg';
+                    referenceText = '90-140/60-90';
+                    const isAbnormal = systolic > 140 || systolic < 90 || diastolic > 90 || diastolic < 60;
+                    const status = isAbnormal ? 'ABNORMAL' : 'NORMAL';
+                    const observationRecord = {
+                        observationId,
+                        type: observationType,
+                        value: `${value} ${unit}`,
+                        referenceRange: referenceText,
+                        status
+                    };
+                    if (isAbnormal) {
+                        patientStats[patientId].abnormalCount++;
+                        patientStats[patientId].abnormalReadings.push(observationRecord);
+                    } else {
+                        patientStats[patientId].normalCount++;
+                        patientStats[patientId].normalObservations.push(observationRecord);
+                    }
+                }
+                return;
+            }
+
+            // Handle other types of observations
+            if (obs.valueQuantity) {
+                value = obs.valueQuantity.value;
+                unit = obs.valueQuantity.unit;
+
+                // Get reference range - first try observation's own range
+                if (obs.referenceRange && obs.referenceRange.length > 0) {
+                    const range = obs.referenceRange[0];
+                    referenceText = range.text || '';
+                }
+
+                // If no range in observation, use standard ranges
+                if (!referenceText && REFERENCE_RANGES[observationType]) {
+                    referenceText = REFERENCE_RANGES[observationType];
+                }
+
+                // Determine if value is abnormal based on reference range
+                let status = 'NORMAL';
+                if (referenceText) {
+                    if (referenceText.includes('<=')) {
+                        const highValue = parseFloat(referenceText.replace('<=', ''));
+                        if (value > highValue) {
+                            status = 'ABNORMAL (High)';
+                        }
+                    } else if (referenceText.includes('-')) {
+                        const [low, high] = referenceText.split('-').map(Number);
+                        if (value < low) {
+                            status = 'ABNORMAL (Low)';
+                        } else if (value > high) {
+                            status = 'ABNORMAL (High)';
+                        }
+                    }
+                }
+
+                // Get the observation date - prefer effectiveDateTime, fall back to issued
+                const observationDate = obs.effectiveDateTime || obs.issued || 'No date';
+                // Format the date to be more readable
+                const formattedDate = observationDate !== 'No date' 
+                    ? new Date(observationDate).toISOString().split('T')[0]
+                    : observationDate;
+
+                // Create observation record with date
+                const observationRecord = {
+                    observationId,
+                    type: observationType,
+                    value: `${value}${unit ? ' ' + unit : ''}`,
+                    referenceRange: referenceText || 'No range specified',
+                    status,
+                    date: formattedDate  // Add date to the record
+                };
+
+                if (status === 'NORMAL') {
+                    patientStats[patientId].normalCount++;
+                    patientStats[patientId].normalObservations.push(observationRecord);
+                } else {
+                    patientStats[patientId].abnormalCount++;
+                    patientStats[patientId].abnormalReadings.push(observationRecord);
+                }
+            }
+
+        } catch (error) {
+            console.warn(`Error processing observation ${obs?.id || 'unknown'}: ${error.message}`);
+        }
+    });
+
+    return patientStats;
+}
+
+// Function to generate report string
+function generateReport(patientStats) {
+    let reportString = '';
+    
+    // Summary section
+    let totalNormal = 0;
+    let totalAbnormal = 0;
+    Object.values(patientStats).forEach(stats => {
+        totalNormal += stats.normalCount;
+        totalAbnormal += stats.abnormalCount;
+    });
+
+    reportString += `Summary:\n`;
+    reportString += `---------\n`;
+    reportString += `Total Observations: ${totalNormal + totalAbnormal}\n`;
+    reportString += `Total Normal Readings: ${totalNormal}\n`;
+    reportString += `Total Abnormal Readings: ${totalAbnormal}\n\n`;
+
+    // Detailed Observations Header
+    reportString += 'Detailed Observations:\n';
+    reportString += '--------------------\n';
+    reportString += 'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status\n';
+    reportString += '-----|--------------|------------|------------------|--------|----------------|--------\n';
+
+    // Patient-wise observations
+    Object.entries(patientStats).forEach(([patientId, stats]) => {
+        const allObservations = [...stats.normalObservations || [], ...stats.abnormalReadings || []];
+        
+        allObservations.forEach(obs => {
+            reportString += `${obs.date} | `;  // Add date to the output
+            reportString += `${stats.name} | `;
+            reportString += `${patientId} | `;
+            reportString += `${obs.type} | `;
+            reportString += `${obs.value} | `;
+            reportString += `${obs.referenceRange || 'N/A'} | `;
+            reportString += `${obs.status || 'NORMAL'}\n`;
+        });
+    });
+
+    return reportString;
+}
+
 async function main() {
     const startTime = new Date().toISOString();
     let success = false;
     let exportedFiles = [];
     let config = null;
+    let logger = null;
     
     try {
         // Initialize logger first
-        const logger = new Logger();
+        logger = new Logger();
         
         console.log(`Starting ${scriptName}...`);
         
@@ -955,7 +1187,10 @@ async function main() {
     } finally {
         const endTime = new Date().toISOString();
         if (config) {
-            await sendCompletionEmail(success, startTime, endTime, exportedFiles, config);
+            const result = await sendCompletionEmail(success, startTime, endTime, exportedFiles, config);
+            if (logger && result?.reportString) {
+                logger.logReport(result.reportString);
+            }
         }
         
         if (!success) {
