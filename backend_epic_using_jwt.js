@@ -63,6 +63,7 @@ const csv = require('csv-parse/sync');
 const util = require('util');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const ConfigManager = require('./src/managers/ConfigManager');
 
 const scriptName = path.basename(process.argv[1]);
 
@@ -136,206 +137,9 @@ ${separator}
     }
 }
 
-// Load configuration from INI file
+// Remove direct config loading
 const configPath = path.resolve(__dirname, 'backend_epic_using_jwt.ini');
-const config = ini.parse(fs.readFileSync(configPath, 'utf-8'));
-
-/**
- * Configuration Management
- * ======================
- * Handles loading and processing of configuration values from INI file.
- * Supports variable substitution using ${variable} syntax.
- * 
- * Key Functions:
- * - loadConfig: Loads/creates configuration file
- * - resolveVariables: Processes variable substitutions
- * - createDefaultConfig: Creates initial configuration if none exists
- */
-class ConfigManager {
-    constructor() {
-        this.configPath = 'backend_epic_using_jwt.ini';
-    }
-
-    async loadConfig() {
-        console.log('Loading configuration...');
-        try {
-            if (!fs.existsSync(this.configPath)) {
-                throw new Error('Configuration file not found: ' + this.configPath);
-            }
-
-            const configFile = fs.readFileSync(this.configPath, 'utf-8');
-            const config = ini.parse(configFile);
-
-            // Log original values before resolution
-            console.log('\nConfiguration values before resolution:');
-            this.logConfigValues(config, 'INI file');
-
-            // Resolve variables
-            const resolvedConfig = this.resolveVariables(config);
-
-            // Log resolved values
-            console.log('\nConfiguration values after resolution:');
-            this.logConfigValues(resolvedConfig, 'Variable substitution');
-
-            // Validate required configurations
-            this.validateConfig(resolvedConfig);
-
-            return resolvedConfig;
-        } catch (error) {
-            console.error('Error loading configuration:', error);
-            throw error;
-        }
-    }
-
-    logConfigValues(config, source, originalConfig = null) {
-        const logValue = (key, value, prefix = '') => {
-            if (typeof value === 'object' && value !== null) {
-                // Handle nested sections
-                Object.entries(value).forEach(([subKey, subValue]) => {
-                    const fullKey = prefix ? `${prefix}.${key}.${subKey}` : `${key}.${subKey}`;
-                    if (originalConfig) {
-                        const origValue = originalConfig[key]?.[subKey];
-                        const valueSource = process.env[fullKey.toUpperCase()] ? 'Environment variable' :
-                                         subValue !== origValue ? 'Variable substitution' :
-                                         source;
-                        console.log(`${fullKey}: ${subValue} (Source: ${valueSource})`);
-                    } else {
-                        console.log(`${fullKey}: ${subValue} (Source: ${source})`);
-                    }
-                });
-            } else {
-                const fullKey = prefix ? `${prefix}.${key}` : key;
-                if (originalConfig) {
-                    const origValue = originalConfig[key];
-                    const valueSource = process.env[fullKey.toUpperCase()] ? 'Environment variable' :
-                                     value !== origValue ? 'Variable substitution' :
-                                     source;
-                    console.log(`${fullKey}: ${value} (Source: ${valueSource})`);
-                } else {
-                    console.log(`${fullKey}: ${value} (Source: ${source})`);
-                }
-            }
-        };
-
-        Object.entries(config).forEach(([key, value]) => logValue(key, value));
-    }
-
-    resolveVariables(config) {
-        // First, flatten the config object
-        function flattenConfig(obj, prefix = '') {
-            const flattened = {};
-            for (const [key, value] of Object.entries(obj)) {
-                const fullKey = prefix ? `${prefix}.${key}` : key;
-                if (typeof value === 'object' && value !== null) {
-                    Object.assign(flattened, flattenConfig(value, fullKey));
-                } else {
-                    flattened[fullKey] = value;
-                }
-            }
-            return flattened;
-        }
-
-        // Flatten the config
-        const flatConfig = flattenConfig(config);
-        
-        // First pass: resolve variables
-        const resolved = {};
-        for (const [key, value] of Object.entries(flatConfig)) {
-            if (typeof value === 'string') {
-                resolved[key] = value.replace(/\${([^}]+)}/g, (match, varName) => {
-                    // Look for the variable in both flattened paths
-                    const fullPath = `paths.${varName}`;
-                    return flatConfig[fullPath] || flatConfig[varName] || match;
-                });
-            } else {
-                resolved[key] = value;
-            }
-        }
-
-        // Second pass: reconstruct paths
-        const result = {};
-        for (const [key, value] of Object.entries(resolved)) {
-            const parts = key.split('.');
-            let current = result;
-            for (let i = 0; i < parts.length - 1; i++) {
-                current[parts[i]] = current[parts[i]] || {};
-                current = current[parts[i]];
-            }
-            // For paths, ensure proper path joining
-            if (key.startsWith('paths.') || key.includes('_folder') || key.includes('_path')) {
-                current[parts[parts.length - 1]] = path.normalize(value);
-            } else {
-                current[parts[parts.length - 1]] = value;
-            }
-        }
-
-        return result;
-    }
-
-    async createDefaultConfig() {
-        console.log('\nCreating default configuration:');
-        
-        const homeDir = require('os').homedir();
-        
-        const defaultConfig = {
-            app_folder_name: path.join(homeDir, 'FHIR', 'BackendEpic'),
-            private_key: '${app_folder_name}/private.key',
-            public_key: '${app_folder_name}/public.key',
-            base64_public_key: '${app_folder_name}/base64_public_key.pem',
-            test_patient_id: process.env.EPIC_TEST_PATIENT_ID || 'erXuFYUfucBZaryVksYEcMg3',
-            epic_endpoint: process.env.EPIC_FHIR_ENDPOINT || 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/',
-            jwt_expiry_minutes: process.env.JWT_EXPIRY_MINUTES || '5'
-        };
-
-        // Log default values and their sources
-        Object.entries(defaultConfig).forEach(([key, value]) => {
-            const source = process.env[key] ? 'Environment variable' : 'Default value';
-            console.log(`${key}: ${value} (Source: ${source})`);
-        });
-
-        // Create the configuration file with comments
-        const configContent = `; EPIC FHIR Backend Authentication Configuration
-; Source: EPIC FHIR Documentation and Implementation Guide
-
-; Application folder path (default: user's home directory)
-app_folder_name = ${defaultConfig.app_folder_name}
-
-; Key file paths (relative to app_folder_name)
-private_key = ${defaultConfig.private_key}
-public_key = ${defaultConfig.public_key}
-base64_public_key = ${defaultConfig.base64_public_key}
-
-; EPIC test patient ID (override with EPIC_TEST_PATIENT_ID environment variable)
-test_patient_id = ${defaultConfig.test_patient_id}
-
-; EPIC FHIR endpoint (override with EPIC_FHIR_ENDPOINT environment variable)
-epic_endpoint = ${defaultConfig.epic_endpoint}
-`;
-
-        fs.writeFileSync(this.configPath, configContent);
-        console.log('Default configuration file created');
-    }
-
-    validateConfig(config) {
-        const required = {
-            paths: ['app_folder_name', 'private_key', 'public_key'],
-            oauth_settings: ['client_id', 'token_endpoint'],
-            jwt_settings: ['jwt_algorithm', 'jwt_expiry_minutes'],
-            epic_settings: ['epic_endpoint']
-        };
-
-        for (const [section, fields] of Object.entries(required)) {
-            if (!config[section]) {
-                throw new Error(`Missing required configuration section: ${section}`);
-            }
-            for (const field of fields) {
-                if (!config[section][field]) {
-                    throw new Error(`Missing required configuration: ${section}.${field}`);
-                }
-            }
-        }
-    }
-}
+const configManager = new ConfigManager(configPath);
 
 /**
  * Key Management
@@ -1158,7 +962,6 @@ async function main() {
         logger.clearExportDirectory();
         
         // Initialize configuration
-        console.log('Loading configuration...');
         const configManager = new ConfigManager();
         config = await configManager.loadConfig();
         
