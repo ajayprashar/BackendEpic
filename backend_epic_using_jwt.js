@@ -304,9 +304,9 @@ class JWTManager {
         
         console.log('• Setting up timestamps:');
         console.log(`  - Current time (iat): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()}`);
-        console.log(`  - Expiry time (exp): EPOCH=${expiryTime} | Human=${new Date(expiryTime * 1000).toISOString()}`);
-        console.log(`  - Not Before (nbf): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()}`);
-        console.log(`  - JWT will be valid for: ${expiryMinutes} minutes`);
+        console.log(`  - Not Before (nbf): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()} (same as iat)`);
+        console.log(`  - Expiry time (exp): EPOCH=${expiryTime} | Human=${new Date(expiryTime * 1000).toISOString()} (iat + ${expiryMinutes} minutes)`);
+        console.log(`  - Token validity window: ${expiryMinutes} minutes from issuance to allow time for token retrieval and API calls`);
         
         const claims = {
             iss: this.clientId,
@@ -324,10 +324,13 @@ class JWTManager {
         console.log(`  - iss (Issuer): ${claims.iss}`);
         console.log(`  - sub (Subject): ${claims.sub} (same as Issuer for backend services)`);
         console.log(`  - aud (Audience): ${claims.aud}`);
-        console.log(`  - jti (JWT ID): ${claims.jti} (unique identifier)`);
-        console.log(`  - exp (Expiration): EPOCH=${claims.exp} | Human=${new Date(claims.exp * 1000).toISOString()}`);
-        console.log(`  - nbf (Not Before): EPOCH=${claims.nbf} | Human=${new Date(claims.nbf * 1000).toISOString()}`);
-        console.log(`  - iat (Issued At): EPOCH=${claims.iat} | Human=${new Date(claims.iat * 1000).toISOString()}`);
+        console.log(`  - jti (JWT ID): ${claims.jti} (random unique identifier)`);
+        console.log(`  - exp (Expiration): EPOCH=${claims.exp} | Human=${new Date(claims.exp * 1000).toISOString()} (iat + ${expiryMinutes} min window)`);
+        console.log(`  - nbf (Not Before): EPOCH=${claims.nbf} | Human=${new Date(claims.nbf * 1000).toISOString()} (current time)`);
+        console.log(`  - iat (Issued At): EPOCH=${claims.iat} | Human=${new Date(claims.iat * 1000).toISOString()} (current time)`);
+
+        console.log('\n• Actual JWT Claims (JSON):');
+        console.log(JSON.stringify(claims, null, 2));
 
         console.log('\nStep 3: Signing JWT');
         console.log('------------------');
@@ -342,7 +345,17 @@ class JWTManager {
             }
         });
 
-        console.log('✓ JWT successfully generated and signed');
+        console.log('\n• Generated JWT Token:');
+        console.log('---------------------');
+        const [header, payload, signature] = token.split('.');
+        console.log('Header (decoded):');
+        console.log(JSON.stringify(JSON.parse(Buffer.from(header, 'base64').toString()), null, 2));
+        console.log('\nPayload (decoded):');
+        console.log(JSON.stringify(JSON.parse(Buffer.from(payload, 'base64').toString()), null, 2));
+        console.log('\nComplete JWT Token (used in request):');
+        console.log(token);
+
+        console.log('\n✓ JWT successfully generated and signed');
         console.log('===============================\n');
 
         return token;
