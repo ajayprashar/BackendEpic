@@ -81,26 +81,21 @@ class Logger {
                        `New Session Started: ${timestamp}` + 
                        '\n' + '='.repeat(80) + '\n';
         
-        this.indentLevel = 0;
         this.logStream = fs.createWriteStream('backend_epic.log', { flags: 'a' });
-        
-        // Append divider to log file
         this.logStream.write(divider);
         
-        // Replace console.log with indented file logging
+        // Replace console.log with file logging
         const originalLog = console.log;
         console.log = (...args) => {
-            const indent = '  '.repeat(this.indentLevel);
-            const message = indent + util.format(...args) + '\n';
+            const message = util.format(...args) + '\n';
             this.logStream.write(message);
             originalLog(...args);
         };
         
-        // Replace console.error with indented file logging
+        // Replace console.error with file logging
         const originalError = console.error;
         console.error = (...args) => {
-            const indent = '  '.repeat(this.indentLevel);
-            const message = indent + 'ERROR: ' + util.format(...args) + '\n';
+            const message = 'ERROR: ' + util.format(...args) + '\n';
             this.logStream.write(message);
             originalError(...args);
         };
@@ -122,18 +117,6 @@ class Logger {
             fs.mkdirSync(exportDir, { recursive: true });
             console.log('Created empty export directory');
         }
-    }
-
-    logReport(reportString) {
-        const separator = '='.repeat(80);
-        const content = `
-${separator}
-Observation Analysis Report
-${separator}
-${reportString}
-${separator}
-`;
-        fs.appendFileSync('backend_epic.log', content);
     }
 }
 
@@ -641,30 +624,27 @@ class EpicClient {
 
     async getResourceDataForPatient(resourceType, patientId, accessToken) {
         try {
-            console.log(`Fetching ${resourceType} data for patient ${patientId}`);
+            // Remove the redundant patient logging since it's now handled in getAllResourceData
             let url = `${this.epicEndpoint}${resourceType}`;
             const params = new URLSearchParams({
                 _format: 'application/fhir+json',
                 _count: this.config.api_settings.page_size
             });
 
-            // Special handling for Patient resource
             if (resourceType === 'Patient') {
                 url = `${this.epicEndpoint}Patient/${patientId}`;
             } 
-            // Special handling for Observation resource
             else if (resourceType === 'Observation') {
                 params.append('patient', patientId);
                 params.append('category', 'vital-signs,laboratory');
                 params.append('_sort', '-date');
             }
-            // Default handling for other resources
             else {
                 params.append('patient', patientId);
             }
 
-            console.log(`Querying ${resourceType} data for patient ${patientId}...`);
-            console.log(`Page 1: URL: ${url}?${params}`);
+            // Log the actual API request being made
+            console.log(`  • Querying Epic's FHIR API: ${url}?${params}`);
 
             const response = await axios.get(`${url}?${params}`, {
                 headers: {
@@ -676,26 +656,20 @@ class EpicClient {
             let results = [];
             
             if (response.data) {
-                // Handle both array responses and single resource responses
                 if (response.data.resourceType === 'Bundle' && Array.isArray(response.data.entry)) {
                     results = response.data.entry.map(entry => entry.resource);
-                    console.log(`Retrieved ${results.length} results on this page`);
+                    console.log(`  • Retrieved ${results.length} results`);
                 } else if (response.data.resourceType === resourceType) {
                     results = [response.data];
-                    console.log('Retrieved single resource');
+                    console.log('  • Retrieved single resource');
                 }
             }
 
-            console.log(`Total ${resourceType} results retrieved: ${results.length}`);
-            console.log(`Retrieved ${results.length} records for ${resourceType}`);
-
+            console.log(`  ✓ Total ${resourceType} results: ${results.length}`);
             return results;
 
         } catch (error) {
-            const errorMessage = error.response?.data?.issue?.[0]?.details?.text || 
-                               error.response?.data?.issue?.[0]?.diagnostics ||
-                               error.message;
-            console.error(`Error fetching ${resourceType} data for patient ${patientId}: ${errorMessage}`);
+            console.error(`  ✗ Error: ${error.message}`);
             return [];
         }
     }
@@ -717,7 +691,8 @@ class EpicClient {
                 let allResourceResults = [];
                 
                 for (const patient of patients) {
-                    console.log(`\n  Patient: ${patient.name} (${patient.fhir_id})`);
+                    // Single patient log entry with both name and ID
+                    console.log(`\n  Processing: ${patient.name} (ID: ${patient.fhir_id})`);
                     try {
                         const patientData = await this.getResourceDataForPatient(
                             resource.resource, 
@@ -888,8 +863,8 @@ function getLatestObservationFile(directory) {
 
     // Sort files by timestamp in the filename
     observationFiles.sort((a, b) => {
-        const timestampA = new Date(a.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)[1]);
-        const timestampB = new Date(b.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)[1]);
+        const timestampA = new Date(a.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)?.[1] || '');
+        const timestampB = new Date(b.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)?.[1] || '');
         return timestampB - timestampA; // Sort descending
     });
 
@@ -1138,13 +1113,9 @@ async function main() {
         const endTime = new Date().toISOString();
         if (config) {
             const result = await sendCompletionEmail(success, startTime, endTime, exportedFiles, config);
-            if (logger && result?.reportString) {
-                logger.logReport(result.reportString);
+            if (!success) {
+                process.exit(1);
             }
-        }
-        
-        if (!success) {
-            process.exit(1);
         }
     }
 }
