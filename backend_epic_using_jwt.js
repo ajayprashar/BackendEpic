@@ -294,25 +294,45 @@ class JWTManager {
     }
 
     generateJWT() {
-        console.log('Generating JWT...');
+        console.log('\n=== JWT Generation Tutorial ===');
+        console.log('Step 1: Preparing JWT Claims');
+        console.log('----------------------------');
         
         const currentTime = Math.floor(Date.now() / 1000);
-        const expiryMinutes = parseInt(this.expiryMinutes) || 5; // Default to 5 if not specified
+        const expiryMinutes = parseInt(this.expiryMinutes) || 5;
+        const expiryTime = currentTime + (expiryMinutes * 60);
         
-        console.log(`Setting JWT expiry to ${expiryMinutes} minutes from now`);
+        console.log('• Setting up timestamps:');
+        console.log(`  - Current time (iat): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()}`);
+        console.log(`  - Expiry time (exp): EPOCH=${expiryTime} | Human=${new Date(expiryTime * 1000).toISOString()}`);
+        console.log(`  - Not Before (nbf): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()}`);
+        console.log(`  - JWT will be valid for: ${expiryMinutes} minutes`);
         
         const claims = {
             iss: this.clientId,
             sub: this.clientId,
             aud: this.tokenEndpoint,
             jti: uuidv4(),
-            exp: currentTime + (expiryMinutes * 60), // Convert minutes to seconds
+            exp: expiryTime,
             nbf: currentTime,
             iat: currentTime
         };
 
-        console.log('JWT Claims:', claims);
-        console.log(`JWT will expire at: ${new Date(claims.exp * 1000).toISOString()}`);
+        console.log('\nStep 2: JWT Claims Structure');
+        console.log('-------------------------');
+        console.log('• Required claims for Epic:');
+        console.log(`  - iss (Issuer): ${claims.iss}`);
+        console.log(`  - sub (Subject): ${claims.sub} (same as Issuer for backend services)`);
+        console.log(`  - aud (Audience): ${claims.aud}`);
+        console.log(`  - jti (JWT ID): ${claims.jti} (unique identifier)`);
+        console.log(`  - exp (Expiration): EPOCH=${claims.exp} | Human=${new Date(claims.exp * 1000).toISOString()}`);
+        console.log(`  - nbf (Not Before): EPOCH=${claims.nbf} | Human=${new Date(claims.nbf * 1000).toISOString()}`);
+        console.log(`  - iat (Issued At): EPOCH=${claims.iat} | Human=${new Date(claims.iat * 1000).toISOString()}`);
+
+        console.log('\nStep 3: Signing JWT');
+        console.log('------------------');
+        console.log(`• Algorithm: ${this.algorithm}`);
+        console.log('• Using private key to sign JWT...');
 
         const token = jwt.sign(claims, this.privateKey, {
             algorithm: this.algorithm,
@@ -321,6 +341,9 @@ class JWTManager {
                 typ: 'JWT'
             }
         });
+
+        console.log('✓ JWT successfully generated and signed');
+        console.log('===============================\n');
 
         return token;
     }
@@ -370,10 +393,20 @@ class EpicClient {
 
     async getAccessToken() {
         try {
-            console.log('Requesting access token...');
+            console.log('\n=== Epic OAuth 2.0 Token Request Tutorial ===');
+            console.log('Step 1: JWT Assertion Generation');
+            console.log('--------------------------------');
             const jwt = await this.jwtManager.generateJWT();
             
-            console.log('Using token endpoint:', this.tokenEndpoint);
+            console.log('\nStep 2: Preparing Token Request');
+            console.log('------------------------------');
+            console.log('• Endpoint:', this.tokenEndpoint);
+            console.log('• Grant Type:', this.config.oauth_settings.grant_type);
+            console.log('• Client Assertion Type:', this.config.oauth_settings.client_assertion_type);
+            
+            console.log('\nStep 3: Sending Token Request');
+            console.log('----------------------------');
+            console.log('• Making POST request to Epic\'s token endpoint...');
             
             const response = await axios.post(this.tokenEndpoint, 
                 new URLSearchParams({
@@ -391,9 +424,20 @@ class EpicClient {
                 throw new Error('No access token received in response');
             }
 
+            console.log('✓ Access token received successfully');
+            console.log('• Token type:', response.data.token_type);
+            console.log('• Expires in:', response.data.expires_in, 'seconds');
+            console.log('=========================================\n');
+
             return response.data.access_token;
         } catch (error) {
-            console.error('Error getting access token from', this.tokenEndpoint + ':', error.message);
+            console.error('\n❌ Error in token request process:');
+            console.error('• Error message:', error.message);
+            if (error.response) {
+                console.error('• Response status:', error.response.status);
+                console.error('• Response data:', JSON.stringify(error.response.data, null, 2));
+            }
+            console.error('=========================================\n');
             throw error;
         }
     }
@@ -476,7 +520,12 @@ class EpicClient {
 
             while (nextUrl && pageCount < this.config.api_settings.max_pages) {
                 pageCount++;
-                console.log(`Page ${pageCount}: URL: ${nextUrl}`);
+                console.log(`\nPage ${pageCount} URL Details:`);
+                console.log('------------------');
+                console.log('Human readable URL:');
+                console.log(`${url}?${decodeURIComponent(queryParams.toString())}`);
+                console.log('\nActual URL used (encoded):');
+                console.log(nextUrl);
                 
                 const response = await axios.get(nextUrl, {
                     headers: {
@@ -505,15 +554,23 @@ class EpicClient {
                     const nextLink = response.data.link.find(link => link.relation === 'next');
                     if (nextLink) {
                         nextUrl = nextLink.url;
+                        // If there's a next page, show its URL preview
+                        if (nextUrl) {
+                            console.log('\nNext page URL preview:');
+                            console.log('Human readable:');
+                            console.log(decodeURIComponent(nextUrl));
+                            console.log('\nEncoded:');
+                            console.log(nextUrl);
+                        }
                     }
                 }
                 
                 if (!nextUrl) {
-                    console.log('No more pages available');
+                    console.log('\nNo more pages available');
                 }
             }
 
-            console.log(`Total ${resourceType} results retrieved: ${allResults.length}`);
+            console.log(`\nTotal ${resourceType} results retrieved: ${allResults.length}`);
             return allResults;
 
         } catch (error) {
