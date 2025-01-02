@@ -1,30 +1,16 @@
 
 ================================================================================
-New Session Started: 2025-01-02T15:49:33.174Z
+New Session Started: 2025-01-02T16:26:42.650Z
 ================================================================================
 Starting backend_epic_using_jwt.js...
-
-Clearing export directory: epic_data_export
-Deleted: AllergyIntolerance_data_2025-01-02T15-48-08.714Z.ndjson
-Deleted: Condition_data_2025-01-02T15-48-09.712Z.ndjson
-Deleted: Device_data_2025-01-02T15-48-10.441Z.ndjson
-Deleted: DiagnosticReport_data_2025-01-02T15-48-11.438Z.ndjson
-Deleted: DocumentReference_data_2025-01-02T15-48-14.182Z.ndjson
-Deleted: Goal_data_2025-01-02T15-48-14.907Z.ndjson
-Deleted: Immunization_data_2025-01-02T15-48-15.573Z.ndjson
-Deleted: MedicationRequest_data_2025-01-02T15-48-16.319Z.ndjson
-Deleted: Observation_data_2025-01-02T15-48-19.861Z.ndjson
-Deleted: Patient_data_2025-01-02T15-48-20.581Z.ndjson
-Deleted: Procedure_data_2025-01-02T15-48-21.346Z.ndjson
-Export directory cleared
 Loading configuration...
 
 Configuration values before resolution:
 paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
 paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
 paths.private_key: ${app_folder_name}\private.key (Source: INI file)
-paths.public_key: ${app_folder_name}\public.key (Source: INI file)
-paths.base64_public_key: ${app_folder_name}\base64_public_key.pem (Source: INI file)
+paths.public_key: ${app_folder_name}\publickey509.pem (Source: INI file)
+paths.base64_public_key: ${app_folder_name}\publickey509.b64 (Source: INI file)
 rsa_settings.rsa_key_size: 2048 (Source: INI file)
 rsa_settings.rsa_public_encoding: spki (Source: INI file)
 rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file)
@@ -64,8 +50,8 @@ Configuration values after resolution:
 paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution)
 paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution)
 paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution)
-paths.public_key: C:\FHIR\BackendEpic\public.key (Source: Variable substitution)
-paths.base64_public_key: C:\FHIR\BackendEpic\base64_public_key.pem (Source: Variable substitution)
+paths.public_key: C:\FHIR\BackendEpic\publickey509.pem (Source: Variable substitution)
+paths.base64_public_key: C:\FHIR\BackendEpic\publickey509.b64 (Source: Variable substitution)
 rsa_settings.rsa_key_size: 2048 (Source: Variable substitution)
 rsa_settings.rsa_public_encoding: spki (Source: Variable substitution)
 rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution)
@@ -100,9 +86,25 @@ data_export.json_format: application/json (Source: Variable substitution)
 data_export.default_count: 100 (Source: Variable substitution)
 file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution)
 file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution)
+
+Clearing export directory: C:\FHIR\BackendEpic\epic_data_export
+
+Clearing export directory: epic_data_export
+Deleted: AllergyIntolerance_data_2025-01-02T16-24-03.058Z.ndjson
+Deleted: Condition_data_2025-01-02T16-24-04.105Z.ndjson
+Deleted: Device_data_2025-01-02T16-24-04.726Z.ndjson
+Deleted: DiagnosticReport_data_2025-01-02T16-24-05.503Z.ndjson
+Deleted: DocumentReference_data_2025-01-02T16-24-08.377Z.ndjson
+Deleted: Goal_data_2025-01-02T16-24-09.103Z.ndjson
+Deleted: Immunization_data_2025-01-02T16-24-09.764Z.ndjson
+Deleted: MedicationRequest_data_2025-01-02T16-24-10.686Z.ndjson
+Deleted: Observation_data_2025-01-02T16-24-14.332Z.ndjson
+Deleted: Patient_data_2025-01-02T16-24-15.108Z.ndjson
+Deleted: Procedure_data_2025-01-02T16-24-15.945Z.ndjson
+Export directory cleared
 Initializing key manager...
 Checking for existing key pair...
-Existing key pair found
+Existing key pair found (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem)
 Initializing EPIC client...
 Requesting access token...
 Requesting access token...
@@ -112,12 +114,12 @@ JWT Claims: {
   iss: 'e6adc0f2-7e22-4a86-9f11-5b8bae6e5190',
   sub: 'e6adc0f2-7e22-4a86-9f11-5b8bae6e5190',
   aud: 'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
-  jti: 'affce0e8-a478-4c9a-afd7-e88bfd6756b1',
-  exp: 1735833273,
-  nbf: 1735832973,
-  iat: 1735832973
+  jti: '09e225b3-b3db-40c8-b1b2-09ff09141e90',
+  exp: 1735835502,
+  nbf: 1735835202,
+  iat: 1735835202
 }
-JWT will expire at: 2025-01-02T15:54:33.000Z
+JWT will expire at: 2025-01-02T16:31:42.000Z
 Using token endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
 Access token received successfully
 Retrieving resource data...
@@ -196,7 +198,7 @@ Retrieved 2 results on this page
 Total AllergyIntolerance results retrieved: 2
 Retrieved 2 records for AllergyIntolerance
   ✓ Retrieved 2 records
-Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T15-49-34.141Z.ndjson
+Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T16-26-43.594Z.ndjson
 
 ✓ Completed AllergyIntolerance: 9 total records
 
@@ -265,7 +267,7 @@ Retrieved 2 results on this page
 Total Condition results retrieved: 2
 Retrieved 2 records for Condition
   ✓ Retrieved 2 records
-Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T15-49-35.281Z.ndjson
+Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T16-26-44.566Z.ndjson
 
 ✓ Completed Condition: 23 total records
 
@@ -334,7 +336,7 @@ Retrieved 1 results on this page
 Total Device results retrieved: 1
 Retrieved 1 records for Device
   ✓ Retrieved 1 records
-Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T15-49-35.906Z.ndjson
+Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T16-26-45.138Z.ndjson
 
 ✓ Completed Device: 8 total records
 
@@ -403,7 +405,7 @@ Retrieved 2 results on this page
 Total DiagnosticReport results retrieved: 2
 Retrieved 2 records for DiagnosticReport
   ✓ Retrieved 2 records
-Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T15-49-36.593Z.ndjson
+Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T16-26-45.817Z.ndjson
 
 ✓ Completed DiagnosticReport: 14 total records
 
@@ -472,7 +474,7 @@ Retrieved 17 results on this page
 Total DocumentReference results retrieved: 17
 Retrieved 17 records for DocumentReference
   ✓ Retrieved 17 records
-Exported 187 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T15-49-39.276Z.ndjson
+Exported 187 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T16-26-49.098Z.ndjson
 
 ✓ Completed DocumentReference: 187 total records
 
@@ -541,7 +543,7 @@ Retrieved 1 results on this page
 Total Goal results retrieved: 1
 Retrieved 1 records for Goal
   ✓ Retrieved 1 records
-Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T15-49-39.993Z.ndjson
+Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T16-26-49.765Z.ndjson
 
 ✓ Completed Goal: 19 total records
 
@@ -610,7 +612,7 @@ Retrieved 1 results on this page
 Total Immunization results retrieved: 1
 Retrieved 1 records for Immunization
   ✓ Retrieved 1 records
-Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T15-49-40.604Z.ndjson
+Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T16-26-50.373Z.ndjson
 
 ✓ Completed Immunization: 13 total records
 
@@ -679,7 +681,7 @@ Retrieved 1 results on this page
 Total MedicationRequest results retrieved: 1
 Retrieved 1 records for MedicationRequest
   ✓ Retrieved 1 records
-Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T15-49-41.357Z.ndjson
+Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T16-26-51.081Z.ndjson
 
 ✓ Completed MedicationRequest: 9 total records
 
@@ -748,7 +750,7 @@ Retrieved 74 results on this page
 Total Observation results retrieved: 74
 Retrieved 74 records for Observation
   ✓ Retrieved 74 records
-Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T15-49-45.565Z.ndjson
+Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T16-26-54.603Z.ndjson
 
 ✓ Completed Observation: 396 total records
 
@@ -817,7 +819,7 @@ Retrieved single resource
 Total Patient results retrieved: 1
 Retrieved 1 records for Patient
   ✓ Retrieved 1 records
-Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T15-49-47.068Z.ndjson
+Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T16-26-55.401Z.ndjson
 
 ✓ Completed Patient: 7 total records
 
@@ -886,7 +888,7 @@ Retrieved 2 results on this page
 Total Procedure results retrieved: 2
 Retrieved 2 records for Procedure
   ✓ Retrieved 2 records
-Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T15-49-48.976Z.ndjson
+Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T16-26-56.163Z.ndjson
 
 ✓ Completed Procedure: 10 total records
 
@@ -895,17 +897,17 @@ Data Retrieval Summary
 
 Exported Files Summary (Filename | Size | Path | Records)
 ================================================
-AllergyIntolerance_data_2025-01-02T15-49-34.141Z.ndjson | 11.31 KB | C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T15-49-34.141Z.ndjson | 9
-Condition_data_2025-01-02T15-49-35.281Z.ndjson | 26.94 KB | C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T15-49-35.281Z.ndjson | 23
-Device_data_2025-01-02T15-49-35.906Z.ndjson | 4.93 KB | C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T15-49-35.906Z.ndjson | 8
-DiagnosticReport_data_2025-01-02T15-49-36.593Z.ndjson | 18.68 KB | C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T15-49-36.593Z.ndjson | 14
-DocumentReference_data_2025-01-02T15-49-39.276Z.ndjson | 287.50 KB | C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T15-49-39.276Z.ndjson | 187
-Goal_data_2025-01-02T15-49-39.993Z.ndjson | 16.34 KB | C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T15-49-39.993Z.ndjson | 19
-Immunization_data_2025-01-02T15-49-40.604Z.ndjson | 9.79 KB | C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T15-49-40.604Z.ndjson | 13
-MedicationRequest_data_2025-01-02T15-49-41.357Z.ndjson | 22.03 KB | C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T15-49-41.357Z.ndjson | 9
-Observation_data_2025-01-02T15-49-45.565Z.ndjson | 738.81 KB | C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T15-49-45.565Z.ndjson | 396
-Patient_data_2025-01-02T15-49-47.068Z.ndjson | 23.58 KB | C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T15-49-47.068Z.ndjson | 7
-Procedure_data_2025-01-02T15-49-48.976Z.ndjson | 10.62 KB | C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T15-49-48.976Z.ndjson | 10
+AllergyIntolerance_data_2025-01-02T16-26-43.594Z.ndjson | 11.31 KB | C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T16-26-43.594Z.ndjson | 9
+Condition_data_2025-01-02T16-26-44.566Z.ndjson | 26.94 KB | C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T16-26-44.566Z.ndjson | 23
+Device_data_2025-01-02T16-26-45.138Z.ndjson | 4.93 KB | C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T16-26-45.138Z.ndjson | 8
+DiagnosticReport_data_2025-01-02T16-26-45.817Z.ndjson | 18.68 KB | C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T16-26-45.817Z.ndjson | 14
+DocumentReference_data_2025-01-02T16-26-49.098Z.ndjson | 287.50 KB | C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T16-26-49.098Z.ndjson | 187
+Goal_data_2025-01-02T16-26-49.765Z.ndjson | 16.34 KB | C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T16-26-49.765Z.ndjson | 19
+Immunization_data_2025-01-02T16-26-50.373Z.ndjson | 9.79 KB | C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T16-26-50.373Z.ndjson | 13
+MedicationRequest_data_2025-01-02T16-26-51.081Z.ndjson | 22.03 KB | C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T16-26-51.081Z.ndjson | 9
+Observation_data_2025-01-02T16-26-54.603Z.ndjson | 738.81 KB | C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T16-26-54.603Z.ndjson | 396
+Patient_data_2025-01-02T16-26-55.401Z.ndjson | 23.58 KB | C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T16-26-55.401Z.ndjson | 7
+Procedure_data_2025-01-02T16-26-56.163Z.ndjson | 10.62 KB | C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T16-26-56.163Z.ndjson | 10
 
 backend_epic_using_jwt.js completed successfully
 

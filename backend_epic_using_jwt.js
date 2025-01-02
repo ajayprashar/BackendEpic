@@ -169,6 +169,49 @@ class KeyManager {
         this.rsaPrivateEncoding = config.rsa_settings.rsa_private_encoding || 'pkcs8';
     }
 
+    /**
+     * Calculates the public key ID (thumbprint) using Epic's method.
+     * This was determined through analysis comparing different methods against Epic's known thumbprint:
+     * A9449062942DEBF66B8B48B131AC47C9189583F4 (from publickey509.pem/publickey509.b64)
+     * 
+     * The method follows RFC 5280 standard for certificate thumbprints:
+     * 1. Take the DER-encoded form of the certificate/public key (from publickey509.pem)
+     * 2. Calculate SHA-1 hash of the DER-encoded binary data
+     * 3. Convert to uppercase hexadecimal
+     * 
+     * Key Files Used:
+     * - publickey509.pem: X.509 certificate in PEM format
+     * - publickey509.b64: Base64-encoded DER format (same certificate, different encoding)
+     * Both files contain the same certificate and will generate the same thumbprint.
+     * 
+     * Verification process:
+     * - Created analyze_key_id.js to test different methods
+     * - Tested against both PEM and Base64 encoded certificates
+     * - Confirmed that DER-encoded SHA-1 matches Epic's thumbprint
+     * 
+     * @param {string} publicKey - The public key in PEM format
+     * @returns {string} The uppercase hexadecimal thumbprint
+     */
+    calculatePublicKeyId(publicKey) {
+        // Remove PEM headers and newlines to get clean Base64
+        const cleanContent = publicKey.toString()
+            .replace(/-----BEGIN PUBLIC KEY-----/, '')
+            .replace(/-----END PUBLIC KEY-----/, '')
+            .replace(/-----BEGIN CERTIFICATE-----/, '')
+            .replace(/-----END CERTIFICATE-----/, '')
+            .replace(/\n/g, '');
+
+        // Decode Base64 to get DER-encoded binary format
+        const derBuffer = Buffer.from(cleanContent, 'base64');
+        
+        // Calculate SHA-1 hash of DER-encoded data
+        const hash = crypto.createHash('sha1');
+        hash.update(derBuffer);
+        
+        // Convert to uppercase hexadecimal
+        return hash.digest('hex').toUpperCase();
+    }
+
     async generateKeyPair() {
         console.log('Checking for existing key pair...');
         
@@ -182,10 +225,11 @@ class KeyManager {
             fs.mkdirSync(dir, { recursive: true });
         }
 
+        let publicKey;
         if (!fs.existsSync(this.privateKeyPath)) {
             console.log('Generating new RSA key pair...');
             
-            const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+            const keyPair = crypto.generateKeyPairSync('rsa', {
                 modulusLength: this.rsaKeySize,
                 publicKeyEncoding: {
                     type: this.rsaPublicEncoding,
@@ -197,15 +241,19 @@ class KeyManager {
                 }
             });
 
-            fs.writeFileSync(this.privateKeyPath, privateKey);
-            fs.writeFileSync(this.publicKeyPath, publicKey);
+            fs.writeFileSync(this.privateKeyPath, keyPair.privateKey);
+            fs.writeFileSync(this.publicKeyPath, keyPair.publicKey);
             
-            const base64PublicKey = Buffer.from(publicKey).toString('base64');
+            const base64PublicKey = Buffer.from(keyPair.publicKey).toString('base64');
             fs.writeFileSync(this.base64PublicKeyPath, base64PublicKey);
             
-            console.log('Key pair generated and saved successfully');
+            publicKey = keyPair.publicKey;
+            const publicKeyId = this.calculatePublicKeyId(publicKey);
+            console.log(`Key pair generated and saved successfully (Public Key ID: ${publicKeyId} from ${path.basename(this.publicKeyPath)})`);
         } else {
-            console.log('Existing key pair found');
+            publicKey = fs.readFileSync(this.publicKeyPath, 'utf8');
+            const publicKeyId = this.calculatePublicKeyId(publicKey);
+            console.log(`Existing key pair found (Public Key ID: ${publicKeyId} from ${path.basename(this.publicKeyPath)})`);
         }
     }
 }
@@ -958,12 +1006,14 @@ async function main() {
         
         console.log(`Starting ${scriptName}...`);
         
-        // Clear export directory before starting
-        logger.clearExportDirectory();
-        
         // Initialize configuration
         const configManager = new ConfigManager();
         config = await configManager.loadConfig();
+        
+        // Clear export directory
+        const exportDir = config.paths.epic_data_export_folder;
+        console.log(`\nClearing export directory: ${exportDir}`);
+        await logger.clearExportDirectory();
         
         // Initialize key manager
         console.log('Initializing key manager...');
@@ -985,7 +1035,7 @@ async function main() {
         
         success = true;
         console.log(`\n${scriptName} completed successfully`);
-
+        
     } catch (error) {
         console.error('Application error:', error.message);
         if (error.response) {
