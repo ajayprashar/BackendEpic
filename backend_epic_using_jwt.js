@@ -913,36 +913,56 @@ function getLatestObservationFile(directory) {
     return path.join(directory, observationFiles[0]);
 }
 
-function analyzeObservations(observations) {
-    // Define standard reference ranges
-    const REFERENCE_RANGES = {
-        'BP': '90-140/60-90',
-        'Temp': '36.5-37.5',
-        'Pulse': '60-100',
-        'Cholesterol [Mass/volume] in Serum or Plasma': '<=200'
-    };
+// Define standard reference ranges with LOINC codes
+const VITAL_SIGNS_RANGES = {
+    'BP': {
+        systolic: { min: 90, max: 140 },
+        diastolic: { min: 60, max: 90 }
+    },
+    'Temp': { min: 36.5, max: 37.5 },
+    'Pulse': { min: 60, max: 100 }
+};
 
+const LAB_REFERENCE_RANGES = {
+    'Cholesterol [Mass/volume] in Serum or Plasma': {
+        type: 'max',
+        value: 200,
+        unit: 'mg/dL'
+    }
+};
+
+// LOINC code mapping for vital signs
+const VITAL_SIGNS_CODE_MAP = {
+    // BP codes
+    '55284-4': 'BP',       // Blood pressure systolic and diastolic
+    '85354-9': 'BP',       // Blood pressure panel
+    '8480-6': 'BP',        // Systolic blood pressure
+    '8462-4': 'BP',        // Diastolic blood pressure
+    
+    // Temperature codes
+    '8310-5': 'Temp',      // Body temperature
+    
+    // Pulse codes
+    '8867-4': 'Pulse'      // Heart rate
+};
+
+function analyzeObservations(observations) {
     const patientStats = {};
 
-    // Process each observation
     observations.forEach(obs => {
         try {
             if (obs.resourceType !== 'Observation') {
                 return;
             }
 
-            const observationId = obs.id;
-            const observationType = obs.code?.coding?.[0]?.display || 'Unknown Type';
-            
             // Get patient info
-            let patientId, patientName;
-            if (obs.subject?.reference) {
-                patientId = obs.subject.reference.split('/')[1];
-                patientName = obs.subject.display || 'Unknown Patient';
-            } else {
+            const patientId = obs.subject?.reference?.split('/')[1];
+            const patientName = obs.subject?.display || 'Unknown Patient';
+            
+            if (!patientId) {
                 return;
             }
-            
+
             // Initialize patient stats if not exists
             if (!patientStats[patientId]) {
                 patientStats[patientId] = {
@@ -954,32 +974,70 @@ function analyzeObservations(observations) {
                 };
             }
 
-            // Handle different observation types
-            let value, unit, referenceText;
-            
+            // Determine observation type
+            let observationType = null;
+            const observationId = obs.id;
+
+            // Try to identify type from code.text
+            if (['BP', 'Temp', 'Pulse'].includes(obs.code?.text)) {
+                observationType = obs.code.text;
+            }
+
+            // If type is still null, search coding for known codes
+            if (!observationType) {
+                const codingArray = obs.code?.coding || [];
+                for (const coding of codingArray) {
+                    if (VITAL_SIGNS_CODE_MAP[coding.code]) {
+                        observationType = VITAL_SIGNS_CODE_MAP[coding.code];
+                        break;
+                    }
+                }
+            }
+
+            // Get observation date
+            const dateField = obs.effectiveDateTime || 
+                            obs.effectivePeriod?.start || 
+                            obs.effectiveInstant || 
+                            obs.issued || 
+                            obs.meta?.lastUpdated || 
+                            obs.date || 
+                            obs.performedDateTime || 
+                            obs.performedPeriod?.start || 
+                            obs.recordedDate;
+
+            const formattedDate = dateField ? 
+                new Date(dateField).toISOString().split('T')[0] : 
+                'No date';
+
+            // Handle BP observations
             if (observationType === 'BP') {
-                // Special handling for blood pressure
-                const systolic = obs.component?.[0]?.valueQuantity?.value;
-                const diastolic = obs.component?.[1]?.valueQuantity?.value;
+                const systolicComponent = obs.component?.find(comp =>
+                    comp.code?.coding?.some(coding => coding.code === '8480-6')
+                );
+                const diastolicComponent = obs.component?.find(comp =>
+                    comp.code?.coding?.some(coding => coding.code === '8462-4')
+                );
+
+                const systolic = systolicComponent?.valueQuantity?.value;
+                const diastolic = diastolicComponent?.valueQuantity?.value;
+
                 if (systolic && diastolic) {
-                    value = `${systolic}/${diastolic}`;
-                    unit = 'mmHg';
-                    referenceText = '90-140/60-90';
-                    const isAbnormal = systolic > 140 || systolic < 90 || diastolic > 90 || diastolic < 60;
-                    const status = isAbnormal ? 'ABNORMAL' : 'NORMAL';
-                    const observationDate = obs.effectiveDateTime || obs.issued || 'No date';
-                    const formattedDate = observationDate !== 'No date' 
-                        ? new Date(observationDate).toISOString().split('T')[0]
-                        : observationDate;
-                    
+                    const ranges = VITAL_SIGNS_RANGES.BP;
+                    const isAbnormal =
+                        systolic > ranges.systolic.max ||
+                        systolic < ranges.systolic.min ||
+                        diastolic > ranges.diastolic.max ||
+                        diastolic < ranges.diastolic.min;
+
                     const observationRecord = {
                         observationId,
                         type: observationType,
-                        value: `${value} ${unit}`,
-                        referenceRange: referenceText,
-                        status,
-                        date: formattedDate  // Use the formatted date
+                        value: `${systolic}/${diastolic} mmHg`,
+                        referenceRange: '90-140/60-90',
+                        status: isAbnormal ? 'ABNORMAL' : 'NORMAL',
+                        date: formattedDate
                     };
+
                     if (isAbnormal) {
                         patientStats[patientId].abnormalCount++;
                         patientStats[patientId].abnormalReadings.push(observationRecord);
@@ -991,55 +1049,39 @@ function analyzeObservations(observations) {
                 return;
             }
 
-            // Handle other types of observations
+            // Handle other vital signs and lab results
             if (obs.valueQuantity) {
-                value = obs.valueQuantity.value;
-                unit = obs.valueQuantity.unit;
-
-                // Get reference range - first try observation's own range
-                if (obs.referenceRange && obs.referenceRange.length > 0) {
-                    const range = obs.referenceRange[0];
-                    referenceText = range.text || '';
-                }
-
-                // If no range in observation, use standard ranges
-                if (!referenceText && REFERENCE_RANGES[observationType]) {
-                    referenceText = REFERENCE_RANGES[observationType];
-                }
-
-                // Determine if value is abnormal based on reference range
+                const value = obs.valueQuantity.value;
+                const unit = obs.valueQuantity.unit;
+                let referenceText = '';
                 let status = 'NORMAL';
-                if (referenceText) {
-                    if (referenceText.includes('<=')) {
-                        const highValue = parseFloat(referenceText.replace('<=', ''));
-                        if (value > highValue) {
-                            status = 'ABNORMAL (High)';
-                        }
-                    } else if (referenceText.includes('-')) {
-                        const [low, high] = referenceText.split('-').map(Number);
-                        if (value < low) {
-                            status = 'ABNORMAL (Low)';
-                        } else if (value > high) {
-                            status = 'ABNORMAL (High)';
-                        }
+
+                // Get reference range based on observation type
+                if (observationType && VITAL_SIGNS_RANGES[observationType]) {
+                    const range = VITAL_SIGNS_RANGES[observationType];
+                    referenceText = `${range.min}-${range.max}`;
+                    if (value < range.min) {
+                        status = 'ABNORMAL (Low)';
+                    } else if (value > range.max) {
+                        status = 'ABNORMAL (High)';
                     }
+                } else if (LAB_REFERENCE_RANGES[obs.code?.coding?.[0]?.display]) {
+                    const range = LAB_REFERENCE_RANGES[obs.code.coding[0].display];
+                    referenceText = `<=${range.value} ${range.unit}`;
+                    if (value > range.value) {
+                        status = 'ABNORMAL (High)';
+                    }
+                } else if (obs.referenceRange?.[0]) {
+                    referenceText = obs.referenceRange[0].text || '';
                 }
 
-                // Get the observation date - prefer effectiveDateTime, fall back to issued
-                const observationDate = obs.effectiveDateTime || obs.issued || 'No date';
-                // Format the date to be more readable
-                const formattedDate = observationDate !== 'No date' 
-                    ? new Date(observationDate).toISOString().split('T')[0]
-                    : observationDate;
-
-                // Create observation record with date
                 const observationRecord = {
                     observationId,
-                    type: observationType,
+                    type: observationType || obs.code?.coding?.[0]?.display || 'Unknown Type',
                     value: `${value}${unit ? ' ' + unit : ''}`,
                     referenceRange: referenceText || 'No range specified',
                     status,
-                    date: formattedDate  // Add date to the record
+                    date: formattedDate
                 };
 
                 if (status === 'NORMAL') {
@@ -1050,9 +1092,8 @@ function analyzeObservations(observations) {
                     patientStats[patientId].abnormalReadings.push(observationRecord);
                 }
             }
-
         } catch (error) {
-            console.warn(`Error processing observation ${obs?.id || 'unknown'}: ${error.message}`);
+            console.warn(`Error processing observation ${obs?.id || 'unknown'}: ${error.message} [Source: backend_epic_using_jwt.js]`);
         }
     });
 
