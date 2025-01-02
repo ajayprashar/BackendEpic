@@ -1,55 +1,83 @@
 /**
- * EPIC FHIR Backend Authentication Implementation
- * ============================================
+ * EPIC FHIR Backend Data Integration System
+ * =======================================
  * Author: Ajay Prashar
  * Date: 12/30/2024
  * Version: 1.0.0
  * 
- * Description:
- * This application implements Epic's OAuth 2.0 backend authentication flow using 
- * JSON Web Tokens (JWT) for system-to-system integration with Epic's FHIR API.
+ * Primary Functions:
+ * 1. OAuth 2.0 Authentication with Epic's FHIR API using JWT
+ * 2. Automated batch data retrieval from Epic's FHIR endpoints
+ * 3. Data export and analysis with reporting capabilities
+ * 4. Email notification system for process monitoring
  * 
- * Epic Documentation References:
- * - Authentication: https://fhir.epic.com/Documentation?docId=oauth2
- * - JWT Requirements: https://fhir.epic.com/Documentation?docId=jwt
- * - Non-Production Access: https://fhir.epic.com/Documentation?docId=testpatients
- * - FHIR API Endpoints: https://fhir.epic.com/Documentation?docId=epiconfhir
+ * Process Flow:
+ * 1. Initialization
+ *    - Load configuration from INI file
+ *    - Set up logging system
+ *    - Prepare export directory
  * 
- * Authentication Flow:
- * 1. Generate/Load RSA Key Pair (Epic Auth Guide - Key Requirements)
- * 2. Create JWT with required claims (Epic Auth Guide - JWT Claims)
- * 3. Request access token using JWT assertion (Epic Auth Guide - Token Request)
- * 4. Use access token for FHIR API requests (Epic API Guide - Authentication)
+ * 2. Authentication
+ *    - Manage RSA key pair (generate/verify)
+ *    - Create JWT with required claims
+ *    - Obtain access token from Epic's OAuth endpoint
+ * 
+ * 3. Data Collection
+ *    - Load patient roster and resource definitions
+ *    - Iterate through resources for each patient
+ *    - Handle paginated API requests
+ *    - Manage rate limiting and error handling
+ * 
+ * 4. Data Processing
+ *    - Convert API responses to NDJSON format
+ *    - Export to timestamped files
+ *    - Track export statistics
+ * 
+ * 5. Analysis & Reporting
+ *    - Process observation data
+ *    - Generate statistical analysis
+ *    - Create detailed reports
+ * 
+ * 6. Notification
+ *    - Send completion email
+ *    - Include analysis report
+ *    - List exported files
  * 
  * Key Components:
- * - ConfigManager: Configuration loading and variable resolution
- * - KeyManager: RSA key pair generation/storage (Epic Auth Guide - Key Management)
- * - JWTManager: JWT creation and signing (Epic Auth Guide - JWT Format)
- * - EpicClient: FHIR API communication (Epic API Guide - REST Implementation)
- * 
- * Resource Types Implemented:
- * - Patient (Epic FHIR API - Patient Resource)
- * - Observation (Epic FHIR API - Observation Resource)
- * - Condition (Epic FHIR API - Condition Resource)
- * - AllergyIntolerance (Epic FHIR API - AllergyIntolerance Resource)
- * - DocumentReference (Epic FHIR API - DocumentReference Resource)
- * - MedicationRequest (Epic FHIR API - MedicationRequest Resource)
- * - Procedure (Epic FHIR API - Procedure Resource)
- * - Immunization (Epic FHIR API - Immunization Resource)
- * - DiagnosticReport (Epic FHIR API - DiagnosticReport Resource)
- * - Goal (Epic FHIR API - Goal Resource)
- * - Device (Epic FHIR API - Device Resource)
+ * - ConfigManager: Configuration and environment management
+ * - KeyManager: RSA key pair operations for JWT signing
+ * - JWTManager: JWT creation and token management
+ * - EpicClient: FHIR API communication and data retrieval
+ * - Logger: Logging and export directory management
  * 
  * Dependencies:
  * - fs: File system operations
  * - path: Path manipulation
- * - crypto: RSA key pair generation (Epic Auth Guide - Key Generation)
- * - ini: Configuration file parsing
- * - axios: HTTP requests to Epic endpoints
- * - jsonwebtoken: JWT creation and signing
- * - uuid: Unique identifier generation for JWT jti claim
- * - csv: Patient roster and resources list parsing
- * - nodemailer: Email notifications via ProtonMail Bridge
+ * - crypto: RSA key operations
+ * - ini: Configuration parsing
+ * - axios: HTTP client for API requests
+ * - jsonwebtoken: JWT operations
+ * - uuid: Unique identifier generation
+ * - csv: CSV file parsing
+ * - nodemailer: Email notifications
+ * 
+ * Security Features:
+ * - RSA key pair management (2048-bit)
+ * - JWT-based authentication
+ * - Secure email notifications
+ * - Environment variable support
+ * 
+ * Error Handling:
+ * - Comprehensive logging
+ * - Email notifications for failures
+ * - Graceful process termination
+ * - Rate limiting management
+ * 
+ * Output:
+ * - NDJSON files for each resource type
+ * - Detailed observation analysis
+ * - Process completion email
+ * - Comprehensive log file
  */
 
 const fs = require('fs');
@@ -72,7 +100,7 @@ let logger = null;
 /**
  * Logger Class
  * ============
- * Handles logging to a file and directory listing
+ * Handles logging to a file and directory listing with source file tracking
  */
 class Logger {
     constructor() {
@@ -87,16 +115,30 @@ class Logger {
         // Replace console.log with file logging
         const originalLog = console.log;
         console.log = (...args) => {
-            const message = util.format(...args) + '\n';
-            this.logStream.write(message);
+            // Get the calling file from the stack trace
+            const stack = new Error().stack;
+            const callerFile = stack.split('\n')[2]?.match(/[\/\\]([\w-]+\.js)/)?.[1] || 'unknown.js';
+            
+            const message = util.format(...args);
+            const logMessage = message.endsWith(']') ? 
+                `${message}\n` : 
+                `${message} [Source: ${callerFile}]\n`;
+            
+            this.logStream.write(logMessage);
             originalLog(...args);
         };
         
         // Replace console.error with file logging
         const originalError = console.error;
         console.error = (...args) => {
-            const message = 'ERROR: ' + util.format(...args) + '\n';
-            this.logStream.write(message);
+            // Get the calling file from the stack trace
+            const stack = new Error().stack;
+            const callerFile = stack.split('\n')[2]?.match(/[\/\\]([\w-]+\.js)/)?.[1] || 'unknown.js';
+            
+            const message = util.format(...args);
+            const logMessage = `ERROR: ${message} [Source: ${callerFile}]\n`;
+            
+            this.logStream.write(logMessage);
             originalError(...args);
         };
     }

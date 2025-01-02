@@ -1,754 +1,754 @@
 
 ================================================================================
-New Session Started: 2025-01-02T22:40:58.708Z
+New Session Started: 2025-01-02T22:52:02.311Z
 ================================================================================
-Starting backend_epic_using_jwt.js...
-Loading configuration...
+Starting backend_epic_using_jwt.js... [Source: backend_epic_using_jwt.js]
+Loading configuration... [Source: ConfigManager.js]
 
-Configuration values before resolution:
-paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
-paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
-paths.private_key: ${app_folder_name}\private.key (Source: INI file)
-paths.public_key: ${app_folder_name}\publickey509.pem (Source: INI file)
-paths.base64_public_key: ${app_folder_name}\publickey509.b64 (Source: INI file)
-rsa_settings.rsa_key_size: 2048 (Source: INI file)
-rsa_settings.rsa_public_encoding: spki (Source: INI file)
-rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file)
-jwt_settings.jwt_algorithm: RS384 (Source: INI file)
-jwt_settings.jwt_expiry_minutes: 5 (Source: INI file)
-oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file)
-oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file)
-oauth_settings.grant_type: client_credentials (Source: INI file)
-oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file)
-epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file)
-epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file)
-lab_data_settings.lab_data_category: laboratory (Source: INI file)
-lab_data_settings.lab_data_format: application/fhir+ndjson (Source: INI file)
-lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file)
-lab_data_settings.lab_data_max_attempts: 30 (Source: INI file)
-lab_data_settings.lab_data_check_interval: 5000 (Source: INI file)
-lab_data_settings.lab_data_timeout: 150000 (Source: INI file)
-data_sources.epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file)
-data_sources.epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file)
-email.smtp_host: 127.0.0.1 (Source: INI file)
-email.smtp_port: 1025 (Source: INI file)
-email.smtp_secure: false (Source: INI file)
-email.smtp_user: ajay@aprashar.com (Source: INI file)
-email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: INI file)
-email.notification_to: ajay@aprashar.com (Source: INI file)
-email.notification_from: ajay@aprashar.com (Source: INI file)
-api_settings.page_size: 100 (Source: INI file)
-api_settings.max_pages: 100 (Source: INI file)
-data_export.format: application/fhir+json (Source: INI file)
-data_export.ndjson_format: application/fhir+ndjson (Source: INI file)
-data_export.json_format: application/json (Source: INI file)
-data_export.default_count: 100 (Source: INI file)
-file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: INI file)
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file)
+Configuration values before resolution: [Source: ConfigManager.js]
+paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file) [Source: ConfigManager.js]
+paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file) [Source: ConfigManager.js]
+paths.private_key: ${app_folder_name}\private.key (Source: INI file) [Source: ConfigManager.js]
+paths.public_key: ${app_folder_name}\publickey509.pem (Source: INI file) [Source: ConfigManager.js]
+paths.base64_public_key: ${app_folder_name}\publickey509.b64 (Source: INI file) [Source: ConfigManager.js]
+rsa_settings.rsa_key_size: 2048 (Source: INI file) [Source: ConfigManager.js]
+rsa_settings.rsa_public_encoding: spki (Source: INI file) [Source: ConfigManager.js]
+rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file) [Source: ConfigManager.js]
+jwt_settings.jwt_algorithm: RS384 (Source: INI file) [Source: ConfigManager.js]
+jwt_settings.jwt_expiry_minutes: 5 (Source: INI file) [Source: ConfigManager.js]
+oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file) [Source: ConfigManager.js]
+oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file) [Source: ConfigManager.js]
+oauth_settings.grant_type: client_credentials (Source: INI file) [Source: ConfigManager.js]
+oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file) [Source: ConfigManager.js]
+epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file) [Source: ConfigManager.js]
+epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file) [Source: ConfigManager.js]
+lab_data_settings.lab_data_category: laboratory (Source: INI file) [Source: ConfigManager.js]
+lab_data_settings.lab_data_format: application/fhir+ndjson (Source: INI file) [Source: ConfigManager.js]
+lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file) [Source: ConfigManager.js]
+lab_data_settings.lab_data_max_attempts: 30 (Source: INI file) [Source: ConfigManager.js]
+lab_data_settings.lab_data_check_interval: 5000 (Source: INI file) [Source: ConfigManager.js]
+lab_data_settings.lab_data_timeout: 150000 (Source: INI file) [Source: ConfigManager.js]
+data_sources.epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file) [Source: ConfigManager.js]
+data_sources.epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file) [Source: ConfigManager.js]
+email.smtp_host: 127.0.0.1 (Source: INI file) [Source: ConfigManager.js]
+email.smtp_port: 1025 (Source: INI file) [Source: ConfigManager.js]
+email.smtp_secure: false (Source: INI file) [Source: ConfigManager.js]
+email.smtp_user: ajay@aprashar.com (Source: INI file) [Source: ConfigManager.js]
+email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: INI file) [Source: ConfigManager.js]
+email.notification_to: ajay@aprashar.com (Source: INI file) [Source: ConfigManager.js]
+email.notification_from: ajay@aprashar.com (Source: INI file) [Source: ConfigManager.js]
+api_settings.page_size: 100 (Source: INI file) [Source: ConfigManager.js]
+api_settings.max_pages: 100 (Source: INI file) [Source: ConfigManager.js]
+data_export.format: application/fhir+json (Source: INI file) [Source: ConfigManager.js]
+data_export.ndjson_format: application/fhir+ndjson (Source: INI file) [Source: ConfigManager.js]
+data_export.json_format: application/json (Source: INI file) [Source: ConfigManager.js]
+data_export.default_count: 100 (Source: INI file) [Source: ConfigManager.js]
+file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: INI file) [Source: ConfigManager.js]
+file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file) [Source: ConfigManager.js]
 
-Configuration values after resolution:
-paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution)
-paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution)
-paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution)
-paths.public_key: C:\FHIR\BackendEpic\publickey509.pem (Source: Variable substitution)
-paths.base64_public_key: C:\FHIR\BackendEpic\publickey509.b64 (Source: Variable substitution)
-rsa_settings.rsa_key_size: 2048 (Source: Variable substitution)
-rsa_settings.rsa_public_encoding: spki (Source: Variable substitution)
-rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution)
-jwt_settings.jwt_algorithm: RS384 (Source: Variable substitution)
-jwt_settings.jwt_expiry_minutes: 5 (Source: Variable substitution)
-oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: Variable substitution)
-oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: Variable substitution)
-oauth_settings.grant_type: client_credentials (Source: Variable substitution)
-oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: Variable substitution)
-epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Variable substitution)
-epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: Variable substitution)
-lab_data_settings.lab_data_category: laboratory (Source: Variable substitution)
-lab_data_settings.lab_data_format: application/fhir+ndjson (Source: Variable substitution)
-lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: Variable substitution)
-lab_data_settings.lab_data_max_attempts: 30 (Source: Variable substitution)
-lab_data_settings.lab_data_check_interval: 5000 (Source: Variable substitution)
-lab_data_settings.lab_data_timeout: 150000 (Source: Variable substitution)
-data_sources.epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution)
-data_sources.epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution)
-email.smtp_host: 127.0.0.1 (Source: Variable substitution)
-email.smtp_port: 1025 (Source: Variable substitution)
-email.smtp_secure: false (Source: Variable substitution)
-email.smtp_user: ajay@aprashar.com (Source: Variable substitution)
-email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: Variable substitution)
-email.notification_to: ajay@aprashar.com (Source: Variable substitution)
-email.notification_from: ajay@aprashar.com (Source: Variable substitution)
-api_settings.page_size: 100 (Source: Variable substitution)
-api_settings.max_pages: 100 (Source: Variable substitution)
-data_export.format: application/fhir+json (Source: Variable substitution)
-data_export.ndjson_format: application/fhir+ndjson (Source: Variable substitution)
-data_export.json_format: application/json (Source: Variable substitution)
-data_export.default_count: 100 (Source: Variable substitution)
-file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution)
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution)
+Configuration values after resolution: [Source: ConfigManager.js]
+paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution) [Source: ConfigManager.js]
+paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution) [Source: ConfigManager.js]
+paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution) [Source: ConfigManager.js]
+paths.public_key: C:\FHIR\BackendEpic\publickey509.pem (Source: Variable substitution) [Source: ConfigManager.js]
+paths.base64_public_key: C:\FHIR\BackendEpic\publickey509.b64 (Source: Variable substitution) [Source: ConfigManager.js]
+rsa_settings.rsa_key_size: 2048 (Source: Variable substitution) [Source: ConfigManager.js]
+rsa_settings.rsa_public_encoding: spki (Source: Variable substitution) [Source: ConfigManager.js]
+rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution) [Source: ConfigManager.js]
+jwt_settings.jwt_algorithm: RS384 (Source: Variable substitution) [Source: ConfigManager.js]
+jwt_settings.jwt_expiry_minutes: 5 (Source: Variable substitution) [Source: ConfigManager.js]
+oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: Variable substitution) [Source: ConfigManager.js]
+oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: Variable substitution) [Source: ConfigManager.js]
+oauth_settings.grant_type: client_credentials (Source: Variable substitution) [Source: ConfigManager.js]
+oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: Variable substitution) [Source: ConfigManager.js]
+epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Variable substitution) [Source: ConfigManager.js]
+epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: Variable substitution) [Source: ConfigManager.js]
+lab_data_settings.lab_data_category: laboratory (Source: Variable substitution) [Source: ConfigManager.js]
+lab_data_settings.lab_data_format: application/fhir+ndjson (Source: Variable substitution) [Source: ConfigManager.js]
+lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: Variable substitution) [Source: ConfigManager.js]
+lab_data_settings.lab_data_max_attempts: 30 (Source: Variable substitution) [Source: ConfigManager.js]
+lab_data_settings.lab_data_check_interval: 5000 (Source: Variable substitution) [Source: ConfigManager.js]
+lab_data_settings.lab_data_timeout: 150000 (Source: Variable substitution) [Source: ConfigManager.js]
+data_sources.epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution) [Source: ConfigManager.js]
+data_sources.epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution) [Source: ConfigManager.js]
+email.smtp_host: 127.0.0.1 (Source: Variable substitution) [Source: ConfigManager.js]
+email.smtp_port: 1025 (Source: Variable substitution) [Source: ConfigManager.js]
+email.smtp_secure: false (Source: Variable substitution) [Source: ConfigManager.js]
+email.smtp_user: ajay@aprashar.com (Source: Variable substitution) [Source: ConfigManager.js]
+email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: Variable substitution) [Source: ConfigManager.js]
+email.notification_to: ajay@aprashar.com (Source: Variable substitution) [Source: ConfigManager.js]
+email.notification_from: ajay@aprashar.com (Source: Variable substitution) [Source: ConfigManager.js]
+api_settings.page_size: 100 (Source: Variable substitution) [Source: ConfigManager.js]
+api_settings.max_pages: 100 (Source: Variable substitution) [Source: ConfigManager.js]
+data_export.format: application/fhir+json (Source: Variable substitution) [Source: ConfigManager.js]
+data_export.ndjson_format: application/fhir+ndjson (Source: Variable substitution) [Source: ConfigManager.js]
+data_export.json_format: application/json (Source: Variable substitution) [Source: ConfigManager.js]
+data_export.default_count: 100 (Source: Variable substitution) [Source: ConfigManager.js]
+file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution) [Source: ConfigManager.js]
+file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution) [Source: ConfigManager.js]
 
-Clearing export directory: C:\FHIR\BackendEpic\epic_data_export
+Clearing export directory: C:\FHIR\BackendEpic\epic_data_export [Source: backend_epic_using_jwt.js]
 
-Clearing export directory: epic_data_export
-Deleted: AllergyIntolerance_data_2025-01-02T22-37-02.746Z.ndjson
-Deleted: Condition_data_2025-01-02T22-37-03.770Z.ndjson
-Deleted: Device_data_2025-01-02T22-37-04.361Z.ndjson
-Deleted: DiagnosticReport_data_2025-01-02T22-37-05.066Z.ndjson
-Deleted: DocumentReference_data_2025-01-02T22-37-07.566Z.ndjson
-Deleted: Goal_data_2025-01-02T22-37-08.232Z.ndjson
-Deleted: Immunization_data_2025-01-02T22-37-08.862Z.ndjson
-Deleted: MedicationRequest_data_2025-01-02T22-37-09.622Z.ndjson
-Deleted: Observation_data_2025-01-02T22-37-12.965Z.ndjson
-Deleted: Patient_data_2025-01-02T22-37-13.796Z.ndjson
-Deleted: Procedure_data_2025-01-02T22-37-14.586Z.ndjson
-Export directory cleared
-Initializing key manager...
-Checking for existing key pair...
-Existing key pair found (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem)
-Initializing EPIC client...
-Requesting access token...
+Clearing export directory: epic_data_export [Source: backend_epic_using_jwt.js]
+Deleted: AllergyIntolerance_data_2025-01-02T22-40-59.978Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Condition_data_2025-01-02T22-41-00.988Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Device_data_2025-01-02T22-41-01.565Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: DiagnosticReport_data_2025-01-02T22-41-02.230Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: DocumentReference_data_2025-01-02T22-41-04.852Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Goal_data_2025-01-02T22-41-05.532Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Immunization_data_2025-01-02T22-41-06.139Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: MedicationRequest_data_2025-01-02T22-41-06.897Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Observation_data_2025-01-02T22-41-10.586Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Patient_data_2025-01-02T22-41-11.436Z.ndjson [Source: backend_epic_using_jwt.js]
+Deleted: Procedure_data_2025-01-02T22-41-12.207Z.ndjson [Source: backend_epic_using_jwt.js]
+Export directory cleared [Source: backend_epic_using_jwt.js]
+Initializing key manager... [Source: backend_epic_using_jwt.js]
+Checking for existing key pair... [Source: backend_epic_using_jwt.js]
+Existing key pair found (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem) [Source: backend_epic_using_jwt.js]
+Initializing EPIC client... [Source: backend_epic_using_jwt.js]
+Requesting access token... [Source: backend_epic_using_jwt.js]
 
-=== Epic OAuth 2.0 Token Request Tutorial ===
-Step 1: JWT Assertion Generation
---------------------------------
+=== Epic OAuth 2.0 Token Request Tutorial === [Source: backend_epic_using_jwt.js]
+Step 1: JWT Assertion Generation [Source: backend_epic_using_jwt.js]
+-------------------------------- [Source: backend_epic_using_jwt.js]
 
-=== JWT Generation Tutorial ===
-Step 1: Preparing JWT Claims
-----------------------------
-• Setting up timestamps:
-  - Current time (iat): EPOCH=1735857658 | Human=2025-01-02T22:40:58.000Z
-  - Not Before (nbf): EPOCH=1735857658 | Human=2025-01-02T22:40:58.000Z (same as iat)
-  - Expiry time (exp): EPOCH=1735857958 | Human=2025-01-02T22:45:58.000Z (iat + 5 minutes)
-  - Token validity window: 5 minutes from issuance to allow time for token retrieval and API calls
+=== JWT Generation Tutorial === [Source: backend_epic_using_jwt.js]
+Step 1: Preparing JWT Claims [Source: backend_epic_using_jwt.js]
+---------------------------- [Source: backend_epic_using_jwt.js]
+• Setting up timestamps: [Source: backend_epic_using_jwt.js]
+  - Current time (iat): EPOCH=1735858322 | Human=2025-01-02T22:52:02.000Z [Source: backend_epic_using_jwt.js]
+  - Not Before (nbf): EPOCH=1735858322 | Human=2025-01-02T22:52:02.000Z (same as iat) [Source: backend_epic_using_jwt.js]
+  - Expiry time (exp): EPOCH=1735858622 | Human=2025-01-02T22:57:02.000Z (iat + 5 minutes) [Source: backend_epic_using_jwt.js]
+  - Token validity window: 5 minutes from issuance to allow time for token retrieval and API calls [Source: backend_epic_using_jwt.js]
 
-Step 2: JWT Claims Structure
--------------------------
-• Required claims for Epic:
-  - iss (Issuer): e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
-  - sub (Subject): e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (same as Issuer for backend services)
-  - aud (Audience): https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-  - jti (JWT ID): 704be178-4695-4fd6-afd1-850541a1a02f (random unique identifier)
-  - exp (Expiration): EPOCH=1735857958 | Human=2025-01-02T22:45:58.000Z (iat + 5 min window)
-  - nbf (Not Before): EPOCH=1735857658 | Human=2025-01-02T22:40:58.000Z (current time)
-  - iat (Issued At): EPOCH=1735857658 | Human=2025-01-02T22:40:58.000Z (current time)
+Step 2: JWT Claims Structure [Source: backend_epic_using_jwt.js]
+------------------------- [Source: backend_epic_using_jwt.js]
+• Required claims for Epic: [Source: backend_epic_using_jwt.js]
+  - iss (Issuer): e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 [Source: backend_epic_using_jwt.js]
+  - sub (Subject): e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (same as Issuer for backend services) [Source: backend_epic_using_jwt.js]
+  - aud (Audience): https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token [Source: backend_epic_using_jwt.js]
+  - jti (JWT ID): bbb03dec-93b3-49cc-984c-256510dbc8e4 (random unique identifier) [Source: backend_epic_using_jwt.js]
+  - exp (Expiration): EPOCH=1735858622 | Human=2025-01-02T22:57:02.000Z (iat + 5 min window) [Source: backend_epic_using_jwt.js]
+  - nbf (Not Before): EPOCH=1735858322 | Human=2025-01-02T22:52:02.000Z (current time) [Source: backend_epic_using_jwt.js]
+  - iat (Issued At): EPOCH=1735858322 | Human=2025-01-02T22:52:02.000Z (current time) [Source: backend_epic_using_jwt.js]
 
-• Actual JWT Claims (JSON):
+• Actual JWT Claims (JSON): [Source: backend_epic_using_jwt.js]
 {
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "704be178-4695-4fd6-afd1-850541a1a02f",
-  "exp": 1735857958,
-  "nbf": 1735857658,
-  "iat": 1735857658
-}
+  "jti": "bbb03dec-93b3-49cc-984c-256510dbc8e4",
+  "exp": 1735858622,
+  "nbf": 1735858322,
+  "iat": 1735858322
+} [Source: backend_epic_using_jwt.js]
 
-Step 3: Signing JWT
-------------------
-• Algorithm: RS384
-• Using private key to sign JWT... (Private Key starting with "MIIEvAIBADANBg" paired with Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem)
+Step 3: Signing JWT [Source: backend_epic_using_jwt.js]
+------------------ [Source: backend_epic_using_jwt.js]
+• Algorithm: RS384 [Source: backend_epic_using_jwt.js]
+• Using private key to sign JWT... (Private Key starting with "MIIEvAIBADANBg" paired with Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem) [Source: backend_epic_using_jwt.js]
 
-• Generated JWT Token:
----------------------
-Header (decoded):
+• Generated JWT Token: [Source: backend_epic_using_jwt.js]
+--------------------- [Source: backend_epic_using_jwt.js]
+Header (decoded): [Source: backend_epic_using_jwt.js]
 {
   "alg": "RS384",
   "typ": "JWT"
-}
+} [Source: backend_epic_using_jwt.js]
 
-Payload (decoded):
+Payload (decoded): [Source: backend_epic_using_jwt.js]
 {
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "704be178-4695-4fd6-afd1-850541a1a02f",
-  "exp": 1735857958,
-  "nbf": 1735857658,
-  "iat": 1735857658
-}
+  "jti": "bbb03dec-93b3-49cc-984c-256510dbc8e4",
+  "exp": 1735858622,
+  "nbf": 1735858322,
+  "iat": 1735858322
+} [Source: backend_epic_using_jwt.js]
 
-Complete JWT Token (used in request):
-eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiNzA0YmUxNzgtNDY5NS00ZmQ2LWFmZDEtODUwNTQxYTFhMDJmIiwiZXhwIjoxNzM1ODU3OTU4LCJuYmYiOjE3MzU4NTc2NTgsImlhdCI6MTczNTg1NzY1OH0.Islgzkxuc3rgwpYFl6pah2iorZVi1hPx52WFas-Gb3zUY5to5UGaGUjZV9rob5sxvnZKbaO-1hvtRKK5lb3beQdFIk9UTRIlvxS00qAW8eX6jfj57v3f81thzG-Tpk9f8VP4qllcwpQEYe13Zt4C0NDNAu6Cm76imblHwd5vaLuLFjCwKniuxtcgZpUD-hW958KMYzDFxQ1nc3kW5m3FXpauL1uh2dDOvBCy5G0BAWY1CVn9ygmKsKy_atfIDndILhpQJtHceTlT_L98FSbcsE-7yiFYn67Vk6izhq0AaqxEdvSVJO5LWk3vuPfinXpe-hWTiFjH19sjzfqdbnVB1w
+Complete JWT Token (used in request): [Source: backend_epic_using_jwt.js]
+eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiYmJiMDNkZWMtOTNiMy00OWNjLTk4NGMtMjU2NTEwZGJjOGU0IiwiZXhwIjoxNzM1ODU4NjIyLCJuYmYiOjE3MzU4NTgzMjIsImlhdCI6MTczNTg1ODMyMn0.FnkRjPTQW6DYBSljBwHxImHGq3yz88dw6mM4aLwXNrAPoLtSMhGn1-HYGUAY58lHeqfRQlPwFvXwh3VBR09ZvuiBm4773VSS8eIU9dhogjDFC89tCtdnY9sG6oV53k7s-A6gSMs2GtsAAA20E-cqDK1W46XbWP-fvMwpL1RLbU2iyJEgVm-w_o5Btpt6O1d8FyBXmNnxb5CHlZzw7xgE0OUIn9FotbZw6DfcXEe4xx8aH_dnkqnKWDDe5sMrzaRbOQGUviyBXbSLuEtWTHgYBSRbDbYRz1z0j3ALwd_GEsIF04w_UrPG7XPLcLcYCMnk31YBLj9tQ9kLSuLR0IgutA [Source: backend_epic_using_jwt.js]
 
-✓ JWT successfully generated and signed
+✓ JWT successfully generated and signed [Source: backend_epic_using_jwt.js]
 ===============================
+ [Source: backend_epic_using_jwt.js]
 
+Step 2: Preparing Token Request [Source: backend_epic_using_jwt.js]
+------------------------------ [Source: backend_epic_using_jwt.js]
+• Endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token [Source: backend_epic_using_jwt.js]
+• Grant Type: client_credentials [Source: backend_epic_using_jwt.js]
+• Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer [Source: backend_epic_using_jwt.js]
 
-Step 2: Preparing Token Request
-------------------------------
-• Endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-• Grant Type: client_credentials
-• Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-
-Step 3: Sending Token Request
-----------------------------
-• Making POST request to Epic's token endpoint...
-✓ Access token received successfully
-• Token type: Bearer
-• Expires in: 3600 seconds
+Step 3: Sending Token Request [Source: backend_epic_using_jwt.js]
+---------------------------- [Source: backend_epic_using_jwt.js]
+• Making POST request to Epic's token endpoint... [Source: backend_epic_using_jwt.js]
+✓ Access token received successfully [Source: backend_epic_using_jwt.js]
+• Token type: Bearer [Source: backend_epic_using_jwt.js]
+• Expires in: 3600 seconds [Source: backend_epic_using_jwt.js]
 =========================================
-
-Access token received successfully
-Retrieving resource data...
-
-Starting data retrieval process...
-Loading patient roster from CSV...
-Loaded 7 patients from roster
-Loading resources list from CSV...
-Loaded 11 resources from list
-
-Processing resources for each patient:
-=====================================
-
-Resource: AllergyIntolerance
-Description: Patient allergies and intolerances
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 1 results
-  ✓ Total AllergyIntolerance results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 1 results
-  ✓ Total AllergyIntolerance results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 1 results
-  ✓ Total AllergyIntolerance results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 2 results
-  ✓ Total AllergyIntolerance results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 1 results
-  ✓ Total AllergyIntolerance results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 1 results
-  ✓ Total AllergyIntolerance results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 2 results
-  ✓ Total AllergyIntolerance results: 2
-  ✓ Retrieved 2 records
-Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T22-40-59.978Z.ndjson
-
-✓ Completed AllergyIntolerance: 9 total records
-
-Resource: Condition
-Description: Patient conditions and diagnoses
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 9 results
-  ✓ Total Condition results: 9
-  ✓ Retrieved 9 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 3 results
-  ✓ Total Condition results: 3
-  ✓ Retrieved 3 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 1 results
-  ✓ Total Condition results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 4 results
-  ✓ Total Condition results: 4
-  ✓ Retrieved 4 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 2 results
-  ✓ Total Condition results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 2 results
-  ✓ Total Condition results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 2 results
-  ✓ Total Condition results: 2
-  ✓ Retrieved 2 records
-Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T22-41-00.988Z.ndjson
-
-✓ Completed Condition: 23 total records
-
-Resource: Device
-Description: Medical devices and implants
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 1 results
-  ✓ Total Device results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 1 results
-  ✓ Total Device results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 1 results
-  ✓ Total Device results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 1 results
-  ✓ Total Device results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 1 results
-  ✓ Total Device results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 2 results
-  ✓ Total Device results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 1 results
-  ✓ Total Device results: 1
-  ✓ Retrieved 1 records
-Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T22-41-01.565Z.ndjson
-
-✓ Completed Device: 8 total records
-
-Resource: DiagnosticReport
-Description: Clinical diagnostic reports
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 7 results
-  ✓ Total DiagnosticReport results: 7
-  ✓ Retrieved 7 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 1 results
-  ✓ Total DiagnosticReport results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 1 results
-  ✓ Total DiagnosticReport results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 1 results
-  ✓ Total DiagnosticReport results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 1 results
-  ✓ Total DiagnosticReport results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 1 results
-  ✓ Total DiagnosticReport results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 2 results
-  ✓ Total DiagnosticReport results: 2
-  ✓ Retrieved 2 records
-Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T22-41-02.230Z.ndjson
-
-✓ Completed DiagnosticReport: 14 total records
-
-Resource: DocumentReference
-Description: Clinical documents and notes
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 88 results
-  ✓ Total DocumentReference results: 88
-  ✓ Retrieved 88 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 22 results
-  ✓ Total DocumentReference results: 22
-  ✓ Retrieved 22 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 14 results
-  ✓ Total DocumentReference results: 14
-  ✓ Retrieved 14 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 21 results
-  ✓ Total DocumentReference results: 21
-  ✓ Retrieved 21 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 13 results
-  ✓ Total DocumentReference results: 13
-  ✓ Retrieved 13 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 3 results
-  ✓ Total DocumentReference results: 3
-  ✓ Retrieved 3 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 17 results
-  ✓ Total DocumentReference results: 17
-  ✓ Retrieved 17 records
-Exported 178 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T22-41-04.852Z.ndjson
-
-✓ Completed DocumentReference: 178 total records
-
-Resource: Goal
-Description: Patient care goals
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 12 results
-  ✓ Total Goal results: 12
-  ✓ Retrieved 12 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 2 results
-  ✓ Total Goal results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 1 results
-  ✓ Total Goal results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 1 results
-  ✓ Total Goal results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 1 results
-  ✓ Total Goal results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 1 results
-  ✓ Total Goal results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 1 results
-  ✓ Total Goal results: 1
-  ✓ Retrieved 1 records
-Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T22-41-05.532Z.ndjson
-
-✓ Completed Goal: 19 total records
-
-Resource: Immunization
-Description: Vaccination records
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 1 results
-  ✓ Total Immunization results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 1 results
-  ✓ Total Immunization results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 7 results
-  ✓ Total Immunization results: 7
-  ✓ Retrieved 7 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 1 results
-  ✓ Total Immunization results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 1 results
-  ✓ Total Immunization results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 1 results
-  ✓ Total Immunization results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 1 results
-  ✓ Total Immunization results: 1
-  ✓ Retrieved 1 records
-Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T22-41-06.139Z.ndjson
-
-✓ Completed Immunization: 13 total records
-
-Resource: MedicationRequest
-Description: Medication prescriptions
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 1 results
-  ✓ Total MedicationRequest results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 1 results
-  ✓ Total MedicationRequest results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 2 results
-  ✓ Total MedicationRequest results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 1 results
-  ✓ Total MedicationRequest results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 2 results
-  ✓ Total MedicationRequest results: 2
-  ✓ Retrieved 2 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 1 results
-  ✓ Total MedicationRequest results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 1 results
-  ✓ Total MedicationRequest results: 1
-  ✓ Retrieved 1 records
-Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T22-41-06.897Z.ndjson
-
-✓ Completed MedicationRequest: 9 total records
-
-Resource: Observation
-Description: Lab results and vital signs
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 101 results
-  ✓ Total Observation results: 101
-  ✓ Retrieved 101 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 101 results
-  ✓ Total Observation results: 101
-  ✓ Retrieved 101 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 101 results
-  ✓ Total Observation results: 101
-  ✓ Retrieved 101 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 1 results
-  ✓ Total Observation results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 10 results
-  ✓ Total Observation results: 10
-  ✓ Retrieved 10 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 8 results
-  ✓ Total Observation results: 8
-  ✓ Retrieved 8 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3&category=vital-signs%2Claboratory&_sort=-date
-  • Retrieved 74 results
-  ✓ Total Observation results: 74
-  ✓ Retrieved 74 records
-Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T22-41-10.586Z.ndjson
-
-✓ Completed Observation: 396 total records
-
-Resource: Patient
-Description: Basic patient demographics
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/erXuFYUfucBZaryVksYEcMg3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eq081-VQEgP8drUUqCWzHfw3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eAB3mDIBBcyUKviyzrxsnAw3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/egqBHVfQlt4Bw3XGXoxVxHg3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eIXesllypH3M9tAA5WdJftQ3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eh2xYHuzl9nkSFVvV3osUHg3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/e0w0LEDCYtfckT6N.CkJKCw3?_format=application%2Ffhir%2Bjson&_count=100
-  • Retrieved single resource
-  ✓ Total Patient results: 1
-  ✓ Retrieved 1 records
-Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T22-41-11.436Z.ndjson
-
-✓ Completed Patient: 7 total records
-
-Resource: Procedure
-Description: Medical procedures performed 
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3
-  • Retrieved 3 results
-  ✓ Total Procedure results: 3
-  ✓ Retrieved 3 records
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3
-  • Retrieved 1 results
-  ✓ Total Procedure results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3
-  • Retrieved 1 results
-  ✓ Total Procedure results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3
-  • Retrieved 1 results
-  ✓ Total Procedure results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3
-  • Retrieved 1 results
-  ✓ Total Procedure results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3
-  • Retrieved 1 results
-  ✓ Total Procedure results: 1
-  ✓ Retrieved 1 records
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3)
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3
-  • Retrieved 2 results
-  ✓ Total Procedure results: 2
-  ✓ Retrieved 2 records
-Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T22-41-12.207Z.ndjson
-
-✓ Completed Procedure: 10 total records
-
-Data Retrieval Summary
-====================
-
-Exported Files Summary (Filename | Size | Path | Records)
-================================================
-AllergyIntolerance_data_2025-01-02T22-40-59.978Z.ndjson | 11.31 KB | C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T22-40-59.978Z.ndjson | 9
-Condition_data_2025-01-02T22-41-00.988Z.ndjson | 26.94 KB | C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T22-41-00.988Z.ndjson | 23
-Device_data_2025-01-02T22-41-01.565Z.ndjson | 4.93 KB | C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T22-41-01.565Z.ndjson | 8
-DiagnosticReport_data_2025-01-02T22-41-02.230Z.ndjson | 18.68 KB | C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T22-41-02.230Z.ndjson | 14
-DocumentReference_data_2025-01-02T22-41-04.852Z.ndjson | 275.89 KB | C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T22-41-04.852Z.ndjson | 178
-Goal_data_2025-01-02T22-41-05.532Z.ndjson | 16.34 KB | C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T22-41-05.532Z.ndjson | 19
-Immunization_data_2025-01-02T22-41-06.139Z.ndjson | 9.79 KB | C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T22-41-06.139Z.ndjson | 13
-MedicationRequest_data_2025-01-02T22-41-06.897Z.ndjson | 22.03 KB | C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T22-41-06.897Z.ndjson | 9
-Observation_data_2025-01-02T22-41-10.586Z.ndjson | 738.81 KB | C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T22-41-10.586Z.ndjson | 396
-Patient_data_2025-01-02T22-41-11.436Z.ndjson | 23.58 KB | C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T22-41-11.436Z.ndjson | 7
-Procedure_data_2025-01-02T22-41-12.207Z.ndjson | 10.62 KB | C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T22-41-12.207Z.ndjson | 10
-
-backend_epic_using_jwt.js completed successfully
-
-Observation Analysis Report
-=========================
+ [Source: backend_epic_using_jwt.js]
+Access token received successfully [Source: backend_epic_using_jwt.js]
+Retrieving resource data... [Source: backend_epic_using_jwt.js]
+
+Starting data retrieval process... [Source: backend_epic_using_jwt.js]
+Loading patient roster from CSV... [Source: backend_epic_using_jwt.js]
+Loaded 7 patients from roster [Source: backend_epic_using_jwt.js]
+Loading resources list from CSV... [Source: backend_epic_using_jwt.js]
+Loaded 11 resources from list [Source: backend_epic_using_jwt.js]
+
+Processing resources for each patient: [Source: backend_epic_using_jwt.js]
+===================================== [Source: backend_epic_using_jwt.js]
+
+Resource: AllergyIntolerance [Source: backend_epic_using_jwt.js]
+Description: Patient allergies and intolerances [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total AllergyIntolerance results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T22-52-03.579Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed AllergyIntolerance: 9 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Condition [Source: backend_epic_using_jwt.js]
+Description: Patient conditions and diagnoses [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 9 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 9 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 9 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 3 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 3 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 3 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 4 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 4 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 4 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Condition results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T22-52-04.832Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Condition: 23 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Device [Source: backend_epic_using_jwt.js]
+Description: Medical devices and implants [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T22-52-05.475Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Device: 8 total records [Source: backend_epic_using_jwt.js]
+
+Resource: DiagnosticReport [Source: backend_epic_using_jwt.js]
+Description: Clinical diagnostic reports [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 7 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 7 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 7 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DiagnosticReport results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T22-52-06.383Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed DiagnosticReport: 14 total records [Source: backend_epic_using_jwt.js]
+
+Resource: DocumentReference [Source: backend_epic_using_jwt.js]
+Description: Clinical documents and notes [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 88 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 88 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 88 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 22 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 22 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 22 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 14 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 14 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 14 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 21 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 21 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 21 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 13 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 13 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 13 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 3 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 3 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 3 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 17 results [Source: backend_epic_using_jwt.js]
+  ✓ Total DocumentReference results: 17 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 17 records [Source: backend_epic_using_jwt.js]
+Exported 178 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T22-52-09.256Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed DocumentReference: 178 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Goal [Source: backend_epic_using_jwt.js]
+Description: Patient care goals [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 12 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 12 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 12 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T22-52-09.948Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Goal: 19 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Immunization [Source: backend_epic_using_jwt.js]
+Description: Vaccination records [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 7 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 7 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 7 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T22-52-10.655Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Immunization: 13 total records [Source: backend_epic_using_jwt.js]
+
+Resource: MedicationRequest [Source: backend_epic_using_jwt.js]
+Description: Medication prescriptions [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T22-52-11.788Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed MedicationRequest: 9 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Observation [Source: backend_epic_using_jwt.js]
+Description: Lab results and vital signs [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 101 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 101 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 101 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 101 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 101 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 101 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 101 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 101 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 101 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 10 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 10 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 10 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 8 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 8 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 8 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
+  • Retrieved 74 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Observation results: 74 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 74 records [Source: backend_epic_using_jwt.js]
+Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T22-52-15.406Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Observation: 396 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Patient [Source: backend_epic_using_jwt.js]
+Description: Basic patient demographics [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/erXuFYUfucBZaryVksYEcMg3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eq081-VQEgP8drUUqCWzHfw3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eAB3mDIBBcyUKviyzrxsnAw3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/egqBHVfQlt4Bw3XGXoxVxHg3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eIXesllypH3M9tAA5WdJftQ3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eh2xYHuzl9nkSFVvV3osUHg3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/e0w0LEDCYtfckT6N.CkJKCw3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
+  • Retrieved single resource [Source: backend_epic_using_jwt.js]
+  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T22-52-16.161Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Patient: 7 total records [Source: backend_epic_using_jwt.js]
+
+Resource: Procedure [Source: backend_epic_using_jwt.js]
+Description: Medical procedures performed  [Source: backend_epic_using_jwt.js]
+
+  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 3 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 3 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 3 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
+
+  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
+  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
+  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
+  ✓ Total Procedure results: 2 [Source: backend_epic_using_jwt.js]
+  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
+Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T22-52-17.031Z.ndjson [Source: backend_epic_using_jwt.js]
+
+✓ Completed Procedure: 10 total records [Source: backend_epic_using_jwt.js]
+
+Data Retrieval Summary [Source: backend_epic_using_jwt.js]
+==================== [Source: backend_epic_using_jwt.js]
+
+Exported Files Summary (Filename | Size | Path | Records) [Source: backend_epic_using_jwt.js]
+================================================ [Source: backend_epic_using_jwt.js]
+AllergyIntolerance_data_2025-01-02T22-52-03.579Z.ndjson | 11.31 KB | C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T22-52-03.579Z.ndjson | 9 [Source: backend_epic_using_jwt.js]
+Condition_data_2025-01-02T22-52-04.832Z.ndjson | 26.94 KB | C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T22-52-04.832Z.ndjson | 23 [Source: backend_epic_using_jwt.js]
+Device_data_2025-01-02T22-52-05.475Z.ndjson | 4.93 KB | C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T22-52-05.475Z.ndjson | 8 [Source: backend_epic_using_jwt.js]
+DiagnosticReport_data_2025-01-02T22-52-06.383Z.ndjson | 18.68 KB | C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T22-52-06.383Z.ndjson | 14 [Source: backend_epic_using_jwt.js]
+DocumentReference_data_2025-01-02T22-52-09.256Z.ndjson | 275.89 KB | C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T22-52-09.256Z.ndjson | 178 [Source: backend_epic_using_jwt.js]
+Goal_data_2025-01-02T22-52-09.948Z.ndjson | 16.34 KB | C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T22-52-09.948Z.ndjson | 19 [Source: backend_epic_using_jwt.js]
+Immunization_data_2025-01-02T22-52-10.655Z.ndjson | 9.79 KB | C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T22-52-10.655Z.ndjson | 13 [Source: backend_epic_using_jwt.js]
+MedicationRequest_data_2025-01-02T22-52-11.788Z.ndjson | 22.03 KB | C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T22-52-11.788Z.ndjson | 9 [Source: backend_epic_using_jwt.js]
+Observation_data_2025-01-02T22-52-15.406Z.ndjson | 738.81 KB | C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T22-52-15.406Z.ndjson | 396 [Source: backend_epic_using_jwt.js]
+Patient_data_2025-01-02T22-52-16.161Z.ndjson | 23.58 KB | C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T22-52-16.161Z.ndjson | 7 [Source: backend_epic_using_jwt.js]
+Procedure_data_2025-01-02T22-52-17.031Z.ndjson | 10.62 KB | C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T22-52-17.031Z.ndjson | 10 [Source: backend_epic_using_jwt.js]
+
+backend_epic_using_jwt.js completed successfully [Source: backend_epic_using_jwt.js]
+
+Observation Analysis Report [Source: backend_epic_using_jwt.js]
+========================= [Source: backend_epic_using_jwt.js]
 Summary:
 ---------
 Total Observations: 389
@@ -1148,5 +1148,5 @@ Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | 
 2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 | ABNORMAL (Low)
 2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | 36.5-37.5 | ABNORMAL (Low)
 2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | 36.5-37.5 | ABNORMAL (Low)
-
-Completion email sent successfully
+ [Source: backend_epic_using_jwt.js]
+Completion email sent successfully [Source: backend_epic_using_jwt.js]
