@@ -1007,12 +1007,18 @@ function analyzeObservations(observations) {
                     referenceText = '90-140/60-90';
                     const isAbnormal = systolic > 140 || systolic < 90 || diastolic > 90 || diastolic < 60;
                     const status = isAbnormal ? 'ABNORMAL' : 'NORMAL';
+                    const observationDate = obs.effectiveDateTime || obs.issued || 'No date';
+                    const formattedDate = observationDate !== 'No date' 
+                        ? new Date(observationDate).toISOString().split('T')[0]
+                        : observationDate;
+                    
                     const observationRecord = {
                         observationId,
                         type: observationType,
                         value: `${value} ${unit}`,
                         referenceRange: referenceText,
-                        status
+                        status,
+                        date: formattedDate  // Use the formatted date
                     };
                     if (isAbnormal) {
                         patientStats[patientId].abnormalCount++;
