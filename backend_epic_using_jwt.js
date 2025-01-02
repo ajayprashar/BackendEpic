@@ -286,6 +286,7 @@ class JWTManager {
             throw new Error('Configuration missing required paths or oauth_settings section');
         }
 
+        this.config = config;
         this.privateKey = fs.readFileSync(config.paths.private_key, 'utf8');
         this.clientId = config.oauth_settings.client_id;
         this.tokenEndpoint = config.oauth_settings.token_endpoint;
@@ -294,6 +295,13 @@ class JWTManager {
     }
 
     generateJWT() {
+        // Calculate public key ID from the corresponding public key
+        const publicKey = fs.readFileSync(this.config.paths.public_key, 'utf8');
+        const publicKeyId = crypto.createHash('sha1')
+            .update(Buffer.from(publicKey.replace(/-----BEGIN (?:PUBLIC KEY|CERTIFICATE)-----|\n|-----END (?:PUBLIC KEY|CERTIFICATE)-----/g, ''), 'base64'))
+            .digest('hex')
+            .toUpperCase();
+
         console.log('\n=== JWT Generation Tutorial ===');
         console.log('Step 1: Preparing JWT Claims');
         console.log('----------------------------');
@@ -335,7 +343,13 @@ class JWTManager {
         console.log('\nStep 3: Signing JWT');
         console.log('------------------');
         console.log(`• Algorithm: ${this.algorithm}`);
-        console.log('• Using private key to sign JWT...');
+        // Get first 15 characters of the private key (after the header), removing all newlines
+        const privateKeyPreview = this.privateKey
+            .replace(/-----BEGIN PRIVATE KEY-----/, '')
+            .replace(/-----END PRIVATE KEY-----/, '')
+            .replace(/\n/g, '')
+            .substring(0, 15);
+        console.log(`• Using private key to sign JWT... (Private Key starting with "${privateKeyPreview}" paired with Public Key ID: ${publicKeyId} from ${path.basename(this.config.paths.public_key)})`);
 
         const token = jwt.sign(claims, this.privateKey, {
             algorithm: this.algorithm,
@@ -791,16 +805,23 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
         }
     });
 
+    let reportString = '';
     const exportDir = path.resolve(config.paths.epic_data_export_folder);
-    const observationFile = getLatestObservationFile(exportDir);
-    const observations = readNDJSON(observationFile);
-    const patientStats = analyzeObservations(observations);
-    const reportString = generateReport(patientStats);
+    
+    try {
+        const observationFile = getLatestObservationFile(exportDir);
+        const observations = readNDJSON(observationFile);
+        const patientStats = analyzeObservations(observations);
+        reportString = generateReport(patientStats);
 
-    // Log the report
-    console.log('\nObservation Analysis Report');
-    console.log('=========================');
-    console.log(reportString);
+        // Log the report
+        console.log('\nObservation Analysis Report');
+        console.log('=========================');
+        console.log(reportString);
+    } catch (error) {
+        console.log('No observation data available for analysis yet');
+        reportString = 'No observation data available for analysis.';
+    }
 
     const mailOptions = {
         from: config.email.notification_from,
