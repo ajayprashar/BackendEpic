@@ -1,6 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-03T14:48:40.394Z
+New Session Started: 2025-01-03T15:04:34.183Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -119,9 +119,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-03T14:48:40.000Z
-  Not Before (nbf) : 2025-01-03T14:48:40.000Z
-  Expiry time (exp): 2025-01-03T14:53:40.000Z
+  Current time (iat): 2025-01-03T15:04:34.000Z
+  Not Before (nbf) : 2025-01-03T15:04:34.000Z
+  Expiry time (exp): 2025-01-03T15:09:34.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -130,10 +130,10 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "028520e0-5b13-47c7-ac9b-3db0777bd683",
-  "exp": 1735916020,
-  "nbf": 1735915720,
-  "iat": 1735915720
+  "jti": "8e3d2fb4-9088-4b4f-a84e-3545a2f67bbb",
+  "exp": 1735916974,
+  "nbf": 1735916674,
+  "iat": 1735916674
 }
 
 Required Claims Explanation:
@@ -157,7 +157,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiZmFhYTQwNWEtMjliZS00ZGYyLTljOTEtNWZhYjRhMTNiZjY2IiwiZXhwIjoxNzM1OTE2MDIwLCJuYmYiOjE3MzU5MTU3MjAsImlhdCI6MTczNTkxNTcyMH0.hRpB-gMnPObVQQkUjPS1weeCfj6TesaOxktUxFjQiKXFqiaRDjvdT6Z2N1AHw2PHzNSU_zuMMFAi471ydiNTHvFf0RINfDNri8rrkYJdKQs2g6oLDpLE5JLaqO58CDpyOapuPTkeGnQqyZMxurHDjyQJ84UeEnTOPkfbzJy0auQ7q_1CktLyY-yX7qhHEdeuefC5PHTlqnyYIGQDLGnCWU7hvAV0p_i11F3OcOVq5PLMsdtF-JUzn8kRT-mJov3JWGr-iQQtDJZcd1d8A6QsqDTyjm8XyOtu6T64tA-Ez5aZQ6CUcnct1otddjTap_SzgTub4gSKAHqEsRyin4tRcQ"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMzdkMjI3NGItMWJkYy00NmZmLTgzZWYtNjQ2MzM5NTU0YTliIiwiZXhwIjoxNzM1OTE2OTc0LCJuYmYiOjE3MzU5MTY2NzQsImlhdCI6MTczNTkxNjY3NH0.C_hB4UQ7DLJ8xaMlH1RsoKKLrMv-wzGUE4QfOVT5sXUkcu8_dAZbvILNwqv8UczFYhjP0y_0y9YkWfYQ0laYgtkjsnFl5toEyZ6vXaXauBT-OfD_ErFO3XlBOMAWbEwwZhhayG8gZ_dSy-6a_CJa6Ph_Y9xdoF2dzqzDDObCSyhhCuH8OdkUFfDxP4n1qAWC8WdVqzTDujKNSP6G8WI3GacCttJ_PIbBmOI9dyTpEvIqYmF1uZuBExnaD21kJfhLiqDRasjselkV62VEydxj_g6HpA7N8Do7N1UippfhGFA9hW2Nbs1IhrVA5MFa2xf7bw3bYKvy_8Krh4Ci6F0ABg"
 }
 
 STEP 3: SENDING TOKEN REQUEST
@@ -197,6 +197,34 @@ STEP 4: TOKEN RESPONSE
 
 Processing Resources
 backend_epic_using_jwt.js completed successfully
+
+================================================================================
+                         Reference Ranges Tutorial                              
+================================================================================
+
+Blood Pressure (BP) Reference Ranges:
+--------------------------------
+• Normal Systolic Range: 90-140 mmHg
+• Normal Diastolic Range: 60-90 mmHg
+
+Format in Report: [systolic range]/[diastolic range] [unit]
+Example: 90-140/60-90 mmHg
+
+Status Determination:
+-------------------
+• NORMAL: When both systolic and diastolic are within their ranges
+• ABNORMAL: When either:
+  - Systolic is < 90 or > 140 mmHg
+  - Diastolic is < 60 or > 90 mmHg
+
+Source of Ranges:
+---------------
+These ranges are based on standard medical guidelines for normal blood pressure readings.
+The system first checks for ranges provided in the Epic FHIR data, and if not found,
+uses these predefined standard ranges.
+
+================================================================================
+
 
 ================================================================================
                          Observation Analysis Report                             

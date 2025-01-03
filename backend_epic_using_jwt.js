@@ -777,6 +777,28 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
         
         // Write the observation analysis report with proper formatting
         logger.writeDirectly('\n================================================================================\n');
+        logger.writeDirectly('                         Reference Ranges Tutorial                              \n');
+        logger.writeDirectly('================================================================================\n\n');
+        logger.writeDirectly('Blood Pressure (BP) Reference Ranges:\n');
+        logger.writeDirectly('--------------------------------\n');
+        logger.writeDirectly('• Normal Systolic Range: 90-140 mmHg\n');
+        logger.writeDirectly('• Normal Diastolic Range: 60-90 mmHg\n\n');
+        logger.writeDirectly('Format in Report: [systolic range]/[diastolic range] [unit]\n');
+        logger.writeDirectly('Example: 90-140/60-90 mmHg\n\n');
+        logger.writeDirectly('Status Determination:\n');
+        logger.writeDirectly('-------------------\n');
+        logger.writeDirectly('• NORMAL: When both systolic and diastolic are within their ranges\n');
+        logger.writeDirectly('• ABNORMAL: When either:\n');
+        logger.writeDirectly('  - Systolic is < 90 or > 140 mmHg\n');
+        logger.writeDirectly('  - Diastolic is < 60 or > 90 mmHg\n\n');
+        logger.writeDirectly('Source of Ranges:\n');
+        logger.writeDirectly('---------------\n');
+        logger.writeDirectly('These ranges are based on standard medical guidelines for normal blood pressure readings.\n');
+        logger.writeDirectly('The system first checks for ranges provided in the Epic FHIR data, and if not found,\n');
+        logger.writeDirectly('uses these predefined standard ranges.\n\n');
+        logger.writeDirectly('================================================================================\n\n');
+
+        logger.writeDirectly('\n================================================================================\n');
         logger.writeDirectly('                         Observation Analysis Report                             \n');
         logger.writeDirectly('================================================================================\n\n');
 
@@ -1097,19 +1119,41 @@ function analyzeObservations(observations) {
 function generateReport(patientStats) {
     let reportString = '';
     
-    // Summary section
-    let totalNormal = 0;
-    let totalAbnormal = 0;
-    Object.values(patientStats).forEach(stats => {
-        totalNormal += stats.normalCount;
-        totalAbnormal += stats.abnormalCount;
-    });
+    // Add Reference Ranges Tutorial
+    reportString += `Reference Ranges Tutorial\n`;
+    reportString += `=======================\n\n`;
+    reportString += `Blood Pressure (BP) Reference Ranges:\n`;
+    reportString += `--------------------------------\n`;
+    reportString += `• Normal Systolic Range: 90-140 mmHg\n`;
+    reportString += `• Normal Diastolic Range: 60-90 mmHg\n\n`;
+    reportString += `Format in Report: [systolic range]/[diastolic range] [unit]\n`;
+    reportString += `Example: 90-140/60-90 mmHg\n\n`;
+    reportString += `Status Determination:\n`;
+    reportString += `-------------------\n`;
+    reportString += `• NORMAL: When both systolic and diastolic are within their ranges\n`;
+    reportString += `• ABNORMAL: When either:\n`;
+    reportString += `  - Systolic is < 90 or > 140 mmHg\n`;
+    reportString += `  - Diastolic is < 60 or > 90 mmHg\n\n`;
+    reportString += `Source of Ranges:\n`;
+    reportString += `---------------\n`;
+    reportString += `These ranges are based on standard medical guidelines for normal blood pressure readings.\n`;
+    reportString += `The system first checks for ranges provided in the Epic FHIR data, and if not found,\n`;
+    reportString += `uses these predefined standard ranges.\n\n`;
+    reportString += `=================================================================\n\n`;
 
+    // Calculate totals
+    const totals = Object.values(patientStats).reduce((acc, stats) => {
+        acc.normal += stats.normalCount;
+        acc.abnormal += stats.abnormalCount;
+        return acc;
+    }, { normal: 0, abnormal: 0 });
+
+    // Summary section
     reportString += `Summary:\n`;
     reportString += `---------\n`;
-    reportString += `Total Observations: ${totalNormal + totalAbnormal}\n`;
-    reportString += `Total Normal Readings: ${totalNormal}\n`;
-    reportString += `Total Abnormal Readings: ${totalAbnormal}\n\n`;
+    reportString += `Total Observations: ${totals.normal + totals.abnormal}\n`;
+    reportString += `Total Normal Readings: ${totals.normal}\n`;
+    reportString += `Total Abnormal Readings: ${totals.abnormal}\n\n`;
 
     // Detailed Observations Header
     reportString += 'Detailed Observations:\n';
