@@ -1,6 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-03T15:04:34.183Z
+New Session Started: 2025-01-03T16:13:21.550Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -119,9 +119,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-03T15:04:34.000Z
-  Not Before (nbf) : 2025-01-03T15:04:34.000Z
-  Expiry time (exp): 2025-01-03T15:09:34.000Z
+  Current time (iat): 2025-01-03T16:13:21.000Z
+  Not Before (nbf) : 2025-01-03T16:13:21.000Z
+  Expiry time (exp): 2025-01-03T16:18:21.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -130,10 +130,10 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "8e3d2fb4-9088-4b4f-a84e-3545a2f67bbb",
-  "exp": 1735916974,
-  "nbf": 1735916674,
-  "iat": 1735916674
+  "jti": "f3526bb3-7801-413c-b09b-f37fd528de50",
+  "exp": 1735921101,
+  "nbf": 1735920801,
+  "iat": 1735920801
 }
 
 Required Claims Explanation:
@@ -157,7 +157,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMzdkMjI3NGItMWJkYy00NmZmLTgzZWYtNjQ2MzM5NTU0YTliIiwiZXhwIjoxNzM1OTE2OTc0LCJuYmYiOjE3MzU5MTY2NzQsImlhdCI6MTczNTkxNjY3NH0.C_hB4UQ7DLJ8xaMlH1RsoKKLrMv-wzGUE4QfOVT5sXUkcu8_dAZbvILNwqv8UczFYhjP0y_0y9YkWfYQ0laYgtkjsnFl5toEyZ6vXaXauBT-OfD_ErFO3XlBOMAWbEwwZhhayG8gZ_dSy-6a_CJa6Ph_Y9xdoF2dzqzDDObCSyhhCuH8OdkUFfDxP4n1qAWC8WdVqzTDujKNSP6G8WI3GacCttJ_PIbBmOI9dyTpEvIqYmF1uZuBExnaD21kJfhLiqDRasjselkV62VEydxj_g6HpA7N8Do7N1UippfhGFA9hW2Nbs1IhrVA5MFa2xf7bw3bYKvy_8Krh4Ci6F0ABg"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiYWEyMTIzMGMtYWVjOC00OTFhLWI2ZDMtMGU1NDgyMmQ2MjBiIiwiZXhwIjoxNzM1OTIxMTAxLCJuYmYiOjE3MzU5MjA4MDEsImlhdCI6MTczNTkyMDgwMX0.QZscWEUwp92Nf5CCdrcVdZukFXY4yskNsBgj8IiDA_OENVeGuLiB3FjcKrlghE4CCbvcA_44c1ZDVzBC7_Ym77zqHHRkq3Vv3o98jrJU0v1YbTeAMNBGezcxC5Tx68sMgdoOiVdEpLRulOkA8hlTLKI8wJ4sFbnde4c1Y-ws1L53VUW8qI8_X34GR5R5xopga2tY63UJo1oXOBKzmwqZDr5GWhUg04Xher7FjSup9Sf3lQF3O7XgY_qoZ40WuCCf85R5bj12Bjmh31lRYsfjblQPW-uNjQBC3K8YhauQGBWa00ck4eIZ8Dzn3k_iyI1MuoSqZYmnBm3C3MfFwfeFZg"
 }
 
 STEP 3: SENDING TOKEN REQUEST
@@ -230,16 +230,6 @@ uses these predefined standard ranges.
                          Observation Analysis Report                             
 ================================================================================
 
-Summary:
----------
-Total Observations: 389
-Total Normal Readings: 252
-Total Abnormal Readings: 137
-
-Detailed Observations:
---------------------
-Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status
------|--------------|------------|------------------|--------|----------------|--------
 2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/73 mmHg | 90-140/60-90 mmHg | NORMAL
 2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/87 mmHg | 90-140/60-90 mmHg | NORMAL
 2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/78 mmHg | 90-140/60-90 mmHg | NORMAL

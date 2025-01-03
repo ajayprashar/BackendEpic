@@ -810,34 +810,59 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
             totalAbnormal += stats.abnormalCount;
         });
 
-        // Write summary section
-        logger.writeDirectly('Summary:\n');
-        logger.writeDirectly('---------\n');
-        logger.writeDirectly(`Total Observations: ${totalNormal + totalAbnormal}\n`);
-        logger.writeDirectly(`Total Normal Readings: ${totalNormal}\n`);
-        logger.writeDirectly(`Total Abnormal Readings: ${totalAbnormal}\n\n`);
+        // Build report string for email
+        reportString += 'Reference Ranges Tutorial\n';
+        reportString += '=======================\n\n';
+        reportString += 'Blood Pressure (BP) Reference Ranges:\n';
+        reportString += '--------------------------------\n';
+        reportString += '• Normal Systolic Range: 90-140 mmHg\n';
+        reportString += '• Normal Diastolic Range: 60-90 mmHg\n\n';
+        reportString += 'Format in Report: [systolic range]/[diastolic range] [unit]\n';
+        reportString += 'Example: 90-140/60-90 mmHg\n\n';
+        reportString += 'Status Determination:\n';
+        reportString += '-------------------\n';
+        reportString += '• NORMAL: When both systolic and diastolic are within their ranges\n';
+        reportString += '• ABNORMAL: When either:\n';
+        reportString += '  - Systolic is < 90 or > 140 mmHg\n';
+        reportString += '  - Diastolic is < 60 or > 90 mmHg\n\n';
+        reportString += 'Source of Ranges:\n';
+        reportString += '---------------\n';
+        reportString += 'These ranges are based on standard medical guidelines for normal blood pressure readings.\n';
+        reportString += 'The system first checks for ranges provided in the Epic FHIR data, and if not found,\n';
+        reportString += 'uses these predefined standard ranges.\n\n';
+        reportString += '=================================================================\n\n';
 
-        // Write detailed observations
-        logger.writeDirectly('Detailed Observations:\n');
-        logger.writeDirectly('--------------------\n');
-        logger.writeDirectly('Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status\n');
-        logger.writeDirectly('-----|--------------|------------|------------------|--------|----------------|--------\n');
+        reportString += 'Summary:\n';
+        reportString += '---------\n';
+        reportString += `Total Observations: ${totalNormal + totalAbnormal}\n`;
+        reportString += `Total Normal Readings: ${totalNormal}\n`;
+        reportString += `Total Abnormal Readings: ${totalAbnormal}\n\n`;
 
-        // Write patient-wise observations
+        reportString += 'Detailed Observations:\n';
+        reportString += '--------------------\n';
+        reportString += 'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status\n';
+        reportString += '-----|--------------|------------|------------------|--------|----------------|--------\n';
+
+        // Write patient-wise observations to both log and report string
         Object.entries(patientStats).forEach(([patientId, stats]) => {
             const allObservations = [...stats.normalObservations || [], ...stats.abnormalReadings || []];
             allObservations.forEach(obs => {
-                logger.writeDirectly(`${obs.date} | ${stats.name} | ${patientId} | ${obs.type} | ${obs.value} | ${obs.referenceRange || 'N/A'} | ${obs.status || 'NORMAL'}\n`);
+                const line = `${obs.date} | ${stats.name} | ${patientId} | ${obs.type} | ${obs.value} | ${obs.referenceRange || 'N/A'} | ${obs.status || 'NORMAL'}\n`;
+                logger.writeDirectly(line);
+                reportString += line;
             });
         });
 
         logger.writeDirectly('\n================================================================================\n\n');
+        reportString += '\n=================================================================\n\n';
     } catch (error) {
         logger.writeDirectly('\n================================================================================\n');
         logger.writeDirectly('                         Observation Analysis Report                             \n');
         logger.writeDirectly('================================================================================\n\n');
         logger.writeDirectly('No observation data available for analysis.\n\n');
         logger.writeDirectly('================================================================================\n\n');
+        
+        reportString = 'No observation data available for analysis.\n\n';
     }
 
     const mailOptions = {
@@ -852,8 +877,6 @@ End Time: ${endTime}
 Duration: ${Math.round((new Date(endTime) - new Date(startTime))/1000)} seconds
 Status: ${success ? 'Successful' : 'Failed'}
 
-Observation Analysis Report
-=========================
 ${reportString}
 
 Export Directory:
