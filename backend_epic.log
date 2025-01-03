@@ -1,6 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-03T07:03:36.473Z
+New Session Started: 2025-01-03T13:39:56.324Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -87,139 +87,90 @@ file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Sour
 file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution)
 Export directory prepared
 Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
+
 ================================================================================
+                         Epic OAuth 2.0 Token Request Tutorial                   
 ================================================================================
-Epic OAuth 2.0 Token Request Tutorial
-Epic OAuth 2.0 Token Request Tutorial
-================================================================================
-STEP 1: JWT ASSERTION GENERATION
+
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
 Timestamp Configuration:
-Timestamp Configuration:
-Current time (iat): 2025-01-03T07:03:36.000Z
-Current time (iat): 2025-01-03T07:03:36.000Z
-Not Before (nbf) : 2025-01-03T07:03:36.000Z
-Not Before (nbf) : 2025-01-03T07:03:36.000Z
-Expiry time (exp): 2025-01-03T07:08:36.000Z
-Expiry time (exp): 2025-01-03T07:08:36.000Z
-Token validity   : 5 minutes
-Token validity   : 5 minutes
+  Current time (iat): 2025-01-03T13:39:56.000Z
+  Not Before (nbf) : 2025-01-03T13:39:56.000Z
+  Expiry time (exp): 2025-01-03T13:44:56.000Z
+  Token validity   : 5 minutes
+
 JWT Claims:
-JWT Claims:
+
 {
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "916a4c8e-77f9-4263-8543-229eb2223b8c",
-  "exp": 1735888116,
-  "nbf": 1735887816,
-  "iat": 1735887816
+  "jti": "846ce1bd-160f-42be-90ab-acf31086a930",
+  "exp": 1735911896,
+  "nbf": 1735911596,
+  "iat": 1735911596
 }
-{
-  "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
-  "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
-  "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "916a4c8e-77f9-4263-8543-229eb2223b8c",
-  "exp": 1735888116,
-  "nbf": 1735887816,
-  "iat": 1735887816
-}
+
 Required Claims Explanation:
-Required Claims Explanation:
-iss (Issuer)  : Client ID assigned by Epic
-iss (Issuer)  : Client ID assigned by Epic
-sub (Subject) : Same as Issuer for backend services
-sub (Subject) : Same as Issuer for backend services
-aud (Audience): Epic's token endpoint
-aud (Audience): Epic's token endpoint
-jti (JWT ID)  : Unique identifier for this JWT
-jti (JWT ID)  : Unique identifier for this JWT
-exp          : Expiration time
-exp          : Expiration time
-nbf          : Not valid before time
-nbf          : Not valid before time
-iat          : Time when JWT was issued
-iat          : Time when JWT was issued
-STEP 2: PREPARING TOKEN REQUEST
+  iss (Issuer)  : Client ID assigned by Epic
+  sub (Subject) : Same as Issuer for backend services
+  aud (Audience): Epic's token endpoint
+  jti (JWT ID)  : Unique identifier for this JWT
+  exp          : Expiration time
+  nbf          : Not valid before time
+  iat          : Time when JWT was issued
+
 STEP 2: PREPARING TOKEN REQUEST
 --------------------------------------------------------------------------------
 Request Configuration:
-Request Configuration:
-Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-Grant Type          : client_credentials
-Grant Type          : client_credentials
-Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+  Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+  Grant Type          : client_credentials
+  Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+
 Request Body:
-Request Body:
+
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiM2VlZjE1NWYtMjFjNi00YWIzLTk3ZjYtMzNjZWZiZTAxNDU5IiwiZXhwIjoxNzM1ODg4MTE2LCJuYmYiOjE3MzU4ODc4MTYsImlhdCI6MTczNTg4NzgxNn0.PVGMcceobFQoEHMRPjCMftsLvbnfN4-PE26btR5I5aTPkD3JZVcBgBrvwLrqlnxZnXtUJ67eryFCAUXagMSFAFLuPcsdCV2CI-0a8vKd6gHYlWPdHj9jjRk9uPDSdr2gMWA-KskAMTpetQLY0Vsvn2Gxqm-ON4poOJTlWfR6VMe1o-3RzR3A4lMbBD5iP1R6IAPSjvvWc-wRt1c3usRvXS-9pm-kJVKblgoymaKyP1Bc4eWRq4LyqYpPnZnZj5cN0w2_97j6FE6VCxDdLIFvm6SgH7iddfREcx_z2b5yYGqW3pJYDm28oBhXDTQuPzbRUbTFrF2VghQ2icKd_EmQ9Q"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMWIxNDZmZTEtMWJjNC00ODQwLThhYzEtZGMzNmVlNDJkYWNhIiwiZXhwIjoxNzM1OTExODk2LCJuYmYiOjE3MzU5MTE1OTYsImlhdCI6MTczNTkxMTU5Nn0.qdX228jHXCzhnSJ-oAdmH_YqgFUrIqUO5mLF8JjfBrPpmmvA5R8CpJyQb0v-b-A8iB9-9dz71O_cd3FKHD96CwUufsEv7cNhVQwK06TjJgQ799bZ1Z2Icrz7vtZ_kQLTIwpzgA0ZtwWEv4yJEt6GXPUKoU58C1LCN2yF1rAYpMglcB_KwAVqOfo8hNOz2fgFv0uTACDdwHw-O6PQi6lkRx33gkodt_qW74aQvhGEJ6hQzP0mXCG6khM3KekwpY1gj50fOm338BdHPCD36uHlMH_ZG4i2aTi4zN5wgHzE-lGDXyXw3loXztRWEX3btQRo2-Wj3y9QZltHtqLnI-3oew"
 }
-{
-  "grant_type": "client_credentials",
-  "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiM2VlZjE1NWYtMjFjNi00YWIzLTk3ZjYtMzNjZWZiZTAxNDU5IiwiZXhwIjoxNzM1ODg4MTE2LCJuYmYiOjE3MzU4ODc4MTYsImlhdCI6MTczNTg4NzgxNn0.PVGMcceobFQoEHMRPjCMftsLvbnfN4-PE26btR5I5aTPkD3JZVcBgBrvwLrqlnxZnXtUJ67eryFCAUXagMSFAFLuPcsdCV2CI-0a8vKd6gHYlWPdHj9jjRk9uPDSdr2gMWA-KskAMTpetQLY0Vsvn2Gxqm-ON4poOJTlWfR6VMe1o-3RzR3A4lMbBD5iP1R6IAPSjvvWc-wRt1c3usRvXS-9pm-kJVKblgoymaKyP1Bc4eWRq4LyqYpPnZnZj5cN0w2_97j6FE6VCxDdLIFvm6SgH7iddfREcx_z2b5yYGqW3pJYDm28oBhXDTQuPzbRUbTFrF2VghQ2icKd_EmQ9Q"
-}
-STEP 3: SENDING TOKEN REQUEST
+
 STEP 3: SENDING TOKEN REQUEST
 --------------------------------------------------------------------------------
 Understanding the Token Request Process:
-Understanding the Token Request Process:
+
 1. What happens when we send this request:
-1. What happens when we send this request:
-• Our JWT (shown above) is sent to Epic's authorization server
-• Our JWT (shown above) is sent to Epic's authorization server
-• The JWT contains our identity claims and is signed with our private key
-• The JWT contains our identity claims and is signed with our private key
-• Epic's server receives our request and begins the validation process
-• Epic's server receives our request and begins the validation process
+   • Our JWT (shown above) is sent to Epic's authorization server
+   • The JWT contains our identity claims and is signed with our private key
+   • Epic's server receives our request and begins the validation process
+
 2. How Epic validates our request:
-2. How Epic validates our request:
-• Epic retrieves our registered public key using the key ID in the JWT header
-• Epic retrieves our registered public key using the key ID in the JWT header
-• They verify the JWT's signature using this public key
-• They verify the JWT's signature using this public key
-• They check the JWT's claims (expiry time, issuer, etc.)
-• They check the JWT's claims (expiry time, issuer, etc.)
+   • Epic retrieves our registered public key using the key ID in the JWT header
+   • They verify the JWT's signature using this public key
+   • They check the JWT's claims (expiry time, issuer, etc.)
+
 3. What happens after successful validation:
-3. What happens after successful validation:
-• Epic generates a new access token specifically for our session
-• Epic generates a new access token specifically for our session
-• This token grants us access to Epic's FHIR API endpoints
-• This token grants us access to Epic's FHIR API endpoints
-• The token will be valid for 60 minutes
-• The token will be valid for 60 minutes
-• We must include this token in all subsequent API requests
-• We must include this token in all subsequent API requests
-Now sending the request with these parameters:
+   • Epic generates a new access token specifically for our session
+   • This token grants us access to Epic's FHIR API endpoints
+   • The token will be valid for 60 minutes
+   • We must include this token in all subsequent API requests
+
 Now sending the request with these parameters:
 • URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-• URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-• Method: POST
 • Method: POST
 • Headers:
-• Headers:
-Content-Type: application/x-www-form-urlencoded
-Content-Type: application/x-www-form-urlencoded
+    Content-Type: application/x-www-form-urlencoded
 • Request Body Parameters:
-• Request Body Parameters:
-1. grant_type: client_credentials
-1. grant_type: client_credentials
-2. client_assertion_type: JWT Bearer Token
-2. client_assertion_type: JWT Bearer Token
-3. client_assertion: [Generated JWT containing claims shown above]
-3. client_assertion: [Generated JWT containing claims shown above]
-STEP 4: TOKEN RESPONSE
+    1. grant_type: client_credentials
+    2. client_assertion_type: JWT Bearer Token
+    3. client_assertion: [Generated JWT containing claims shown above]
+
 STEP 4: TOKEN RESPONSE
 --------------------------------------------------------------------------------
-✓ Access token received successfully
 ✓ Access token received successfully
 ================================================================================
+
 Processing Resources
 backend_epic_using_jwt.js completed successfully
 Observation Analysis Report

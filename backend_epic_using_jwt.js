@@ -109,7 +109,7 @@ class Logger {
         this.logStream = null;
         this.initialized = false;
         this.recentMessages = new Set(); // Track recent messages to prevent duplicates
-        this.recentMessageTimeout = 1000; // Clear messages after 1 second
+        this.recentMessageTimeout = 5000; // Increased to 5 seconds to better handle tutorial messages
         this.initializeLogStream();
         
         loggerInstance = this;
@@ -226,6 +226,18 @@ class Logger {
                 return;
             }
             
+            // For tutorial messages, check for duplicates within a longer timeframe
+            if (level === 'TUTORIAL') {
+                const messageKey = `${level}:${formattedMessage}`;
+                if (this.recentMessages.has(messageKey)) {
+                    return; // Skip duplicate tutorial message
+                }
+                this.recentMessages.add(messageKey);
+                setTimeout(() => {
+                    this.recentMessages.delete(messageKey);
+                }, this.recentMessageTimeout);
+            }
+            
             // Write to file with newline
             this.logStream.write(formattedMessage + '\n');
             
@@ -283,6 +295,14 @@ class Logger {
             loggerInstance = new Logger();
         }
         return loggerInstance;
+    }
+
+    // Add a method for direct writing to log file
+    writeDirectly(message) {
+        if (!this.initialized || !this.logStream) {
+            this.initializeLogStream();
+        }
+        this.logStream.write(message);
     }
 }
 
@@ -432,97 +452,106 @@ class JWTManager {
         this.logger = Logger.getInstance();
     }
 
-    async getAccessToken() {
+    async getAccessToken(tutorialShown = false) {
         try {
             const logger = Logger.getInstance();
             
-            // Tutorial header
-            logger.writeLog('TUTORIAL', ['\n================================================================================'], console.log);
-            logger.writeLog('TUTORIAL', ['                         Epic OAuth 2.0 Token Request Tutorial                   '], console.log);
-            logger.writeLog('TUTORIAL', ['================================================================================\n'], console.log);
+            // Only show tutorial if it hasn't been shown before
+            if (!tutorialShown) {
+                // Write directly to log file to avoid duplication
+                logger.writeDirectly('\n================================================================================\n');
+                logger.writeDirectly('                         Epic OAuth 2.0 Token Request Tutorial                   \n');
+                logger.writeDirectly('================================================================================\n\n');
 
-            logger.writeLog('TUTORIAL', ['STEP 1: JWT ASSERTION GENERATION'], console.log);
-            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
-            
-            // Generate JWT with claims
-            const currentTime = Math.floor(Date.now() / 1000);
-            const expiryTime = currentTime + (this.expiryMinutes * 60);
-            
-            logger.writeLog('TUTORIAL', ['Timestamp Configuration:'], console.log);
-            logger.writeLog('TUTORIAL', [`  Current time (iat): ${new Date(currentTime * 1000).toISOString()}`], console.log);
-            logger.writeLog('TUTORIAL', [`  Not Before (nbf) : ${new Date(currentTime * 1000).toISOString()}`], console.log);
-            logger.writeLog('TUTORIAL', [`  Expiry time (exp): ${new Date(expiryTime * 1000).toISOString()}`], console.log);
-            logger.writeLog('TUTORIAL', [`  Token validity   : ${this.expiryMinutes} minutes\n`], console.log);
-            
-            const claims = {
-                iss: this.clientId,
-                sub: this.clientId,
-                aud: this.tokenEndpoint,
-                jti: uuidv4(),
-                exp: expiryTime,
-                nbf: currentTime,
-                iat: currentTime
-            };
+                logger.writeDirectly('STEP 1: JWT ASSERTION GENERATION\n');
+                logger.writeDirectly('--------------------------------------------------------------------------------\n');
+                
+                // Generate JWT with claims
+                const currentTime = Math.floor(Date.now() / 1000);
+                const expiryTime = currentTime + (this.expiryMinutes * 60);
+                
+                logger.writeDirectly('Timestamp Configuration:\n');
+                logger.writeDirectly(`  Current time (iat): ${new Date(currentTime * 1000).toISOString()}\n`);
+                logger.writeDirectly(`  Not Before (nbf) : ${new Date(currentTime * 1000).toISOString()}\n`);
+                logger.writeDirectly(`  Expiry time (exp): ${new Date(expiryTime * 1000).toISOString()}\n`);
+                logger.writeDirectly(`  Token validity   : ${this.expiryMinutes} minutes\n\n`);
+                
+                const claims = {
+                    iss: this.clientId,
+                    sub: this.clientId,
+                    aud: this.tokenEndpoint,
+                    jti: uuidv4(),
+                    exp: expiryTime,
+                    nbf: currentTime,
+                    iat: currentTime
+                };
 
-            logger.writeLog('TUTORIAL', ['JWT Claims:'], console.log);
-            logger.writeLog('TUTORIAL', ['\n', claims, '\n'], console.log);
-            
-            logger.writeLog('TUTORIAL', ['Required Claims Explanation:'], console.log);
-            logger.writeLog('TUTORIAL', ['  iss (Issuer)  : Client ID assigned by Epic'], console.log);
-            logger.writeLog('TUTORIAL', ['  sub (Subject) : Same as Issuer for backend services'], console.log);
-            logger.writeLog('TUTORIAL', ['  aud (Audience): Epic\'s token endpoint'], console.log);
-            logger.writeLog('TUTORIAL', ['  jti (JWT ID)  : Unique identifier for this JWT'], console.log);
-            logger.writeLog('TUTORIAL', ['  exp          : Expiration time'], console.log);
-            logger.writeLog('TUTORIAL', ['  nbf          : Not valid before time'], console.log);
-            logger.writeLog('TUTORIAL', ['  iat          : Time when JWT was issued\n'], console.log);
+                logger.writeDirectly('JWT Claims:\n\n');
+                logger.writeDirectly(JSON.stringify(claims, null, 2) + '\n\n');
+                
+                logger.writeDirectly('Required Claims Explanation:\n');
+                logger.writeDirectly('  iss (Issuer)  : Client ID assigned by Epic\n');
+                logger.writeDirectly('  sub (Subject) : Same as Issuer for backend services\n');
+                logger.writeDirectly('  aud (Audience): Epic\'s token endpoint\n');
+                logger.writeDirectly('  jti (JWT ID)  : Unique identifier for this JWT\n');
+                logger.writeDirectly('  exp          : Expiration time\n');
+                logger.writeDirectly('  nbf          : Not valid before time\n');
+                logger.writeDirectly('  iat          : Time when JWT was issued\n\n');
+            }
 
             // Generate JWT silently (without additional logging)
             const jwt = this.generateJWTSilent();
             
-            logger.writeLog('TUTORIAL', ['STEP 2: PREPARING TOKEN REQUEST'], console.log);
-            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
-            logger.writeLog('TUTORIAL', ['Request Configuration:'], console.log);
-            logger.writeLog('TUTORIAL', [`  Token Endpoint       : ${this.tokenEndpoint}`], console.log);
-            logger.writeLog('TUTORIAL', [`  Grant Type          : ${this.config.oauth_settings.grant_type}`], console.log);
-            logger.writeLog('TUTORIAL', [`  Client Assertion Type: ${this.config.oauth_settings.client_assertion_type}\n`], console.log);
-            
-            const requestBody = {
-                grant_type: this.config.oauth_settings.grant_type,
-                client_assertion_type: this.config.oauth_settings.client_assertion_type,
-                client_assertion: jwt
-            };
-            
-            logger.writeLog('TUTORIAL', ['Request Body:'], console.log);
-            logger.writeLog('TUTORIAL', ['\n', requestBody, '\n'], console.log);
-            
-            logger.writeLog('TUTORIAL', ['STEP 3: SENDING TOKEN REQUEST'], console.log);
-            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
-            logger.writeLog('TUTORIAL', ['Understanding the Token Request Process:'], console.log);
-            logger.writeLog('TUTORIAL', ['\n1. What happens when we send this request:'], console.log);
-            logger.writeLog('TUTORIAL', ['   • Our JWT (shown above) is sent to Epic\'s authorization server'], console.log);
-            logger.writeLog('TUTORIAL', ['   • The JWT contains our identity claims and is signed with our private key'], console.log);
-            logger.writeLog('TUTORIAL', ['   • Epic\'s server receives our request and begins the validation process'], console.log);
-            logger.writeLog('TUTORIAL', ['\n2. How Epic validates our request:'], console.log);
-            logger.writeLog('TUTORIAL', ['   • Epic retrieves our registered public key using the key ID in the JWT header'], console.log);
-            logger.writeLog('TUTORIAL', ['   • They verify the JWT\'s signature using this public key'], console.log);
-            logger.writeLog('TUTORIAL', ['   • They check the JWT\'s claims (expiry time, issuer, etc.)'], console.log);
-            logger.writeLog('TUTORIAL', ['\n3. What happens after successful validation:'], console.log);
-            logger.writeLog('TUTORIAL', ['   • Epic generates a new access token specifically for our session'], console.log);
-            logger.writeLog('TUTORIAL', ['   • This token grants us access to Epic\'s FHIR API endpoints'], console.log);
-            logger.writeLog('TUTORIAL', ['   • The token will be valid for 60 minutes'], console.log);
-            logger.writeLog('TUTORIAL', ['   • We must include this token in all subsequent API requests'], console.log);
-            logger.writeLog('TUTORIAL', ['\nNow sending the request with these parameters:'], console.log);
-            logger.writeLog('TUTORIAL', ['• URL: ' + this.tokenEndpoint], console.log);
-            logger.writeLog('TUTORIAL', ['• Method: POST'], console.log);
-            logger.writeLog('TUTORIAL', ['• Headers:'], console.log);
-            logger.writeLog('TUTORIAL', ['    Content-Type: application/x-www-form-urlencoded'], console.log);
-            logger.writeLog('TUTORIAL', ['• Request Body Parameters:'], console.log);
-            logger.writeLog('TUTORIAL', ['    1. grant_type: client_credentials'], console.log);
-            logger.writeLog('TUTORIAL', ['    2. client_assertion_type: JWT Bearer Token'], console.log);
-            logger.writeLog('TUTORIAL', ['    3. client_assertion: [Generated JWT containing claims shown above]\n'], console.log);
+            if (!tutorialShown) {
+                logger.writeDirectly('STEP 2: PREPARING TOKEN REQUEST\n');
+                logger.writeDirectly('--------------------------------------------------------------------------------\n');
+                logger.writeDirectly('Request Configuration:\n');
+                logger.writeDirectly(`  Token Endpoint       : ${this.tokenEndpoint}\n`);
+                logger.writeDirectly(`  Grant Type          : ${this.config.oauth_settings.grant_type}\n`);
+                logger.writeDirectly(`  Client Assertion Type: ${this.config.oauth_settings.client_assertion_type}\n\n`);
+                
+                const requestBody = {
+                    grant_type: this.config.oauth_settings.grant_type,
+                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
+                    client_assertion: jwt
+                };
+                
+                logger.writeDirectly('Request Body:\n\n');
+                logger.writeDirectly(JSON.stringify(requestBody, null, 2) + '\n\n');
+                
+                logger.writeDirectly('STEP 3: SENDING TOKEN REQUEST\n');
+                logger.writeDirectly('--------------------------------------------------------------------------------\n');
+                logger.writeDirectly('Understanding the Token Request Process:\n');
+                logger.writeDirectly('\n1. What happens when we send this request:\n');
+                logger.writeDirectly('   • Our JWT (shown above) is sent to Epic\'s authorization server\n');
+                logger.writeDirectly('   • The JWT contains our identity claims and is signed with our private key\n');
+                logger.writeDirectly('   • Epic\'s server receives our request and begins the validation process\n');
+                logger.writeDirectly('\n2. How Epic validates our request:\n');
+                logger.writeDirectly('   • Epic retrieves our registered public key using the key ID in the JWT header\n');
+                logger.writeDirectly('   • They verify the JWT\'s signature using this public key\n');
+                logger.writeDirectly('   • They check the JWT\'s claims (expiry time, issuer, etc.)\n');
+                logger.writeDirectly('\n3. What happens after successful validation:\n');
+                logger.writeDirectly('   • Epic generates a new access token specifically for our session\n');
+                logger.writeDirectly('   • This token grants us access to Epic\'s FHIR API endpoints\n');
+                logger.writeDirectly('   • The token will be valid for 60 minutes\n');
+                logger.writeDirectly('   • We must include this token in all subsequent API requests\n');
+                logger.writeDirectly('\nNow sending the request with these parameters:\n');
+                logger.writeDirectly('• URL: ' + this.tokenEndpoint + '\n');
+                logger.writeDirectly('• Method: POST\n');
+                logger.writeDirectly('• Headers:\n');
+                logger.writeDirectly('    Content-Type: application/x-www-form-urlencoded\n');
+                logger.writeDirectly('• Request Body Parameters:\n');
+                logger.writeDirectly('    1. grant_type: client_credentials\n');
+                logger.writeDirectly('    2. client_assertion_type: JWT Bearer Token\n');
+                logger.writeDirectly('    3. client_assertion: [Generated JWT containing claims shown above]\n\n');
+            }
             
             const response = await axios.post(this.tokenEndpoint, 
-                new URLSearchParams(requestBody), 
+                new URLSearchParams({
+                    grant_type: this.config.oauth_settings.grant_type,
+                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
+                    client_assertion: jwt
+                }), 
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -534,10 +563,12 @@ class JWTManager {
                 throw new Error('No access token received in response');
             }
 
-            logger.writeLog('TUTORIAL', ['STEP 4: TOKEN RESPONSE'], console.log);
-            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
-            logger.writeLog('TUTORIAL', ['✓ Access token received successfully'], console.log);
-            logger.writeLog('TUTORIAL', ['================================================================================\n'], console.log);
+            if (!tutorialShown) {
+                logger.writeDirectly('STEP 4: TOKEN RESPONSE\n');
+                logger.writeDirectly('--------------------------------------------------------------------------------\n');
+                logger.writeDirectly('✓ Access token received successfully\n');
+                logger.writeDirectly('================================================================================\n\n');
+            }
 
             return response.data.access_token;
         } catch (error) {
@@ -617,6 +648,7 @@ class EpicClient {
         this.exportedFiles = [];
         this.epicEndpoint = config.epic_settings.epic_endpoint;
         this.tokenEndpoint = config.oauth_settings.token_endpoint;
+        this.tutorialShown = false;  // Add flag to track if tutorial has been shown
         
         // Add these lines to get the paths from config
         this.patientRosterPath = config.data_sources.epic_sandbox_roster;
@@ -633,7 +665,9 @@ class EpicClient {
 
     async getAccessToken() {
         try {
-            const accessToken = await this.jwtManager.getAccessToken();
+            // Pass the flag to JWTManager to control tutorial display
+            const accessToken = await this.jwtManager.getAccessToken(this.tutorialShown);
+            this.tutorialShown = true;  // Update flag after first tutorial
             return accessToken;
         } catch (error) {
             throw error;
