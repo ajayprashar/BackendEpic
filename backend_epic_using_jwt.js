@@ -92,221 +92,11 @@ const util = require('util');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const ConfigManager = require('./src/managers/ConfigManager');
+const Logger = require('./src/utils/Logger');
 
 const scriptName = path.basename(process.argv[1]);
 
-// Create a single logger instance
-let loggerInstance = null;
-
-class Logger {
-    constructor() {
-        if (loggerInstance) {
-            return loggerInstance;
-        }
-        
-        this.LOG_FILE = 'backend_epic.log';
-        this.MAX_LOG_SIZE = 10 * 1024 * 1024; // 10MB
-        this.logStream = null;
-        this.initialized = false;
-        this.recentMessages = new Set(); // Track recent messages to prevent duplicates
-        this.recentMessageTimeout = 5000; // Increased to 5 seconds to better handle tutorial messages
-        this.initializeLogStream();
-        
-        loggerInstance = this;
-        return loggerInstance;
-    }
-
-    initializeLogStream() {
-        if (this.initialized) {
-            return;
-        }
-
-        try {
-            // Check if log file needs rotation
-            if (fs.existsSync(this.LOG_FILE)) {
-                const stats = fs.statSync(this.LOG_FILE);
-                if (stats.size >= this.MAX_LOG_SIZE) {
-                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-                    fs.renameSync(this.LOG_FILE, `${this.LOG_FILE}.${timestamp}`);
-                }
-            }
-
-            // Create write stream and set up console overrides
-            this.logStream = fs.createWriteStream(this.LOG_FILE, { flags: 'a' });
-            this.setupConsoleOverrides();
-
-            // Write session start directly to stream to avoid duplication
-            const timestamp = new Date().toISOString();
-            this.logStream.write([
-                '',
-                '='.repeat(80),
-                `New Session Started: ${timestamp}`,
-                '='.repeat(80),
-                '',
-                ''
-            ].join('\n'));
-
-            this.initialized = true;
-        } catch (error) {
-            console.error(`Failed to initialize log stream: ${error.message}`);
-            throw error;
-        }
-    }
-
-    setupConsoleOverrides() {
-        const originalLog = console.log;
-        const originalWarn = console.warn;
-        const originalError = console.error;
-
-        console.log = (...args) => this.writeLog('INFO', args, originalLog);
-        console.warn = (...args) => this.writeLog('WARN', args, originalWarn);
-        console.error = (...args) => this.writeLog('ERROR', args, originalError);
-    }
-
-    getCallerInfo() {
-        const stack = new Error().stack;
-        const callerLine = stack.split('\n')[3]; // Skip 3 lines to get actual caller
-        const match = callerLine?.match(/[\/\\]([\w-]+\.js):(\d+):(\d+)/);
-        
-        return {
-            file: match?.[1] || 'unknown.js',
-            line: match?.[2] || '?',
-            column: match?.[3] || '?'
-        };
-    }
-
-    formatMessage(level, args) {
-        const timestamp = new Date().toISOString();
-        
-        // Format any JSON objects in the message
-        const formattedArgs = args.map(arg => {
-            if (typeof arg === 'object' && arg !== null) {
-                return '\n' + JSON.stringify(arg, null, 2) + '\n';
-            }
-            return String(arg);
-        });
-        
-        // Join all arguments with spaces and trim any extra whitespace
-        let message = formattedArgs.join(' ').trim();
-        
-        // Remove redundant level prefix if it exists
-        message = message.replace(new RegExp(`^${level}:\\s*`, 'i'), '');
-        
-        // For tutorial content, return as is without any prefixes
-        if (level === 'TUTORIAL') {
-            return message;
-        }
-        
-        // For regular log messages, only add timestamp for errors
-        if (level === 'ERROR') {
-            return `[${timestamp}] ${message}`;
-        }
-        
-        // Check for duplicate messages
-        const messageKey = `${level}:${message}`;
-        if (this.recentMessages.has(messageKey)) {
-            return null; // Skip duplicate message
-        }
-        
-        // Add message to recent set and schedule cleanup
-        this.recentMessages.add(messageKey);
-        setTimeout(() => {
-            this.recentMessages.delete(messageKey);
-        }, this.recentMessageTimeout);
-        
-        return message;
-    }
-
-    writeLog(level, args, originalMethod) {
-        try {
-            const formattedMessage = this.formatMessage(level, args);
-            
-            // Skip if message is null (duplicate) or empty
-            if (!formattedMessage) {
-                return;
-            }
-            
-            // For tutorial messages, check for duplicates within a longer timeframe
-            if (level === 'TUTORIAL') {
-                const messageKey = `${level}:${formattedMessage}`;
-                if (this.recentMessages.has(messageKey)) {
-                    return; // Skip duplicate tutorial message
-                }
-                this.recentMessages.add(messageKey);
-                setTimeout(() => {
-                    this.recentMessages.delete(messageKey);
-                }, this.recentMessageTimeout);
-            }
-            
-            // Write to file with newline
-            this.logStream.write(formattedMessage + '\n');
-            
-            // Write to console with color
-            switch (level) {
-                case 'WARN':
-                    originalMethod('\x1b[33m' + formattedMessage + '\x1b[0m'); // Yellow
-                    break;
-                case 'ERROR':
-                    originalMethod('\x1b[31m' + formattedMessage + '\x1b[0m'); // Red
-                    break;
-                default:
-                    originalMethod(formattedMessage);
-            }
-        } catch (error) {
-            // Fallback to original console if logging fails
-            originalMethod(...args);
-            originalMethod(`Logger error: ${error.message}`);
-        }
-    }
-
-    clearExportDirectory() {
-        const exportDir = 'epic_data_export';
-        
-        try {
-            if (fs.existsSync(exportDir)) {
-                const files = fs.readdirSync(exportDir);
-                files.forEach(file => {
-                    try {
-                        fs.unlinkSync(path.join(exportDir, file));
-                    } catch (error) {
-                        console.error(`Failed to delete file ${file}: ${error.message}`);
-                    }
-                });
-            } else {
-                fs.mkdirSync(exportDir, { recursive: true });
-            }
-            console.log('Export directory prepared');
-        } catch (error) {
-            console.error(`Failed to prepare export directory: ${error.message}`);
-            throw error;
-        }
-    }
-
-    close() {
-        if (this.logStream) {
-            this.logStream.end('\n=== End of Session ===\n');
-            this.logStream.close();
-        }
-    }
-
-    // Static method to get logger instance
-    static getInstance() {
-        if (!loggerInstance) {
-            loggerInstance = new Logger();
-        }
-        return loggerInstance;
-    }
-
-    // Add a method for direct writing to log file
-    writeDirectly(message) {
-        if (!this.initialized || !this.logStream) {
-            this.initializeLogStream();
-        }
-        this.logStream.write(message);
-    }
-}
-
-// Create a single logger instance
+// Get logger instance
 const logger = Logger.getInstance();
 
 // Ensure logger is closed properly on exit
@@ -325,9 +115,6 @@ process.on('unhandledRejection', (reason, promise) => {
     logger.close();
     process.exit(1);
 });
-
-// Export logger instance
-module.exports = logger;
 
 // Remove direct config loading
 const configPath = path.resolve(__dirname, 'backend_epic_using_jwt.ini');
@@ -493,10 +280,10 @@ class JWTManager {
                 logger.writeDirectly('  iss (Issuer)  : Client ID assigned by Epic\n');
                 logger.writeDirectly('  sub (Subject) : Same as Issuer for backend services\n');
                 logger.writeDirectly('  aud (Audience): Epic\'s token endpoint\n');
-                logger.writeDirectly('  jti (JWT ID)  : Unique identifier for this JWT\n');
-                logger.writeDirectly('  exp          : Expiration time\n');
-                logger.writeDirectly('  nbf          : Not valid before time\n');
-                logger.writeDirectly('  iat          : Time when JWT was issued\n\n');
+                logger.writeDirectly('  jti (JWT ID)  : Unique identifier for this JWT. This means we randomly generate this while respecting the format of the jti in Epic documentation.\n');
+                logger.writeDirectly('  exp           : Expiration time\n');
+                logger.writeDirectly('  nbf           : Not valid before time\n');
+                logger.writeDirectly('  iat           : Time when JWT was issued\n\n');
             }
 
             // Generate JWT silently (without additional logging)
@@ -507,7 +294,7 @@ class JWTManager {
                 logger.writeDirectly('--------------------------------------------------------------------------------\n');
                 logger.writeDirectly('Request Configuration:\n');
                 logger.writeDirectly(`  Token Endpoint       : ${this.tokenEndpoint}\n`);
-                logger.writeDirectly(`  Grant Type          : ${this.config.oauth_settings.grant_type}\n`);
+                logger.writeDirectly(`  Grant Type           : ${this.config.oauth_settings.grant_type}\n`);
                 logger.writeDirectly(`  Client Assertion Type: ${this.config.oauth_settings.client_assertion_type}\n\n`);
                 
                 const requestBody = {
@@ -987,17 +774,48 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
         const observationFile = getLatestObservationFile(exportDir);
         const observations = readNDJSON(observationFile);
         const patientStats = analyzeObservations(observations);
-        reportString = generateReport(patientStats);
         
-        // Log the observation report to the file
-        console.log('\nObservation Analysis Report');
-        console.log('=========================');
-        console.log(reportString);
+        // Write the observation analysis report with proper formatting
+        logger.writeDirectly('\n================================================================================\n');
+        logger.writeDirectly('                         Observation Analysis Report                             \n');
+        logger.writeDirectly('================================================================================\n\n');
+
+        // Calculate totals
+        let totalNormal = 0;
+        let totalAbnormal = 0;
+        Object.values(patientStats).forEach(stats => {
+            totalNormal += stats.normalCount;
+            totalAbnormal += stats.abnormalCount;
+        });
+
+        // Write summary section
+        logger.writeDirectly('Summary:\n');
+        logger.writeDirectly('---------\n');
+        logger.writeDirectly(`Total Observations: ${totalNormal + totalAbnormal}\n`);
+        logger.writeDirectly(`Total Normal Readings: ${totalNormal}\n`);
+        logger.writeDirectly(`Total Abnormal Readings: ${totalAbnormal}\n\n`);
+
+        // Write detailed observations
+        logger.writeDirectly('Detailed Observations:\n');
+        logger.writeDirectly('--------------------\n');
+        logger.writeDirectly('Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status\n');
+        logger.writeDirectly('-----|--------------|------------|------------------|--------|----------------|--------\n');
+
+        // Write patient-wise observations
+        Object.entries(patientStats).forEach(([patientId, stats]) => {
+            const allObservations = [...stats.normalObservations || [], ...stats.abnormalReadings || []];
+            allObservations.forEach(obs => {
+                logger.writeDirectly(`${obs.date} | ${stats.name} | ${patientId} | ${obs.type} | ${obs.value} | ${obs.referenceRange || 'N/A'} | ${obs.status || 'NORMAL'}\n`);
+            });
+        });
+
+        logger.writeDirectly('\n================================================================================\n\n');
     } catch (error) {
-        reportString = 'No observation data available for analysis.';
-        console.log('\nObservation Analysis Report');
-        console.log('=========================');
-        console.log(reportString);
+        logger.writeDirectly('\n================================================================================\n');
+        logger.writeDirectly('                         Observation Analysis Report                             \n');
+        logger.writeDirectly('================================================================================\n\n');
+        logger.writeDirectly('No observation data available for analysis.\n\n');
+        logger.writeDirectly('================================================================================\n\n');
     }
 
     const mailOptions = {

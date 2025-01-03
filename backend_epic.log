@@ -1,10 +1,34 @@
 
 ================================================================================
-New Session Started: 2025-01-03T13:39:56.324Z
+New Session Started: 2025-01-03T14:48:40.394Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
-Loading configuration...
+
+================================================================================
+                         Configuration Loading Tutorial                          
+================================================================================
+
+Loading configuration from: backend_epic_using_jwt.ini
+Understanding Configuration Sources:
+----------------------------------
+When you see a value in the configuration, it will show its source:
+
+1. (Source: INI file)
+   • Values read directly from the INI configuration file
+   • These are the raw, unprocessed values
+
+2. (Source: Variable substitution)
+   • Values that contained variables (${variable}) that have been resolved
+   • Example: ${app_folder_name}/epic_data_export → C:/FHIR/BackendEpic/epic_data_export
+
+3. (Source: Environment variable)
+   • Values that were overridden by environment variables
+   • Useful for sensitive information like API keys
+
+Now loading the configuration values...
+--------------------------------------------------------------------------------
+
 Configuration values before resolution:
 paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
 paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
@@ -95,9 +119,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-03T13:39:56.000Z
-  Not Before (nbf) : 2025-01-03T13:39:56.000Z
-  Expiry time (exp): 2025-01-03T13:44:56.000Z
+  Current time (iat): 2025-01-03T14:48:40.000Z
+  Not Before (nbf) : 2025-01-03T14:48:40.000Z
+  Expiry time (exp): 2025-01-03T14:53:40.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -106,26 +130,26 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "846ce1bd-160f-42be-90ab-acf31086a930",
-  "exp": 1735911896,
-  "nbf": 1735911596,
-  "iat": 1735911596
+  "jti": "028520e0-5b13-47c7-ac9b-3db0777bd683",
+  "exp": 1735916020,
+  "nbf": 1735915720,
+  "iat": 1735915720
 }
 
 Required Claims Explanation:
   iss (Issuer)  : Client ID assigned by Epic
   sub (Subject) : Same as Issuer for backend services
   aud (Audience): Epic's token endpoint
-  jti (JWT ID)  : Unique identifier for this JWT
-  exp          : Expiration time
-  nbf          : Not valid before time
-  iat          : Time when JWT was issued
+  jti (JWT ID)  : Unique identifier for this JWT. This means we randomly generate this while respecting the format of the jti in Epic documentation.
+  exp           : Expiration time
+  nbf           : Not valid before time
+  iat           : Time when JWT was issued
 
 STEP 2: PREPARING TOKEN REQUEST
 --------------------------------------------------------------------------------
 Request Configuration:
   Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-  Grant Type          : client_credentials
+  Grant Type           : client_credentials
   Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
 
 Request Body:
@@ -133,7 +157,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMWIxNDZmZTEtMWJjNC00ODQwLThhYzEtZGMzNmVlNDJkYWNhIiwiZXhwIjoxNzM1OTExODk2LCJuYmYiOjE3MzU5MTE1OTYsImlhdCI6MTczNTkxMTU5Nn0.qdX228jHXCzhnSJ-oAdmH_YqgFUrIqUO5mLF8JjfBrPpmmvA5R8CpJyQb0v-b-A8iB9-9dz71O_cd3FKHD96CwUufsEv7cNhVQwK06TjJgQ799bZ1Z2Icrz7vtZ_kQLTIwpzgA0ZtwWEv4yJEt6GXPUKoU58C1LCN2yF1rAYpMglcB_KwAVqOfo8hNOz2fgFv0uTACDdwHw-O6PQi6lkRx33gkodt_qW74aQvhGEJ6hQzP0mXCG6khM3KekwpY1gj50fOm338BdHPCD36uHlMH_ZG4i2aTi4zN5wgHzE-lGDXyXw3loXztRWEX3btQRo2-Wj3y9QZltHtqLnI-3oew"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiZmFhYTQwNWEtMjliZS00ZGYyLTljOTEtNWZhYjRhMTNiZjY2IiwiZXhwIjoxNzM1OTE2MDIwLCJuYmYiOjE3MzU5MTU3MjAsImlhdCI6MTczNTkxNTcyMH0.hRpB-gMnPObVQQkUjPS1weeCfj6TesaOxktUxFjQiKXFqiaRDjvdT6Z2N1AHw2PHzNSU_zuMMFAi471ydiNTHvFf0RINfDNri8rrkYJdKQs2g6oLDpLE5JLaqO58CDpyOapuPTkeGnQqyZMxurHDjyQJ84UeEnTOPkfbzJy0auQ7q_1CktLyY-yX7qhHEdeuefC5PHTlqnyYIGQDLGnCWU7hvAV0p_i11F3OcOVq5PLMsdtF-JUzn8kRT-mJov3JWGr-iQQtDJZcd1d8A6QsqDTyjm8XyOtu6T64tA-Ez5aZQ6CUcnct1otddjTap_SzgTub4gSKAHqEsRyin4tRcQ"
 }
 
 STEP 3: SENDING TOKEN REQUEST
@@ -173,8 +197,11 @@ STEP 4: TOKEN RESPONSE
 
 Processing Resources
 backend_epic_using_jwt.js completed successfully
-Observation Analysis Report
-=========================
+
+================================================================================
+                         Observation Analysis Report                             
+================================================================================
+
 Summary:
 ---------
 Total Observations: 389
@@ -574,6 +601,9 @@ Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | 
 2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
 2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | 36.5-37.5 °C | ABNORMAL (Low)
 2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+
+================================================================================
+
 Completion email sent successfully
 
 === End of Session ===

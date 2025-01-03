@@ -30,6 +30,7 @@
 const fs = require('fs');
 const ini = require('ini');
 const path = require('path');
+const Logger = require('../utils/Logger');
 
 class ConfigManager {
     constructor(configPath = 'backend_epic_using_jwt.ini') {
@@ -37,7 +38,26 @@ class ConfigManager {
     }
 
     async loadConfig() {
-        console.log('Loading configuration...');
+        const logger = Logger.getInstance();
+        logger.writeDirectly('\n================================================================================\n');
+        logger.writeDirectly('                         Configuration Loading Tutorial                          \n');
+        logger.writeDirectly('================================================================================\n\n');
+        logger.writeDirectly('Loading configuration from: ' + this.configPath + '\n');
+        logger.writeDirectly('Understanding Configuration Sources:\n');
+        logger.writeDirectly('----------------------------------\n');
+        logger.writeDirectly('When you see a value in the configuration, it will show its source:\n\n');
+        logger.writeDirectly('1. (Source: INI file)\n');
+        logger.writeDirectly('   • Values read directly from the INI configuration file\n');
+        logger.writeDirectly('   • These are the raw, unprocessed values\n\n');
+        logger.writeDirectly('2. (Source: Variable substitution)\n');
+        logger.writeDirectly('   • Values that contained variables (${variable}) that have been resolved\n');
+        logger.writeDirectly('   • Example: ${app_folder_name}/epic_data_export → C:/FHIR/BackendEpic/epic_data_export\n\n');
+        logger.writeDirectly('3. (Source: Environment variable)\n');
+        logger.writeDirectly('   • Values that were overridden by environment variables\n');
+        logger.writeDirectly('   • Useful for sensitive information like API keys\n\n');
+        logger.writeDirectly('Now loading the configuration values...\n');
+        logger.writeDirectly('--------------------------------------------------------------------------------\n\n');
+
         try {
             if (!fs.existsSync(this.configPath)) {
                 console.log('Configuration file not found, creating default configuration...');
