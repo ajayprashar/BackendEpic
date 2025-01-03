@@ -1,754 +1,229 @@
 
 ================================================================================
-New Session Started: 2025-01-02T23:03:44.947Z
+New Session Started: 2025-01-03T07:03:36.473Z
 ================================================================================
-Starting backend_epic_using_jwt.js... [Source: backend_epic_using_jwt.js]
-Loading configuration... [Source: ConfigManager.js]
 
-Configuration values before resolution: [Source: ConfigManager.js]
-paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file) [Source: ConfigManager.js]
-paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file) [Source: ConfigManager.js]
-paths.private_key: ${app_folder_name}\private.key (Source: INI file) [Source: ConfigManager.js]
-paths.public_key: ${app_folder_name}\publickey509.pem (Source: INI file) [Source: ConfigManager.js]
-paths.base64_public_key: ${app_folder_name}\publickey509.b64 (Source: INI file) [Source: ConfigManager.js]
-rsa_settings.rsa_key_size: 2048 (Source: INI file) [Source: ConfigManager.js]
-rsa_settings.rsa_public_encoding: spki (Source: INI file) [Source: ConfigManager.js]
-rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file) [Source: ConfigManager.js]
-jwt_settings.jwt_algorithm: RS384 (Source: INI file) [Source: ConfigManager.js]
-jwt_settings.jwt_expiry_minutes: 5 (Source: INI file) [Source: ConfigManager.js]
-oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file) [Source: ConfigManager.js]
-oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file) [Source: ConfigManager.js]
-oauth_settings.grant_type: client_credentials (Source: INI file) [Source: ConfigManager.js]
-oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file) [Source: ConfigManager.js]
-epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file) [Source: ConfigManager.js]
-epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file) [Source: ConfigManager.js]
-lab_data_settings.lab_data_category: laboratory (Source: INI file) [Source: ConfigManager.js]
-lab_data_settings.lab_data_format: application/fhir+ndjson (Source: INI file) [Source: ConfigManager.js]
-lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file) [Source: ConfigManager.js]
-lab_data_settings.lab_data_max_attempts: 30 (Source: INI file) [Source: ConfigManager.js]
-lab_data_settings.lab_data_check_interval: 5000 (Source: INI file) [Source: ConfigManager.js]
-lab_data_settings.lab_data_timeout: 150000 (Source: INI file) [Source: ConfigManager.js]
-data_sources.epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file) [Source: ConfigManager.js]
-data_sources.epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file) [Source: ConfigManager.js]
-email.smtp_host: 127.0.0.1 (Source: INI file) [Source: ConfigManager.js]
-email.smtp_port: 1025 (Source: INI file) [Source: ConfigManager.js]
-email.smtp_secure: false (Source: INI file) [Source: ConfigManager.js]
-email.smtp_user: ajay@aprashar.com (Source: INI file) [Source: ConfigManager.js]
-email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: INI file) [Source: ConfigManager.js]
-email.notification_to: ajay@aprashar.com (Source: INI file) [Source: ConfigManager.js]
-email.notification_from: ajay@aprashar.com (Source: INI file) [Source: ConfigManager.js]
-api_settings.page_size: 100 (Source: INI file) [Source: ConfigManager.js]
-api_settings.max_pages: 100 (Source: INI file) [Source: ConfigManager.js]
-data_export.format: application/fhir+json (Source: INI file) [Source: ConfigManager.js]
-data_export.ndjson_format: application/fhir+ndjson (Source: INI file) [Source: ConfigManager.js]
-data_export.json_format: application/json (Source: INI file) [Source: ConfigManager.js]
-data_export.default_count: 100 (Source: INI file) [Source: ConfigManager.js]
-file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: INI file) [Source: ConfigManager.js]
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file) [Source: ConfigManager.js]
-
-Configuration values after resolution: [Source: ConfigManager.js]
-paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution) [Source: ConfigManager.js]
-paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution) [Source: ConfigManager.js]
-paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution) [Source: ConfigManager.js]
-paths.public_key: C:\FHIR\BackendEpic\publickey509.pem (Source: Variable substitution) [Source: ConfigManager.js]
-paths.base64_public_key: C:\FHIR\BackendEpic\publickey509.b64 (Source: Variable substitution) [Source: ConfigManager.js]
-rsa_settings.rsa_key_size: 2048 (Source: Variable substitution) [Source: ConfigManager.js]
-rsa_settings.rsa_public_encoding: spki (Source: Variable substitution) [Source: ConfigManager.js]
-rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution) [Source: ConfigManager.js]
-jwt_settings.jwt_algorithm: RS384 (Source: Variable substitution) [Source: ConfigManager.js]
-jwt_settings.jwt_expiry_minutes: 5 (Source: Variable substitution) [Source: ConfigManager.js]
-oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: Variable substitution) [Source: ConfigManager.js]
-oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: Variable substitution) [Source: ConfigManager.js]
-oauth_settings.grant_type: client_credentials (Source: Variable substitution) [Source: ConfigManager.js]
-oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: Variable substitution) [Source: ConfigManager.js]
-epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Variable substitution) [Source: ConfigManager.js]
-epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: Variable substitution) [Source: ConfigManager.js]
-lab_data_settings.lab_data_category: laboratory (Source: Variable substitution) [Source: ConfigManager.js]
-lab_data_settings.lab_data_format: application/fhir+ndjson (Source: Variable substitution) [Source: ConfigManager.js]
-lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: Variable substitution) [Source: ConfigManager.js]
-lab_data_settings.lab_data_max_attempts: 30 (Source: Variable substitution) [Source: ConfigManager.js]
-lab_data_settings.lab_data_check_interval: 5000 (Source: Variable substitution) [Source: ConfigManager.js]
-lab_data_settings.lab_data_timeout: 150000 (Source: Variable substitution) [Source: ConfigManager.js]
-data_sources.epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution) [Source: ConfigManager.js]
-data_sources.epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution) [Source: ConfigManager.js]
-email.smtp_host: 127.0.0.1 (Source: Variable substitution) [Source: ConfigManager.js]
-email.smtp_port: 1025 (Source: Variable substitution) [Source: ConfigManager.js]
-email.smtp_secure: false (Source: Variable substitution) [Source: ConfigManager.js]
-email.smtp_user: ajay@aprashar.com (Source: Variable substitution) [Source: ConfigManager.js]
-email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: Variable substitution) [Source: ConfigManager.js]
-email.notification_to: ajay@aprashar.com (Source: Variable substitution) [Source: ConfigManager.js]
-email.notification_from: ajay@aprashar.com (Source: Variable substitution) [Source: ConfigManager.js]
-api_settings.page_size: 100 (Source: Variable substitution) [Source: ConfigManager.js]
-api_settings.max_pages: 100 (Source: Variable substitution) [Source: ConfigManager.js]
-data_export.format: application/fhir+json (Source: Variable substitution) [Source: ConfigManager.js]
-data_export.ndjson_format: application/fhir+ndjson (Source: Variable substitution) [Source: ConfigManager.js]
-data_export.json_format: application/json (Source: Variable substitution) [Source: ConfigManager.js]
-data_export.default_count: 100 (Source: Variable substitution) [Source: ConfigManager.js]
-file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution) [Source: ConfigManager.js]
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution) [Source: ConfigManager.js]
-
-Clearing export directory: C:\FHIR\BackendEpic\epic_data_export [Source: backend_epic_using_jwt.js]
-
-Clearing export directory: epic_data_export [Source: backend_epic_using_jwt.js]
-Deleted: AllergyIntolerance_data_2025-01-02T22-52-03.579Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Condition_data_2025-01-02T22-52-04.832Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Device_data_2025-01-02T22-52-05.475Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: DiagnosticReport_data_2025-01-02T22-52-06.383Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: DocumentReference_data_2025-01-02T22-52-09.256Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Goal_data_2025-01-02T22-52-09.948Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Immunization_data_2025-01-02T22-52-10.655Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: MedicationRequest_data_2025-01-02T22-52-11.788Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Observation_data_2025-01-02T22-52-15.406Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Patient_data_2025-01-02T22-52-16.161Z.ndjson [Source: backend_epic_using_jwt.js]
-Deleted: Procedure_data_2025-01-02T22-52-17.031Z.ndjson [Source: backend_epic_using_jwt.js]
-Export directory cleared [Source: backend_epic_using_jwt.js]
-Initializing key manager... [Source: backend_epic_using_jwt.js]
-Checking for existing key pair... [Source: backend_epic_using_jwt.js]
-Existing key pair found (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem) [Source: backend_epic_using_jwt.js]
-Initializing EPIC client... [Source: backend_epic_using_jwt.js]
-Requesting access token... [Source: backend_epic_using_jwt.js]
-
-=== Epic OAuth 2.0 Token Request Tutorial === [Source: backend_epic_using_jwt.js]
-Step 1: JWT Assertion Generation [Source: backend_epic_using_jwt.js]
--------------------------------- [Source: backend_epic_using_jwt.js]
-
-=== JWT Generation Tutorial === [Source: backend_epic_using_jwt.js]
-Step 1: Preparing JWT Claims [Source: backend_epic_using_jwt.js]
----------------------------- [Source: backend_epic_using_jwt.js]
-• Setting up timestamps: [Source: backend_epic_using_jwt.js]
-  - Current time (iat): EPOCH=1735859024 | Human=2025-01-02T23:03:44.000Z [Source: backend_epic_using_jwt.js]
-  - Not Before (nbf): EPOCH=1735859024 | Human=2025-01-02T23:03:44.000Z (same as iat) [Source: backend_epic_using_jwt.js]
-  - Expiry time (exp): EPOCH=1735859324 | Human=2025-01-02T23:08:44.000Z (iat + 5 minutes) [Source: backend_epic_using_jwt.js]
-  - Token validity window: 5 minutes from issuance to allow time for token retrieval and API calls [Source: backend_epic_using_jwt.js]
-
-Step 2: JWT Claims Structure [Source: backend_epic_using_jwt.js]
-------------------------- [Source: backend_epic_using_jwt.js]
-• Required claims for Epic: [Source: backend_epic_using_jwt.js]
-  - iss (Issuer): e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 [Source: backend_epic_using_jwt.js]
-  - sub (Subject): e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (same as Issuer for backend services) [Source: backend_epic_using_jwt.js]
-  - aud (Audience): https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token [Source: backend_epic_using_jwt.js]
-  - jti (JWT ID): f1309a10-c63e-4c95-a156-4dd71a0980bc (random unique identifier) [Source: backend_epic_using_jwt.js]
-  - exp (Expiration): EPOCH=1735859324 | Human=2025-01-02T23:08:44.000Z (iat + 5 min window) [Source: backend_epic_using_jwt.js]
-  - nbf (Not Before): EPOCH=1735859024 | Human=2025-01-02T23:03:44.000Z (current time) [Source: backend_epic_using_jwt.js]
-  - iat (Issued At): EPOCH=1735859024 | Human=2025-01-02T23:03:44.000Z (current time) [Source: backend_epic_using_jwt.js]
-
-• Actual JWT Claims (JSON): [Source: backend_epic_using_jwt.js]
+Starting backend_epic_using_jwt.js...
+Loading configuration...
+Configuration values before resolution:
+paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
+paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
+paths.private_key: ${app_folder_name}\private.key (Source: INI file)
+paths.public_key: ${app_folder_name}\publickey509.pem (Source: INI file)
+paths.base64_public_key: ${app_folder_name}\publickey509.b64 (Source: INI file)
+rsa_settings.rsa_key_size: 2048 (Source: INI file)
+rsa_settings.rsa_public_encoding: spki (Source: INI file)
+rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file)
+jwt_settings.jwt_algorithm: RS384 (Source: INI file)
+jwt_settings.jwt_expiry_minutes: 5 (Source: INI file)
+oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file)
+oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file)
+oauth_settings.grant_type: client_credentials (Source: INI file)
+oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file)
+epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file)
+epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file)
+lab_data_settings.lab_data_category: laboratory (Source: INI file)
+lab_data_settings.lab_data_format: application/fhir+ndjson (Source: INI file)
+lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file)
+lab_data_settings.lab_data_max_attempts: 30 (Source: INI file)
+lab_data_settings.lab_data_check_interval: 5000 (Source: INI file)
+lab_data_settings.lab_data_timeout: 150000 (Source: INI file)
+data_sources.epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file)
+data_sources.epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file)
+email.smtp_host: 127.0.0.1 (Source: INI file)
+email.smtp_port: 1025 (Source: INI file)
+email.smtp_secure: false (Source: INI file)
+email.smtp_user: ajay@aprashar.com (Source: INI file)
+email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: INI file)
+email.notification_to: ajay@aprashar.com (Source: INI file)
+email.notification_from: ajay@aprashar.com (Source: INI file)
+api_settings.page_size: 100 (Source: INI file)
+api_settings.max_pages: 100 (Source: INI file)
+data_export.format: application/fhir+json (Source: INI file)
+data_export.ndjson_format: application/fhir+ndjson (Source: INI file)
+data_export.json_format: application/json (Source: INI file)
+data_export.default_count: 100 (Source: INI file)
+file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: INI file)
+file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file)
+Configuration values after resolution:
+paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution)
+paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution)
+paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution)
+paths.public_key: C:\FHIR\BackendEpic\publickey509.pem (Source: Variable substitution)
+paths.base64_public_key: C:\FHIR\BackendEpic\publickey509.b64 (Source: Variable substitution)
+rsa_settings.rsa_key_size: 2048 (Source: Variable substitution)
+rsa_settings.rsa_public_encoding: spki (Source: Variable substitution)
+rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution)
+jwt_settings.jwt_algorithm: RS384 (Source: Variable substitution)
+jwt_settings.jwt_expiry_minutes: 5 (Source: Variable substitution)
+oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: Variable substitution)
+oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: Variable substitution)
+oauth_settings.grant_type: client_credentials (Source: Variable substitution)
+oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: Variable substitution)
+epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Variable substitution)
+epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: Variable substitution)
+lab_data_settings.lab_data_category: laboratory (Source: Variable substitution)
+lab_data_settings.lab_data_format: application/fhir+ndjson (Source: Variable substitution)
+lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: Variable substitution)
+lab_data_settings.lab_data_max_attempts: 30 (Source: Variable substitution)
+lab_data_settings.lab_data_check_interval: 5000 (Source: Variable substitution)
+lab_data_settings.lab_data_timeout: 150000 (Source: Variable substitution)
+data_sources.epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution)
+data_sources.epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution)
+email.smtp_host: 127.0.0.1 (Source: Variable substitution)
+email.smtp_port: 1025 (Source: Variable substitution)
+email.smtp_secure: false (Source: Variable substitution)
+email.smtp_user: ajay@aprashar.com (Source: Variable substitution)
+email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: Variable substitution)
+email.notification_to: ajay@aprashar.com (Source: Variable substitution)
+email.notification_from: ajay@aprashar.com (Source: Variable substitution)
+api_settings.page_size: 100 (Source: Variable substitution)
+api_settings.max_pages: 100 (Source: Variable substitution)
+data_export.format: application/fhir+json (Source: Variable substitution)
+data_export.ndjson_format: application/fhir+ndjson (Source: Variable substitution)
+data_export.json_format: application/json (Source: Variable substitution)
+data_export.default_count: 100 (Source: Variable substitution)
+file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution)
+file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution)
+Export directory prepared
+Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
+================================================================================
+================================================================================
+Epic OAuth 2.0 Token Request Tutorial
+Epic OAuth 2.0 Token Request Tutorial
+================================================================================
+STEP 1: JWT ASSERTION GENERATION
+STEP 1: JWT ASSERTION GENERATION
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Timestamp Configuration:
+Timestamp Configuration:
+Current time (iat): 2025-01-03T07:03:36.000Z
+Current time (iat): 2025-01-03T07:03:36.000Z
+Not Before (nbf) : 2025-01-03T07:03:36.000Z
+Not Before (nbf) : 2025-01-03T07:03:36.000Z
+Expiry time (exp): 2025-01-03T07:08:36.000Z
+Expiry time (exp): 2025-01-03T07:08:36.000Z
+Token validity   : 5 minutes
+Token validity   : 5 minutes
+JWT Claims:
+JWT Claims:
 {
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "f1309a10-c63e-4c95-a156-4dd71a0980bc",
-  "exp": 1735859324,
-  "nbf": 1735859024,
-  "iat": 1735859024
-} [Source: backend_epic_using_jwt.js]
-
-Step 3: Signing JWT [Source: backend_epic_using_jwt.js]
------------------- [Source: backend_epic_using_jwt.js]
-• Algorithm: RS384 [Source: backend_epic_using_jwt.js]
-• Using private key to sign JWT... (Private Key starting with "MIIEvAIBADANBg" paired with Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4 from publickey509.pem) [Source: backend_epic_using_jwt.js]
-
-• Generated JWT Token: [Source: backend_epic_using_jwt.js]
---------------------- [Source: backend_epic_using_jwt.js]
-Header (decoded): [Source: backend_epic_using_jwt.js]
-{
-  "alg": "RS384",
-  "typ": "JWT"
-} [Source: backend_epic_using_jwt.js]
-
-Payload (decoded): [Source: backend_epic_using_jwt.js]
+  "jti": "916a4c8e-77f9-4263-8543-229eb2223b8c",
+  "exp": 1735888116,
+  "nbf": 1735887816,
+  "iat": 1735887816
+}
 {
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "f1309a10-c63e-4c95-a156-4dd71a0980bc",
-  "exp": 1735859324,
-  "nbf": 1735859024,
-  "iat": 1735859024
-} [Source: backend_epic_using_jwt.js]
-
-Complete JWT Token (used in request): [Source: backend_epic_using_jwt.js]
-eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiZjEzMDlhMTAtYzYzZS00Yzk1LWExNTYtNGRkNzFhMDk4MGJjIiwiZXhwIjoxNzM1ODU5MzI0LCJuYmYiOjE3MzU4NTkwMjQsImlhdCI6MTczNTg1OTAyNH0.LCHgzahp3r0CQaeiTzkx17FrXO8Me_EHNwZFhKpsZr3THsMt3c0IkRxqvXKjPMDLOd4LcHiyG-ZQd0uJHy-EwUusuTtksxpbzwuUZovJBCSSdsDcNupEwaAm4VMJBEtvJZNhROnSi_VHSujxFJEeW3jvvIw9bT-n4ym17PMVQlTNq1XoIMYR1m1XL8zbCAJDWUf29ToXNbiF9Hs3R5fFg415z_cJqMoS-w6SJAQDL6W8fFlo7m07XdgYr8AaaKIDVqdKf5BMSQhxYLhU5shIScOL8h7Tx5sx-gbmcUtr9j5kKpb2yvNGT3e9CG1rCLbiJLDXp7FWqJYFkzqGwf1_Yw [Source: backend_epic_using_jwt.js]
-
-✓ JWT successfully generated and signed [Source: backend_epic_using_jwt.js]
-===============================
- [Source: backend_epic_using_jwt.js]
-
-Step 2: Preparing Token Request [Source: backend_epic_using_jwt.js]
------------------------------- [Source: backend_epic_using_jwt.js]
-• Endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token [Source: backend_epic_using_jwt.js]
-• Grant Type: client_credentials [Source: backend_epic_using_jwt.js]
-• Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer [Source: backend_epic_using_jwt.js]
-
-Step 3: Sending Token Request [Source: backend_epic_using_jwt.js]
----------------------------- [Source: backend_epic_using_jwt.js]
-• Making POST request to Epic's token endpoint... [Source: backend_epic_using_jwt.js]
-✓ Access token received successfully [Source: backend_epic_using_jwt.js]
-• Token type: Bearer [Source: backend_epic_using_jwt.js]
-• Expires in: 3600 seconds [Source: backend_epic_using_jwt.js]
-=========================================
- [Source: backend_epic_using_jwt.js]
-Access token received successfully [Source: backend_epic_using_jwt.js]
-Retrieving resource data... [Source: backend_epic_using_jwt.js]
-
-Starting data retrieval process... [Source: backend_epic_using_jwt.js]
-Loading patient roster from CSV... [Source: backend_epic_using_jwt.js]
-Loaded 7 patients from roster [Source: backend_epic_using_jwt.js]
-Loading resources list from CSV... [Source: backend_epic_using_jwt.js]
-Loaded 11 resources from list [Source: backend_epic_using_jwt.js]
-
-Processing resources for each patient: [Source: backend_epic_using_jwt.js]
-===================================== [Source: backend_epic_using_jwt.js]
-
-Resource: AllergyIntolerance [Source: backend_epic_using_jwt.js]
-Description: Patient allergies and intolerances [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/AllergyIntolerance?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total AllergyIntolerance results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T23-03-46.328Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed AllergyIntolerance: 9 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Condition [Source: backend_epic_using_jwt.js]
-Description: Patient conditions and diagnoses [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 9 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 9 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 9 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 3 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 3 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 3 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 4 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 4 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 4 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Condition?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Condition results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-Exported 23 records to: C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T23-03-47.583Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Condition: 23 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Device [Source: backend_epic_using_jwt.js]
-Description: Medical devices and implants [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Device?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Device results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-Exported 8 records to: C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T23-03-48.217Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Device: 8 total records [Source: backend_epic_using_jwt.js]
-
-Resource: DiagnosticReport [Source: backend_epic_using_jwt.js]
-Description: Clinical diagnostic reports [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 7 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 7 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 7 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DiagnosticReport?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DiagnosticReport results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-Exported 14 records to: C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T23-03-49.198Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed DiagnosticReport: 14 total records [Source: backend_epic_using_jwt.js]
-
-Resource: DocumentReference [Source: backend_epic_using_jwt.js]
-Description: Clinical documents and notes [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 88 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 88 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 88 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 22 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 22 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 22 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 14 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 14 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 14 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 21 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 21 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 21 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 13 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 13 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 13 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 3 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 3 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 3 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/DocumentReference?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 17 results [Source: backend_epic_using_jwt.js]
-  ✓ Total DocumentReference results: 17 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 17 records [Source: backend_epic_using_jwt.js]
-Exported 178 records to: C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T23-03-52.180Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed DocumentReference: 178 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Goal [Source: backend_epic_using_jwt.js]
-Description: Patient care goals [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 12 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 12 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 12 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Goal?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Goal results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-Exported 19 records to: C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T23-03-52.881Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Goal: 19 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Immunization [Source: backend_epic_using_jwt.js]
-Description: Vaccination records [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 7 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 7 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 7 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Immunization?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Immunization results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-Exported 13 records to: C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T23-03-53.541Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Immunization: 13 total records [Source: backend_epic_using_jwt.js]
-
-Resource: MedicationRequest [Source: backend_epic_using_jwt.js]
-Description: Medication prescriptions [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/MedicationRequest?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total MedicationRequest results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-Exported 9 records to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T23-03-54.545Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed MedicationRequest: 9 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Observation [Source: backend_epic_using_jwt.js]
-Description: Lab results and vital signs [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 101 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 101 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 101 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 101 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 101 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 101 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 101 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 101 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 101 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 10 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 10 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 10 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 8 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 8 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 8 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Observation?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3&category=vital-signs%2Claboratory&_sort=-date [Source: backend_epic_using_jwt.js]
-  • Retrieved 74 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Observation results: 74 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 74 records [Source: backend_epic_using_jwt.js]
-Exported 396 records to: C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T23-03-58.243Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Observation: 396 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Patient [Source: backend_epic_using_jwt.js]
-Description: Basic patient demographics [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/erXuFYUfucBZaryVksYEcMg3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eq081-VQEgP8drUUqCWzHfw3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eAB3mDIBBcyUKviyzrxsnAw3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/egqBHVfQlt4Bw3XGXoxVxHg3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eIXesllypH3M9tAA5WdJftQ3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/eh2xYHuzl9nkSFVvV3osUHg3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/e0w0LEDCYtfckT6N.CkJKCw3?_format=application%2Ffhir%2Bjson&_count=100 [Source: backend_epic_using_jwt.js]
-  • Retrieved single resource [Source: backend_epic_using_jwt.js]
-  ✓ Total Patient results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-Exported 7 records to: C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T23-03-59.013Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Patient: 7 total records [Source: backend_epic_using_jwt.js]
-
-Resource: Procedure [Source: backend_epic_using_jwt.js]
-Description: Medical procedures performed  [Source: backend_epic_using_jwt.js]
-
-  Processing: Camila Lopez (ID: erXuFYUfucBZaryVksYEcMg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=erXuFYUfucBZaryVksYEcMg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 3 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 3 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 3 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Derrick Lin (ID: eq081-VQEgP8drUUqCWzHfw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eq081-VQEgP8drUUqCWzHfw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Desiree Powell (ID: eAB3mDIBBcyUKviyzrxsnAw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eAB3mDIBBcyUKviyzrxsnAw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Elijah Davis (ID: egqBHVfQlt4Bw3XGXoxVxHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=egqBHVfQlt4Bw3XGXoxVxHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Linda Ross (ID: eIXesllypH3M9tAA5WdJftQ3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eIXesllypH3M9tAA5WdJftQ3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Olivia Roberts (ID: eh2xYHuzl9nkSFVvV3osUHg3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=eh2xYHuzl9nkSFVvV3osUHg3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 1 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 1 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 1 records [Source: backend_epic_using_jwt.js]
-
-  Processing: Warren McGinnis  (ID: e0w0LEDCYtfckT6N.CkJKCw3) [Source: backend_epic_using_jwt.js]
-  • Querying Epic's FHIR API: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Procedure?_format=application%2Ffhir%2Bjson&_count=100&patient=e0w0LEDCYtfckT6N.CkJKCw3 [Source: backend_epic_using_jwt.js]
-  • Retrieved 2 results [Source: backend_epic_using_jwt.js]
-  ✓ Total Procedure results: 2 [Source: backend_epic_using_jwt.js]
-  ✓ Retrieved 2 records [Source: backend_epic_using_jwt.js]
-Exported 10 records to: C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T23-03-59.866Z.ndjson [Source: backend_epic_using_jwt.js]
-
-✓ Completed Procedure: 10 total records [Source: backend_epic_using_jwt.js]
-
-Data Retrieval Summary [Source: backend_epic_using_jwt.js]
-==================== [Source: backend_epic_using_jwt.js]
-
-Exported Files Summary (Filename | Size | Path | Records) [Source: backend_epic_using_jwt.js]
-================================================ [Source: backend_epic_using_jwt.js]
-AllergyIntolerance_data_2025-01-02T23-03-46.328Z.ndjson | 11.31 KB | C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance_data_2025-01-02T23-03-46.328Z.ndjson | 9 [Source: backend_epic_using_jwt.js]
-Condition_data_2025-01-02T23-03-47.583Z.ndjson | 26.94 KB | C:\FHIR\BackendEpic\epic_data_export\Condition_data_2025-01-02T23-03-47.583Z.ndjson | 23 [Source: backend_epic_using_jwt.js]
-Device_data_2025-01-02T23-03-48.217Z.ndjson | 4.93 KB | C:\FHIR\BackendEpic\epic_data_export\Device_data_2025-01-02T23-03-48.217Z.ndjson | 8 [Source: backend_epic_using_jwt.js]
-DiagnosticReport_data_2025-01-02T23-03-49.198Z.ndjson | 18.68 KB | C:\FHIR\BackendEpic\epic_data_export\DiagnosticReport_data_2025-01-02T23-03-49.198Z.ndjson | 14 [Source: backend_epic_using_jwt.js]
-DocumentReference_data_2025-01-02T23-03-52.180Z.ndjson | 275.89 KB | C:\FHIR\BackendEpic\epic_data_export\DocumentReference_data_2025-01-02T23-03-52.180Z.ndjson | 178 [Source: backend_epic_using_jwt.js]
-Goal_data_2025-01-02T23-03-52.881Z.ndjson | 16.34 KB | C:\FHIR\BackendEpic\epic_data_export\Goal_data_2025-01-02T23-03-52.881Z.ndjson | 19 [Source: backend_epic_using_jwt.js]
-Immunization_data_2025-01-02T23-03-53.541Z.ndjson | 9.79 KB | C:\FHIR\BackendEpic\epic_data_export\Immunization_data_2025-01-02T23-03-53.541Z.ndjson | 13 [Source: backend_epic_using_jwt.js]
-MedicationRequest_data_2025-01-02T23-03-54.545Z.ndjson | 22.03 KB | C:\FHIR\BackendEpic\epic_data_export\MedicationRequest_data_2025-01-02T23-03-54.545Z.ndjson | 9 [Source: backend_epic_using_jwt.js]
-Observation_data_2025-01-02T23-03-58.243Z.ndjson | 738.81 KB | C:\FHIR\BackendEpic\epic_data_export\Observation_data_2025-01-02T23-03-58.243Z.ndjson | 396 [Source: backend_epic_using_jwt.js]
-Patient_data_2025-01-02T23-03-59.013Z.ndjson | 23.58 KB | C:\FHIR\BackendEpic\epic_data_export\Patient_data_2025-01-02T23-03-59.013Z.ndjson | 7 [Source: backend_epic_using_jwt.js]
-Procedure_data_2025-01-02T23-03-59.866Z.ndjson | 10.62 KB | C:\FHIR\BackendEpic\epic_data_export\Procedure_data_2025-01-02T23-03-59.866Z.ndjson | 10 [Source: backend_epic_using_jwt.js]
-
-backend_epic_using_jwt.js completed successfully [Source: backend_epic_using_jwt.js]
-
-Observation Analysis Report [Source: backend_epic_using_jwt.js]
-========================= [Source: backend_epic_using_jwt.js]
+  "jti": "916a4c8e-77f9-4263-8543-229eb2223b8c",
+  "exp": 1735888116,
+  "nbf": 1735887816,
+  "iat": 1735887816
+}
+Required Claims Explanation:
+Required Claims Explanation:
+iss (Issuer)  : Client ID assigned by Epic
+iss (Issuer)  : Client ID assigned by Epic
+sub (Subject) : Same as Issuer for backend services
+sub (Subject) : Same as Issuer for backend services
+aud (Audience): Epic's token endpoint
+aud (Audience): Epic's token endpoint
+jti (JWT ID)  : Unique identifier for this JWT
+jti (JWT ID)  : Unique identifier for this JWT
+exp          : Expiration time
+exp          : Expiration time
+nbf          : Not valid before time
+nbf          : Not valid before time
+iat          : Time when JWT was issued
+iat          : Time when JWT was issued
+STEP 2: PREPARING TOKEN REQUEST
+STEP 2: PREPARING TOKEN REQUEST
+--------------------------------------------------------------------------------
+Request Configuration:
+Request Configuration:
+Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+Grant Type          : client_credentials
+Grant Type          : client_credentials
+Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+Request Body:
+Request Body:
+{
+  "grant_type": "client_credentials",
+  "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiM2VlZjE1NWYtMjFjNi00YWIzLTk3ZjYtMzNjZWZiZTAxNDU5IiwiZXhwIjoxNzM1ODg4MTE2LCJuYmYiOjE3MzU4ODc4MTYsImlhdCI6MTczNTg4NzgxNn0.PVGMcceobFQoEHMRPjCMftsLvbnfN4-PE26btR5I5aTPkD3JZVcBgBrvwLrqlnxZnXtUJ67eryFCAUXagMSFAFLuPcsdCV2CI-0a8vKd6gHYlWPdHj9jjRk9uPDSdr2gMWA-KskAMTpetQLY0Vsvn2Gxqm-ON4poOJTlWfR6VMe1o-3RzR3A4lMbBD5iP1R6IAPSjvvWc-wRt1c3usRvXS-9pm-kJVKblgoymaKyP1Bc4eWRq4LyqYpPnZnZj5cN0w2_97j6FE6VCxDdLIFvm6SgH7iddfREcx_z2b5yYGqW3pJYDm28oBhXDTQuPzbRUbTFrF2VghQ2icKd_EmQ9Q"
+}
+{
+  "grant_type": "client_credentials",
+  "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiM2VlZjE1NWYtMjFjNi00YWIzLTk3ZjYtMzNjZWZiZTAxNDU5IiwiZXhwIjoxNzM1ODg4MTE2LCJuYmYiOjE3MzU4ODc4MTYsImlhdCI6MTczNTg4NzgxNn0.PVGMcceobFQoEHMRPjCMftsLvbnfN4-PE26btR5I5aTPkD3JZVcBgBrvwLrqlnxZnXtUJ67eryFCAUXagMSFAFLuPcsdCV2CI-0a8vKd6gHYlWPdHj9jjRk9uPDSdr2gMWA-KskAMTpetQLY0Vsvn2Gxqm-ON4poOJTlWfR6VMe1o-3RzR3A4lMbBD5iP1R6IAPSjvvWc-wRt1c3usRvXS-9pm-kJVKblgoymaKyP1Bc4eWRq4LyqYpPnZnZj5cN0w2_97j6FE6VCxDdLIFvm6SgH7iddfREcx_z2b5yYGqW3pJYDm28oBhXDTQuPzbRUbTFrF2VghQ2icKd_EmQ9Q"
+}
+STEP 3: SENDING TOKEN REQUEST
+STEP 3: SENDING TOKEN REQUEST
+--------------------------------------------------------------------------------
+Understanding the Token Request Process:
+Understanding the Token Request Process:
+1. What happens when we send this request:
+1. What happens when we send this request:
+• Our JWT (shown above) is sent to Epic's authorization server
+• Our JWT (shown above) is sent to Epic's authorization server
+• The JWT contains our identity claims and is signed with our private key
+• The JWT contains our identity claims and is signed with our private key
+• Epic's server receives our request and begins the validation process
+• Epic's server receives our request and begins the validation process
+2. How Epic validates our request:
+2. How Epic validates our request:
+• Epic retrieves our registered public key using the key ID in the JWT header
+• Epic retrieves our registered public key using the key ID in the JWT header
+• They verify the JWT's signature using this public key
+• They verify the JWT's signature using this public key
+• They check the JWT's claims (expiry time, issuer, etc.)
+• They check the JWT's claims (expiry time, issuer, etc.)
+3. What happens after successful validation:
+3. What happens after successful validation:
+• Epic generates a new access token specifically for our session
+• Epic generates a new access token specifically for our session
+• This token grants us access to Epic's FHIR API endpoints
+• This token grants us access to Epic's FHIR API endpoints
+• The token will be valid for 60 minutes
+• The token will be valid for 60 minutes
+• We must include this token in all subsequent API requests
+• We must include this token in all subsequent API requests
+Now sending the request with these parameters:
+Now sending the request with these parameters:
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• Method: POST
+• Method: POST
+• Headers:
+• Headers:
+Content-Type: application/x-www-form-urlencoded
+Content-Type: application/x-www-form-urlencoded
+• Request Body Parameters:
+• Request Body Parameters:
+1. grant_type: client_credentials
+1. grant_type: client_credentials
+2. client_assertion_type: JWT Bearer Token
+2. client_assertion_type: JWT Bearer Token
+3. client_assertion: [Generated JWT containing claims shown above]
+3. client_assertion: [Generated JWT containing claims shown above]
+STEP 4: TOKEN RESPONSE
+STEP 4: TOKEN RESPONSE
+--------------------------------------------------------------------------------
+✓ Access token received successfully
+✓ Access token received successfully
+================================================================================
+Processing Resources
+backend_epic_using_jwt.js completed successfully
+Observation Analysis Report
+=========================
 Summary:
 ---------
 Total Observations: 389
@@ -759,350 +234,350 @@ Detailed Observations:
 --------------------
 Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status
 -----|--------------|------------|------------------|--------|----------------|--------
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/73 mmHg | 90-140/60-90 | NORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/87 mmHg | 90-140/60-90 | NORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/78 mmHg | 90-140/60-90 | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/85 mmHg | 90-140/60-90 | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/78 mmHg | 90-140/60-90 | NORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/78 mmHg | 90-140/60-90 | NORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/80 mmHg | 90-140/60-90 | NORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 126/69 mmHg | 90-140/60-90 | NORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/70 mmHg | 90-140/60-90 | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 114/70 mmHg | 90-140/60-90 | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/77 mmHg | 90-140/60-90 | NORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/75 mmHg | 90-140/60-90 | NORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/72 mmHg | 90-140/60-90 | NORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/77 mmHg | 90-140/60-90 | NORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/74 mmHg | 90-140/60-90 | NORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/74 mmHg | 90-140/60-90 | NORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/72 mmHg | 90-140/60-90 | NORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/77 mmHg | 90-140/60-90 | NORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/75 mmHg | 90-140/60-90 | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/82 mmHg | 90-140/60-90 | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/80 mmHg | 90-140/60-90 | NORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/74 mmHg | 90-140/60-90 | NORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/71 mmHg | 90-140/60-90 | NORMAL
-2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/89 mmHg | 90-140/60-90 | NORMAL
-2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/74 mmHg | 90-140/60-90 | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/70 mmHg | 90-140/60-90 | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/67 mmHg | 90-140/60-90 | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/72 mmHg | 90-140/60-90 | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 119/77 mmHg | 90-140/60-90 | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | 36.5-37.5 | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | 60-100 | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | 60-100 | NORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 82 /min | 60-100 | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 153/82 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/82 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/84 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/77 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 157/84 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 169/91 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 155/83 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/82 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/82 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/81 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/78 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/78 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/79 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/86 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/78 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 161/89 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/84 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/74 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/86 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 66/43 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/80 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/76 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/92 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 162/100 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/86 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 142/81 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/81 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/80 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/77 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 84/53 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/80 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/75 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/78 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/81 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/73 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 1/1 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 150/78 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/82 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 159/84 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 152/83 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/85 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | 36.5-37.5 | ABNORMAL (High)
-2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | 36.5-37.5 | ABNORMAL (High)
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | 36.5-37.5 | ABNORMAL (High)
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/79 mmHg | 90-140/60-90 | NORMAL
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 | NORMAL
-2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/82 mmHg | 90-140/60-90 | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/82 mmHg | 90-140/60-90 | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 108/77 mmHg | 90-140/60-90 | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/69 mmHg | 90-140/60-90 | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/81 mmHg | 90-140/60-90 | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/86 mmHg | 90-140/60-90 | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/84 mmHg | 90-140/60-90 | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/78 mmHg | 90-140/60-90 | NORMAL
-2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 111/65 mmHg | 90-140/60-90 | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 115/71 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/69 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/73 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/73 mmHg | 90-140/60-90 | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/72 mmHg | 90-140/60-90 | NORMAL
-2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 114/74 mmHg | 90-140/60-90 | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/87 mmHg | 90-140/60-90 | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/70 mmHg | 90-140/60-90 | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/77 mmHg | 90-140/60-90 | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/74 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/88 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/88 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/66 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/73 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/74 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/86 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/82 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/85 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/86 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 118/75 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/69 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/61 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/77 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/75 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/70 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/76 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/73 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/69 mmHg | 90-140/60-90 | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/82 mmHg | 90-140/60-90 | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/73 mmHg | 90-140/60-90 | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/71 mmHg | 90-140/60-90 | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/85 mmHg | 90-140/60-90 | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/77 mmHg | 90-140/60-90 | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/74 mmHg | 90-140/60-90 | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/84 mmHg | 90-140/60-90 | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 143/83 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/92 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 147/89 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 152/87 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 66/49 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 142/86 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 | NORMAL
-2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 127/81 mmHg | 90-140/60-90 | NORMAL
-2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/63 mmHg | 90-140/60-90 | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 124/66 mmHg | 90-140/60-90 | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/69 mmHg | 90-140/60-90 | NORMAL
-2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 135/72 mmHg | 90-140/60-90 | NORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 129/74 mmHg | 90-140/60-90 | NORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 115/63 mmHg | 90-140/60-90 | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/64 mmHg | 90-140/60-90 | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 112/69 mmHg | 90-140/60-90 | NORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/63 mmHg | 90-140/60-90 | NORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 108/86 mmHg | 90-140/60-90 | NORMAL
-2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 140/87 mmHg | 90-140/60-90 | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/73 mmHg | 90-140/60-90 | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/61 mmHg | 90-140/60-90 | NORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 | NORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/60 mmHg | 90-140/60-90 | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 | NORMAL
-2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 | NORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | 36.5-37.5 | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | 60-100 | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | 60-100 | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/95 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 170/58 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 118/99 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/92 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 172/51 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 122/94 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 128/50 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 166/69 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 143/73 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/99 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 147/52 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/98 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 136/51 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/55 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 173/81 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 104/52 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 175/63 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 153/73 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 141/84 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/94 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 168/74 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 163/113 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 146/71 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/128 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/75 mmHg | 90-140/60-90 | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 139/108 mmHg | 90-140/60-90 | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/103 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | 36.5-37.5 | ABNORMAL (Low)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 125/60 mmHg | 90-140/60-90 | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 120/60 mmHg | 90-140/60-90 | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | 60-100 | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | 60-100 | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | 60-100 | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 121/59 mmHg | 90-140/60-90 | ABNORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | 36.5-37.5 | ABNORMAL (High)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | 36.5-37.5 | ABNORMAL (High)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | 36.5-37.5 | ABNORMAL (High)
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 | NORMAL
+2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/87 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/85 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 126/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/70 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 114/70 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/72 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/72 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/82 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/71 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/89 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/70 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/67 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/72 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 119/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | 36.5-37.5 °C | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | 60-100 bpm | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | 60-100 bpm | NORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 82 /min | 60-100 bpm | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 153/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 157/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 169/91 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 155/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/79 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 161/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/74 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 66/43 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/76 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 162/100 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 142/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 84/53 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 1/1 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 150/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 159/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 152/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/85 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/82 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/82 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 108/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/86 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/84 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 111/65 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 115/71 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/72 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 114/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/87 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/70 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/88 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/88 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/66 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/86 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/82 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/85 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/86 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 118/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/61 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/75 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/70 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/82 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/71 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/85 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/84 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 143/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 147/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 152/87 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 66/49 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 142/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 127/81 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/63 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 124/66 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 135/72 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 129/74 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 115/63 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/64 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 112/69 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/63 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 108/86 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 140/87 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/73 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/61 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/60 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
+2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
+2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
+2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | 60-100 bpm | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | 60-100 bpm | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
+2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/95 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 170/58 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 118/99 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 172/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 122/94 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 128/50 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 166/69 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 143/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/99 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 147/52 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/98 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 136/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/55 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 173/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 104/52 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 175/63 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 153/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 141/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/94 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 168/74 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 163/113 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 146/71 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/128 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 139/108 mmHg | 90-140/60-90 mmHg | ABNORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/103 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 125/60 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 120/60 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | 60-100 bpm | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | 60-100 bpm | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | 60-100 bpm | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 121/59 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
 2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Weight | 120 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 111/76 mmHg | 90-140/60-90 | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 117/72 mmHg | 90-140/60-90 | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 116/71 mmHg | 90-140/60-90 | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 132/87 mmHg | 90-140/60-90 | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 125/70 mmHg | 90-140/60-90 | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | 36.5-37.5 | NORMAL
-2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | 36.5-37.5 | NORMAL
-2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | 36.5-37.5 | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | 36.5-37.5 | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | 60-100 | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | 60-100 | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | 60-100 | NORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | 60-100 | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | 60-100 | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | 60-100 | NORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | 60-100 | NORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 | NORMAL
-2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 111/76 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 117/72 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 116/71 mmHg | 90-140/60-90 mmHg | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 132/87 mmHg | 90-140/60-90 mmHg | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 125/70 mmHg | 90-140/60-90 mmHg | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | 36.5-37.5 °C | NORMAL
+2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | 36.5-37.5 °C | NORMAL
+2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | 36.5-37.5 °C | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 bpm | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | 60-100 bpm | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 bpm | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 bpm | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | 60-100 bpm | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 bpm | NORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | 60-100 bpm | NORMAL
+2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 bpm | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | 60-100 bpm | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | 60-100 bpm | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | 60-100 bpm | NORMAL
+2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | 60-100 bpm | NORMAL
+2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 bpm | NORMAL
+2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 bpm | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 bpm | NORMAL
 2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
@@ -1133,20 +608,21 @@ Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | 
 2019-08-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
 2019-07-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
 2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Cholesterol [Mass/volume] in Serum or Plasma | 187 mg/dL | <=200 mg/dL | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 170/86 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 164/90 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 156/89 mmHg | 90-140/60-90 | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 150/97 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 148/78 mmHg | 90-140/60-90 | ABNORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 149/81 mmHg | 90-140/60-90 | ABNORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 121/51 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 115/110 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 124/93 mmHg | 90-140/60-90 | ABNORMAL
-2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | 36.5-37.5 | ABNORMAL (High)
-2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 | ABNORMAL (Low)
-2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 | ABNORMAL (Low)
-2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 | ABNORMAL (Low)
-2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | 36.5-37.5 | ABNORMAL (Low)
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | 36.5-37.5 | ABNORMAL (Low)
- [Source: backend_epic_using_jwt.js]
-Completion email sent successfully [Source: backend_epic_using_jwt.js]
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 170/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 164/90 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 156/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 150/97 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 148/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 149/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 121/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 115/110 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 124/93 mmHg | 90-140/60-90 mmHg | ABNORMAL
+2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | 36.5-37.5 °C | ABNORMAL (High)
+2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+Completion email sent successfully
+
+=== End of Session ===

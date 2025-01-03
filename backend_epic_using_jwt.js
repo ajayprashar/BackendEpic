@@ -95,72 +95,219 @@ const ConfigManager = require('./src/managers/ConfigManager');
 
 const scriptName = path.basename(process.argv[1]);
 
-let logger = null;
+// Create a single logger instance
+let loggerInstance = null;
 
-/**
- * Logger Class
- * ============
- * Handles logging to a file and directory listing with source file tracking
- */
 class Logger {
     constructor() {
-        const timestamp = new Date().toISOString();
-        const divider = '\n' + '='.repeat(80) + '\n' + 
-                       `New Session Started: ${timestamp}` + 
-                       '\n' + '='.repeat(80) + '\n';
+        if (loggerInstance) {
+            return loggerInstance;
+        }
         
-        this.logStream = fs.createWriteStream('backend_epic.log', { flags: 'a' });
-        this.logStream.write(divider);
+        this.LOG_FILE = 'backend_epic.log';
+        this.MAX_LOG_SIZE = 10 * 1024 * 1024; // 10MB
+        this.logStream = null;
+        this.initialized = false;
+        this.recentMessages = new Set(); // Track recent messages to prevent duplicates
+        this.recentMessageTimeout = 1000; // Clear messages after 1 second
+        this.initializeLogStream();
         
-        // Replace console.log with file logging
+        loggerInstance = this;
+        return loggerInstance;
+    }
+
+    initializeLogStream() {
+        if (this.initialized) {
+            return;
+        }
+
+        try {
+            // Check if log file needs rotation
+            if (fs.existsSync(this.LOG_FILE)) {
+                const stats = fs.statSync(this.LOG_FILE);
+                if (stats.size >= this.MAX_LOG_SIZE) {
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                    fs.renameSync(this.LOG_FILE, `${this.LOG_FILE}.${timestamp}`);
+                }
+            }
+
+            // Create write stream and set up console overrides
+            this.logStream = fs.createWriteStream(this.LOG_FILE, { flags: 'a' });
+            this.setupConsoleOverrides();
+
+            // Write session start directly to stream to avoid duplication
+            const timestamp = new Date().toISOString();
+            this.logStream.write([
+                '',
+                '='.repeat(80),
+                `New Session Started: ${timestamp}`,
+                '='.repeat(80),
+                '',
+                ''
+            ].join('\n'));
+
+            this.initialized = true;
+        } catch (error) {
+            console.error(`Failed to initialize log stream: ${error.message}`);
+            throw error;
+        }
+    }
+
+    setupConsoleOverrides() {
         const originalLog = console.log;
-        console.log = (...args) => {
-            // Get the calling file from the stack trace
-            const stack = new Error().stack;
-            const callerFile = stack.split('\n')[2]?.match(/[\/\\]([\w-]+\.js)/)?.[1] || 'unknown.js';
-            
-            const message = util.format(...args);
-            const logMessage = message.endsWith(']') ? 
-                `${message}\n` : 
-                `${message} [Source: ${callerFile}]\n`;
-            
-            this.logStream.write(logMessage);
-            originalLog(...args);
-        };
-        
-        // Replace console.error with file logging
+        const originalWarn = console.warn;
         const originalError = console.error;
-        console.error = (...args) => {
-            // Get the calling file from the stack trace
-            const stack = new Error().stack;
-            const callerFile = stack.split('\n')[2]?.match(/[\/\\]([\w-]+\.js)/)?.[1] || 'unknown.js';
-            
-            const message = util.format(...args);
-            const logMessage = `ERROR: ${message} [Source: ${callerFile}]\n`;
-            
-            this.logStream.write(logMessage);
-            originalError(...args);
+
+        console.log = (...args) => this.writeLog('INFO', args, originalLog);
+        console.warn = (...args) => this.writeLog('WARN', args, originalWarn);
+        console.error = (...args) => this.writeLog('ERROR', args, originalError);
+    }
+
+    getCallerInfo() {
+        const stack = new Error().stack;
+        const callerLine = stack.split('\n')[3]; // Skip 3 lines to get actual caller
+        const match = callerLine?.match(/[\/\\]([\w-]+\.js):(\d+):(\d+)/);
+        
+        return {
+            file: match?.[1] || 'unknown.js',
+            line: match?.[2] || '?',
+            column: match?.[3] || '?'
         };
+    }
+
+    formatMessage(level, args) {
+        const timestamp = new Date().toISOString();
+        
+        // Format any JSON objects in the message
+        const formattedArgs = args.map(arg => {
+            if (typeof arg === 'object' && arg !== null) {
+                return '\n' + JSON.stringify(arg, null, 2) + '\n';
+            }
+            return String(arg);
+        });
+        
+        // Join all arguments with spaces and trim any extra whitespace
+        let message = formattedArgs.join(' ').trim();
+        
+        // Remove redundant level prefix if it exists
+        message = message.replace(new RegExp(`^${level}:\\s*`, 'i'), '');
+        
+        // For tutorial content, return as is without any prefixes
+        if (level === 'TUTORIAL') {
+            return message;
+        }
+        
+        // For regular log messages, only add timestamp for errors
+        if (level === 'ERROR') {
+            return `[${timestamp}] ${message}`;
+        }
+        
+        // Check for duplicate messages
+        const messageKey = `${level}:${message}`;
+        if (this.recentMessages.has(messageKey)) {
+            return null; // Skip duplicate message
+        }
+        
+        // Add message to recent set and schedule cleanup
+        this.recentMessages.add(messageKey);
+        setTimeout(() => {
+            this.recentMessages.delete(messageKey);
+        }, this.recentMessageTimeout);
+        
+        return message;
+    }
+
+    writeLog(level, args, originalMethod) {
+        try {
+            const formattedMessage = this.formatMessage(level, args);
+            
+            // Skip if message is null (duplicate) or empty
+            if (!formattedMessage) {
+                return;
+            }
+            
+            // Write to file with newline
+            this.logStream.write(formattedMessage + '\n');
+            
+            // Write to console with color
+            switch (level) {
+                case 'WARN':
+                    originalMethod('\x1b[33m' + formattedMessage + '\x1b[0m'); // Yellow
+                    break;
+                case 'ERROR':
+                    originalMethod('\x1b[31m' + formattedMessage + '\x1b[0m'); // Red
+                    break;
+                default:
+                    originalMethod(formattedMessage);
+            }
+        } catch (error) {
+            // Fallback to original console if logging fails
+            originalMethod(...args);
+            originalMethod(`Logger error: ${error.message}`);
+        }
     }
 
     clearExportDirectory() {
         const exportDir = 'epic_data_export';
-        console.log(`\nClearing export directory: ${exportDir}`);
         
-        if (fs.existsSync(exportDir)) {
-            const files = fs.readdirSync(exportDir);
-            files.forEach(file => {
-                const filePath = path.join(exportDir, file);
-                fs.unlinkSync(filePath);
-                console.log(`Deleted: ${file}`);
-            });
-            console.log('Export directory cleared');
-        } else {
-            fs.mkdirSync(exportDir, { recursive: true });
-            console.log('Created empty export directory');
+        try {
+            if (fs.existsSync(exportDir)) {
+                const files = fs.readdirSync(exportDir);
+                files.forEach(file => {
+                    try {
+                        fs.unlinkSync(path.join(exportDir, file));
+                    } catch (error) {
+                        console.error(`Failed to delete file ${file}: ${error.message}`);
+                    }
+                });
+            } else {
+                fs.mkdirSync(exportDir, { recursive: true });
+            }
+            console.log('Export directory prepared');
+        } catch (error) {
+            console.error(`Failed to prepare export directory: ${error.message}`);
+            throw error;
         }
     }
+
+    close() {
+        if (this.logStream) {
+            this.logStream.end('\n=== End of Session ===\n');
+            this.logStream.close();
+        }
+    }
+
+    // Static method to get logger instance
+    static getInstance() {
+        if (!loggerInstance) {
+            loggerInstance = new Logger();
+        }
+        return loggerInstance;
+    }
 }
+
+// Create a single logger instance
+const logger = Logger.getInstance();
+
+// Ensure logger is closed properly on exit
+process.on('exit', () => {
+    logger.close();
+});
+
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    logger.close();
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    logger.close();
+    process.exit(1);
+});
+
+// Export logger instance
+module.exports = logger;
 
 // Remove direct config loading
 const configPath = path.resolve(__dirname, 'backend_epic_using_jwt.ini');
@@ -184,7 +331,6 @@ class KeyManager {
             throw new Error('Configuration missing required paths section');
         }
 
-        // Make sure we're accessing the nested paths correctly
         this.privateKeyPath = path.resolve(config.paths.private_key);
         this.publicKeyPath = path.resolve(config.paths.public_key);
         this.base64PublicKeyPath = path.resolve(config.paths.base64_public_key);
@@ -194,31 +340,7 @@ class KeyManager {
         this.rsaPrivateEncoding = config.rsa_settings.rsa_private_encoding || 'pkcs8';
     }
 
-    /**
-     * Calculates the public key ID (thumbprint) using Epic's method.
-     * This was determined through analysis comparing different methods against Epic's known thumbprint:
-     * A9449062942DEBF66B8B48B131AC47C9189583F4 (from publickey509.pem/publickey509.b64)
-     * 
-     * The method follows RFC 5280 standard for certificate thumbprints:
-     * 1. Take the DER-encoded form of the certificate/public key (from publickey509.pem)
-     * 2. Calculate SHA-1 hash of the DER-encoded binary data
-     * 3. Convert to uppercase hexadecimal
-     * 
-     * Key Files Used:
-     * - publickey509.pem: X.509 certificate in PEM format
-     * - publickey509.b64: Base64-encoded DER format (same certificate, different encoding)
-     * Both files contain the same certificate and will generate the same thumbprint.
-     * 
-     * Verification process:
-     * - Created analyze_key_id.js to test different methods
-     * - Tested against both PEM and Base64 encoded certificates
-     * - Confirmed that DER-encoded SHA-1 matches Epic's thumbprint
-     * 
-     * @param {string} publicKey - The public key in PEM format
-     * @returns {string} The uppercase hexadecimal thumbprint
-     */
     calculatePublicKeyId(publicKey) {
-        // Remove PEM headers and newlines to get clean Base64
         const cleanContent = publicKey.toString()
             .replace(/-----BEGIN PUBLIC KEY-----/, '')
             .replace(/-----END PUBLIC KEY-----/, '')
@@ -226,34 +348,24 @@ class KeyManager {
             .replace(/-----END CERTIFICATE-----/, '')
             .replace(/\n/g, '');
 
-        // Decode Base64 to get DER-encoded binary format
         const derBuffer = Buffer.from(cleanContent, 'base64');
-        
-        // Calculate SHA-1 hash of DER-encoded data
         const hash = crypto.createHash('sha1');
         hash.update(derBuffer);
-        
-        // Convert to uppercase hexadecimal
         return hash.digest('hex').toUpperCase();
     }
 
     async generateKeyPair() {
-        console.log('Checking for existing key pair...');
-        
         if (!this.privateKeyPath) {
             throw new Error('Private key path is not defined in configuration');
         }
 
         const dir = path.dirname(this.privateKeyPath);
         if (!fs.existsSync(dir)) {
-            console.log(`Creating directory: ${dir}`);
             fs.mkdirSync(dir, { recursive: true });
         }
 
         let publicKey;
         if (!fs.existsSync(this.privateKeyPath)) {
-            console.log('Generating new RSA key pair...');
-            
             const keyPair = crypto.generateKeyPairSync('rsa', {
                 modulusLength: this.rsaKeySize,
                 publicKeyEncoding: {
@@ -274,11 +386,11 @@ class KeyManager {
             
             publicKey = keyPair.publicKey;
             const publicKeyId = this.calculatePublicKeyId(publicKey);
-            console.log(`Key pair generated and saved successfully (Public Key ID: ${publicKeyId} from ${path.basename(this.publicKeyPath)})`);
+            logger.writeLog('INFO', [`Key pair generated successfully (Public Key ID: ${publicKeyId})`], console.log);
         } else {
             publicKey = fs.readFileSync(this.publicKeyPath, 'utf8');
             const publicKeyId = this.calculatePublicKeyId(publicKey);
-            console.log(`Existing key pair found (Public Key ID: ${publicKeyId} from ${path.basename(this.publicKeyPath)})`);
+            logger.writeLog('INFO', [`Using existing key pair (Public Key ID: ${publicKeyId})`], console.log);
         }
     }
 }
@@ -317,29 +429,142 @@ class JWTManager {
         this.tokenEndpoint = config.oauth_settings.token_endpoint;
         this.algorithm = config.jwt_settings.jwt_algorithm || 'RS384';
         this.expiryMinutes = parseInt(config.jwt_settings.jwt_expiry_minutes) || 5;
+        this.logger = Logger.getInstance();
     }
 
-    generateJWT() {
-        // Calculate public key ID from the corresponding public key
+    async getAccessToken() {
+        try {
+            const logger = Logger.getInstance();
+            
+            // Tutorial header
+            logger.writeLog('TUTORIAL', ['\n================================================================================'], console.log);
+            logger.writeLog('TUTORIAL', ['                         Epic OAuth 2.0 Token Request Tutorial                   '], console.log);
+            logger.writeLog('TUTORIAL', ['================================================================================\n'], console.log);
+
+            logger.writeLog('TUTORIAL', ['STEP 1: JWT ASSERTION GENERATION'], console.log);
+            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
+            
+            // Generate JWT with claims
+            const currentTime = Math.floor(Date.now() / 1000);
+            const expiryTime = currentTime + (this.expiryMinutes * 60);
+            
+            logger.writeLog('TUTORIAL', ['Timestamp Configuration:'], console.log);
+            logger.writeLog('TUTORIAL', [`  Current time (iat): ${new Date(currentTime * 1000).toISOString()}`], console.log);
+            logger.writeLog('TUTORIAL', [`  Not Before (nbf) : ${new Date(currentTime * 1000).toISOString()}`], console.log);
+            logger.writeLog('TUTORIAL', [`  Expiry time (exp): ${new Date(expiryTime * 1000).toISOString()}`], console.log);
+            logger.writeLog('TUTORIAL', [`  Token validity   : ${this.expiryMinutes} minutes\n`], console.log);
+            
+            const claims = {
+                iss: this.clientId,
+                sub: this.clientId,
+                aud: this.tokenEndpoint,
+                jti: uuidv4(),
+                exp: expiryTime,
+                nbf: currentTime,
+                iat: currentTime
+            };
+
+            logger.writeLog('TUTORIAL', ['JWT Claims:'], console.log);
+            logger.writeLog('TUTORIAL', ['\n', claims, '\n'], console.log);
+            
+            logger.writeLog('TUTORIAL', ['Required Claims Explanation:'], console.log);
+            logger.writeLog('TUTORIAL', ['  iss (Issuer)  : Client ID assigned by Epic'], console.log);
+            logger.writeLog('TUTORIAL', ['  sub (Subject) : Same as Issuer for backend services'], console.log);
+            logger.writeLog('TUTORIAL', ['  aud (Audience): Epic\'s token endpoint'], console.log);
+            logger.writeLog('TUTORIAL', ['  jti (JWT ID)  : Unique identifier for this JWT'], console.log);
+            logger.writeLog('TUTORIAL', ['  exp          : Expiration time'], console.log);
+            logger.writeLog('TUTORIAL', ['  nbf          : Not valid before time'], console.log);
+            logger.writeLog('TUTORIAL', ['  iat          : Time when JWT was issued\n'], console.log);
+
+            // Generate JWT silently (without additional logging)
+            const jwt = this.generateJWTSilent();
+            
+            logger.writeLog('TUTORIAL', ['STEP 2: PREPARING TOKEN REQUEST'], console.log);
+            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
+            logger.writeLog('TUTORIAL', ['Request Configuration:'], console.log);
+            logger.writeLog('TUTORIAL', [`  Token Endpoint       : ${this.tokenEndpoint}`], console.log);
+            logger.writeLog('TUTORIAL', [`  Grant Type          : ${this.config.oauth_settings.grant_type}`], console.log);
+            logger.writeLog('TUTORIAL', [`  Client Assertion Type: ${this.config.oauth_settings.client_assertion_type}\n`], console.log);
+            
+            const requestBody = {
+                grant_type: this.config.oauth_settings.grant_type,
+                client_assertion_type: this.config.oauth_settings.client_assertion_type,
+                client_assertion: jwt
+            };
+            
+            logger.writeLog('TUTORIAL', ['Request Body:'], console.log);
+            logger.writeLog('TUTORIAL', ['\n', requestBody, '\n'], console.log);
+            
+            logger.writeLog('TUTORIAL', ['STEP 3: SENDING TOKEN REQUEST'], console.log);
+            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
+            logger.writeLog('TUTORIAL', ['Understanding the Token Request Process:'], console.log);
+            logger.writeLog('TUTORIAL', ['\n1. What happens when we send this request:'], console.log);
+            logger.writeLog('TUTORIAL', ['   • Our JWT (shown above) is sent to Epic\'s authorization server'], console.log);
+            logger.writeLog('TUTORIAL', ['   • The JWT contains our identity claims and is signed with our private key'], console.log);
+            logger.writeLog('TUTORIAL', ['   • Epic\'s server receives our request and begins the validation process'], console.log);
+            logger.writeLog('TUTORIAL', ['\n2. How Epic validates our request:'], console.log);
+            logger.writeLog('TUTORIAL', ['   • Epic retrieves our registered public key using the key ID in the JWT header'], console.log);
+            logger.writeLog('TUTORIAL', ['   • They verify the JWT\'s signature using this public key'], console.log);
+            logger.writeLog('TUTORIAL', ['   • They check the JWT\'s claims (expiry time, issuer, etc.)'], console.log);
+            logger.writeLog('TUTORIAL', ['\n3. What happens after successful validation:'], console.log);
+            logger.writeLog('TUTORIAL', ['   • Epic generates a new access token specifically for our session'], console.log);
+            logger.writeLog('TUTORIAL', ['   • This token grants us access to Epic\'s FHIR API endpoints'], console.log);
+            logger.writeLog('TUTORIAL', ['   • The token will be valid for 60 minutes'], console.log);
+            logger.writeLog('TUTORIAL', ['   • We must include this token in all subsequent API requests'], console.log);
+            logger.writeLog('TUTORIAL', ['\nNow sending the request with these parameters:'], console.log);
+            logger.writeLog('TUTORIAL', ['• URL: ' + this.tokenEndpoint], console.log);
+            logger.writeLog('TUTORIAL', ['• Method: POST'], console.log);
+            logger.writeLog('TUTORIAL', ['• Headers:'], console.log);
+            logger.writeLog('TUTORIAL', ['    Content-Type: application/x-www-form-urlencoded'], console.log);
+            logger.writeLog('TUTORIAL', ['• Request Body Parameters:'], console.log);
+            logger.writeLog('TUTORIAL', ['    1. grant_type: client_credentials'], console.log);
+            logger.writeLog('TUTORIAL', ['    2. client_assertion_type: JWT Bearer Token'], console.log);
+            logger.writeLog('TUTORIAL', ['    3. client_assertion: [Generated JWT containing claims shown above]\n'], console.log);
+            
+            const response = await axios.post(this.tokenEndpoint, 
+                new URLSearchParams(requestBody), 
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            );
+
+            if (!response.data.access_token) {
+                throw new Error('No access token received in response');
+            }
+
+            logger.writeLog('TUTORIAL', ['STEP 4: TOKEN RESPONSE'], console.log);
+            logger.writeLog('TUTORIAL', ['--------------------------------------------------------------------------------'], console.log);
+            logger.writeLog('TUTORIAL', ['✓ Access token received successfully'], console.log);
+            logger.writeLog('TUTORIAL', ['================================================================================\n'], console.log);
+
+            return response.data.access_token;
+        } catch (error) {
+            const logger = Logger.getInstance();
+            logger.writeLog('ERROR', ['❌ Error in token request process:'], console.error);
+            logger.writeLog('ERROR', ['--------------------------------------------------------------------------------'], console.error);
+            logger.writeLog('ERROR', ['Error Details:'], console.error);
+            logger.writeLog('ERROR', ['\n', {
+                message: error.message,
+                status: error.response?.status,
+                data: error.response?.data
+            }, '\n'], console.error);
+            logger.writeLog('ERROR', ['================================================================================\n'], console.error);
+            throw error;
+        }
+    }
+
+    // Silent version of generateJWT that doesn't output tutorial messages
+    generateJWTSilent() {
         const publicKey = fs.readFileSync(this.config.paths.public_key, 'utf8');
         const publicKeyId = crypto.createHash('sha1')
             .update(Buffer.from(publicKey.replace(/-----BEGIN (?:PUBLIC KEY|CERTIFICATE)-----|\n|-----END (?:PUBLIC KEY|CERTIFICATE)-----/g, ''), 'base64'))
             .digest('hex')
             .toUpperCase();
-
-        console.log('\n=== JWT Generation Tutorial ===');
-        console.log('Step 1: Preparing JWT Claims');
-        console.log('----------------------------');
         
         const currentTime = Math.floor(Date.now() / 1000);
-        const expiryMinutes = parseInt(this.expiryMinutes) || 5;
-        const expiryTime = currentTime + (expiryMinutes * 60);
-        
-        console.log('• Setting up timestamps:');
-        console.log(`  - Current time (iat): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()}`);
-        console.log(`  - Not Before (nbf): EPOCH=${currentTime} | Human=${new Date(currentTime * 1000).toISOString()} (same as iat)`);
-        console.log(`  - Expiry time (exp): EPOCH=${expiryTime} | Human=${new Date(expiryTime * 1000).toISOString()} (iat + ${expiryMinutes} minutes)`);
-        console.log(`  - Token validity window: ${expiryMinutes} minutes from issuance to allow time for token retrieval and API calls`);
+        const expiryTime = currentTime + (this.expiryMinutes * 60);
         
         const claims = {
             iss: this.clientId,
@@ -351,53 +576,16 @@ class JWTManager {
             iat: currentTime
         };
 
-        console.log('\nStep 2: JWT Claims Structure');
-        console.log('-------------------------');
-        console.log('• Required claims for Epic:');
-        console.log(`  - iss (Issuer): ${claims.iss}`);
-        console.log(`  - sub (Subject): ${claims.sub} (same as Issuer for backend services)`);
-        console.log(`  - aud (Audience): ${claims.aud}`);
-        console.log(`  - jti (JWT ID): ${claims.jti} (random unique identifier)`);
-        console.log(`  - exp (Expiration): EPOCH=${claims.exp} | Human=${new Date(claims.exp * 1000).toISOString()} (iat + ${expiryMinutes} min window)`);
-        console.log(`  - nbf (Not Before): EPOCH=${claims.nbf} | Human=${new Date(claims.nbf * 1000).toISOString()} (current time)`);
-        console.log(`  - iat (Issued At): EPOCH=${claims.iat} | Human=${new Date(claims.iat * 1000).toISOString()} (current time)`);
+        const header = {
+            alg: this.algorithm,
+            typ: 'JWT',
+            kid: publicKeyId
+        };
 
-        console.log('\n• Actual JWT Claims (JSON):');
-        console.log(JSON.stringify(claims, null, 2));
-
-        console.log('\nStep 3: Signing JWT');
-        console.log('------------------');
-        console.log(`• Algorithm: ${this.algorithm}`);
-        // Get first 15 characters of the private key (after the header), removing all newlines
-        const privateKeyPreview = this.privateKey
-            .replace(/-----BEGIN PRIVATE KEY-----/, '')
-            .replace(/-----END PRIVATE KEY-----/, '')
-            .replace(/\n/g, '')
-            .substring(0, 15);
-        console.log(`• Using private key to sign JWT... (Private Key starting with "${privateKeyPreview}" paired with Public Key ID: ${publicKeyId} from ${path.basename(this.config.paths.public_key)})`);
-
-        const token = jwt.sign(claims, this.privateKey, {
+        return jwt.sign(claims, this.privateKey, {
             algorithm: this.algorithm,
-            header: {
-                alg: this.algorithm,
-                typ: 'JWT'
-            }
+            header: header
         });
-
-        console.log('\n• Generated JWT Token:');
-        console.log('---------------------');
-        const [header, payload, signature] = token.split('.');
-        console.log('Header (decoded):');
-        console.log(JSON.stringify(JSON.parse(Buffer.from(header, 'base64').toString()), null, 2));
-        console.log('\nPayload (decoded):');
-        console.log(JSON.stringify(JSON.parse(Buffer.from(payload, 'base64').toString()), null, 2));
-        console.log('\nComplete JWT Token (used in request):');
-        console.log(token);
-
-        console.log('\n✓ JWT successfully generated and signed');
-        console.log('===============================\n');
-
-        return token;
     }
 }
 
@@ -445,58 +633,15 @@ class EpicClient {
 
     async getAccessToken() {
         try {
-            console.log('\n=== Epic OAuth 2.0 Token Request Tutorial ===');
-            console.log('Step 1: JWT Assertion Generation');
-            console.log('--------------------------------');
-            const jwt = await this.jwtManager.generateJWT();
-            
-            console.log('\nStep 2: Preparing Token Request');
-            console.log('------------------------------');
-            console.log('• Endpoint:', this.tokenEndpoint);
-            console.log('• Grant Type:', this.config.oauth_settings.grant_type);
-            console.log('• Client Assertion Type:', this.config.oauth_settings.client_assertion_type);
-            
-            console.log('\nStep 3: Sending Token Request');
-            console.log('----------------------------');
-            console.log('• Making POST request to Epic\'s token endpoint...');
-            
-            const response = await axios.post(this.tokenEndpoint, 
-                new URLSearchParams({
-                    grant_type: this.config.oauth_settings.grant_type,
-                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
-                    client_assertion: jwt
-                }), {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
-            );
-
-            if (!response.data.access_token) {
-                throw new Error('No access token received in response');
-            }
-
-            console.log('✓ Access token received successfully');
-            console.log('• Token type:', response.data.token_type);
-            console.log('• Expires in:', response.data.expires_in, 'seconds');
-            console.log('=========================================\n');
-
-            return response.data.access_token;
+            const accessToken = await this.jwtManager.getAccessToken();
+            return accessToken;
         } catch (error) {
-            console.error('\n❌ Error in token request process:');
-            console.error('• Error message:', error.message);
-            if (error.response) {
-                console.error('• Response status:', error.response.status);
-                console.error('• Response data:', JSON.stringify(error.response.data, null, 2));
-            }
-            console.error('=========================================\n');
             throw error;
         }
     }
 
     async loadPatientRoster() {
         try {
-            console.log('Loading patient roster from CSV...');
             const rosterPath = this.patientRosterPath;
             
             if (!fs.existsSync(rosterPath)) {
@@ -509,17 +654,15 @@ class EpicClient {
                 skip_empty_lines: true
             });
 
-            console.log(`Loaded ${records.length} patients from roster`);
             return records;
         } catch (error) {
-            console.error('Error loading patient roster:', error.message);
+            logger.writeLog('ERROR', ['Error loading patient roster:', error.message], console.error);
             throw error;
         }
     }
 
     async loadResourcesList() {
         try {
-            console.log('Loading resources list from CSV...');
             const resourcesPath = this.resourcesListPath;
             
             if (!fs.existsSync(resourcesPath)) {
@@ -532,10 +675,9 @@ class EpicClient {
                 skip_empty_lines: true
             });
 
-            console.log(`Loaded ${records.length} resources from list`);
             return records;
         } catch (error) {
-            console.error('Error loading resources list:', error.message);
+            logger.writeLog('ERROR', ['Error loading resources list:', error.message], console.error);
             throw error;
         }
     }
@@ -654,19 +796,16 @@ class EpicClient {
         const stats = fs.statSync(filePath);
         const fileSizeInKB = (stats.size / 1024).toFixed(2);
         
-        // Add to exported files list with full path
+        // Add to exported files list
         this.exportedFiles.push({
             name: fileName,
             size: fileSizeInKB,
             path: filePath
         });
-        
-        console.log(`Exported ${data.length} records to: ${filePath}`);
     }
 
     async getResourceDataForPatient(resourceType, patientId, accessToken) {
         try {
-            // Remove the redundant patient logging since it's now handled in getAllResourceData
             let url = `${this.epicEndpoint}${resourceType}`;
             const params = new URLSearchParams({
                 _format: 'application/fhir+json',
@@ -685,9 +824,6 @@ class EpicClient {
                 params.append('patient', patientId);
             }
 
-            // Log the actual API request being made
-            console.log(`  • Querying Epic's FHIR API: ${url}?${params}`);
-
             const response = await axios.get(`${url}?${params}`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
@@ -700,74 +836,63 @@ class EpicClient {
             if (response.data) {
                 if (response.data.resourceType === 'Bundle' && Array.isArray(response.data.entry)) {
                     results = response.data.entry.map(entry => entry.resource);
-                    console.log(`  • Retrieved ${results.length} results`);
                 } else if (response.data.resourceType === resourceType) {
                     results = [response.data];
-                    console.log('  • Retrieved single resource');
                 }
             }
 
-            console.log(`  ✓ Total ${resourceType} results: ${results.length}`);
             return results;
 
         } catch (error) {
-            console.error(`  ✗ Error: ${error.message}`);
-            return [];
+            throw error;
         }
     }
 
     async getAllResourceData(accessToken) {
+        const logger = Logger.getInstance();
         try {
             this.exportedFiles = [];
             
-            console.log('\nStarting data retrieval process...');
             const patients = await this.loadPatientRoster();
             const resources = await this.loadResourcesList();
             
-            console.log('\nProcessing resources for each patient:');
-            console.log('=====================================');
+            logger.writeLog('INFO', ['\nProcessing Resources'], console.log);
             
             for (const resource of resources) {
-                console.log(`\nResource: ${resource.resource}`);
-                console.log(`Description: ${resource.description}`);
                 let allResourceResults = [];
                 
+                // Process each patient silently
                 for (const patient of patients) {
-                    // Single patient log entry with both name and ID
-                    console.log(`\n  Processing: ${patient.name} (ID: ${patient.fhir_id})`);
                     try {
                         const patientData = await this.getResourceDataForPatient(
                             resource.resource, 
                             patient.fhir_id, 
                             accessToken
                         );
+                        
                         if (patientData && patientData.length > 0) {
                             allResourceResults = allResourceResults.concat(patientData);
-                            console.log(`  ✓ Retrieved ${patientData.length} records`);
-                        } else {
-                            console.log('  ✓ No records found');
                         }
                     } catch (error) {
-                        console.error(`  ✗ Error: ${error.message}`);
+                        logger.writeLog('ERROR', [`Error processing ${resource.resource} for patient ${patient.fhir_id}: ${error.message}`], console.error);
                     }
                 }
                 
+                // Only log once when we have results
                 if (allResourceResults.length > 0) {
                     await this.saveResourceData(resource.resource, allResourceResults);
-                    console.log(`\n✓ Completed ${resource.resource}: ${allResourceResults.length} total records`);
-                } else {
-                    console.log(`\n- Skipped ${resource.resource}: No data found`);
+                    // Use process.stdout.write to ensure atomic write
+                    process.stdout.write(`${resource.resource} (${resource.description}): ${allResourceResults.length} records exported\n`);
                 }
             }
             
-            console.log('\nData Retrieval Summary');
-            console.log('====================');
-            this.logExportSummary(this.exportedFiles);
+            // Log completion once at the end
+            logger.writeLog('INFO', [`\n${scriptName} completed successfully`], console.log);
             
             return this.exportedFiles;
             
         } catch (error) {
-            console.error('\nError in data retrieval process:', error.message);
+            logger.writeLog('ERROR', ['Error in data retrieval process:', error.message], console.error);
             throw error;
         }
     }
@@ -778,15 +903,14 @@ class EpicClient {
             return;
         }
         
-        console.log('\nExported Files Summary (Filename | Size | Path | Records)');
-        console.log('================================================');
+        console.log('\nExported Files Summary');
+        console.log('=====================');
         files.forEach(file => {
             // Count lines in the file
             const content = fs.readFileSync(file.path, 'utf8');
             const lineCount = content.split('\n').filter(line => line.trim()).length;
             
-            // Output pipe-delimited format with spaces
-            console.log(`${file.name} | ${file.size} KB | ${file.path} | ${lineCount}`);
+            console.log(`${file.name} | ${file.size} KB | ${lineCount} records`);
         });
     }
 }
@@ -830,14 +954,16 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
         const observations = readNDJSON(observationFile);
         const patientStats = analyzeObservations(observations);
         reportString = generateReport(patientStats);
-
-        // Log the report
+        
+        // Log the observation report to the file
         console.log('\nObservation Analysis Report');
         console.log('=========================');
         console.log(reportString);
     } catch (error) {
-        console.log('No observation data available for analysis yet');
         reportString = 'No observation data available for analysis.';
+        console.log('\nObservation Analysis Report');
+        console.log('=========================');
+        console.log(reportString);
     }
 
     const mailOptions = {
@@ -872,18 +998,9 @@ ${path.resolve('backend_epic.log')}
         console.log('Completion email sent successfully');
         return { success: true, reportString };
     } catch (error) {
-        console.error('Error sending email:', error);
-        console.error('Error details:', error.message);
+        console.error(`Error sending email: ${error.message}`);
         return { success: false, reportString };
     }
-}
-
-function logExportSummary(files) {
-    console.log('=== Begin Export Summary ===');
-    files.forEach(file => {
-        console.log(`Exported: ${file.name} (${file.size} KB)`);
-    });
-    console.log('=== End Export Summary ===');
 }
 
 // Function to read and parse NDJSON file
@@ -917,10 +1034,19 @@ function getLatestObservationFile(directory) {
 const VITAL_SIGNS_RANGES = {
     'BP': {
         systolic: { min: 90, max: 140 },
-        diastolic: { min: 60, max: 90 }
+        diastolic: { min: 60, max: 90 },
+        unit: 'mmHg'
     },
-    'Temp': { min: 36.5, max: 37.5 },
-    'Pulse': { min: 60, max: 100 }
+    'Temp': { 
+        min: 36.5, 
+        max: 37.5,
+        unit: '°C'
+    },
+    'Pulse': { 
+        min: 60, 
+        max: 100,
+        unit: 'bpm'
+    }
 };
 
 const LAB_REFERENCE_RANGES = {
@@ -931,37 +1057,80 @@ const LAB_REFERENCE_RANGES = {
     }
 };
 
-// LOINC code mapping for vital signs
+// LOINC code mapping for vital signs with descriptions
 const VITAL_SIGNS_CODE_MAP = {
     // BP codes
-    '55284-4': 'BP',       // Blood pressure systolic and diastolic
-    '85354-9': 'BP',       // Blood pressure panel
-    '8480-6': 'BP',        // Systolic blood pressure
-    '8462-4': 'BP',        // Diastolic blood pressure
+    '55284-4': { type: 'BP', description: 'Blood pressure systolic and diastolic' },
+    '85354-9': { type: 'BP', description: 'Blood pressure panel' },
+    '8480-6':  { type: 'BP', description: 'Systolic blood pressure' },
+    '8462-4':  { type: 'BP', description: 'Diastolic blood pressure' },
     
     // Temperature codes
-    '8310-5': 'Temp',      // Body temperature
+    '8310-5':  { type: 'Temp', description: 'Body temperature' },
     
     // Pulse codes
-    '8867-4': 'Pulse'      // Heart rate
+    '8867-4':  { type: 'Pulse', description: 'Heart rate' }
 };
+
+function getObservationType(observation) {
+    // Try to identify type from code.text
+    if (observation.code?.text && ['BP', 'Temp', 'Pulse'].includes(observation.code.text)) {
+        return observation.code.text;
+    }
+
+    // Search coding for known codes
+    const codingArray = observation.code?.coding || [];
+    for (const coding of codingArray) {
+        const mappedCode = VITAL_SIGNS_CODE_MAP[coding.code];
+        if (mappedCode) {
+            return mappedCode.type;
+        }
+    }
+
+    return observation.code?.coding?.[0]?.display || 'Unknown Type';
+}
+
+function getObservationDate(observation) {
+    const dateFields = [
+        { field: 'effectiveDateTime', value: observation.effectiveDateTime },
+        { field: 'effectivePeriod.start', value: observation.effectivePeriod?.start },
+        { field: 'effectiveInstant', value: observation.effectiveInstant },
+        { field: 'issued', value: observation.issued },
+        { field: 'meta.lastUpdated', value: observation.meta?.lastUpdated },
+        { field: 'date', value: observation.date },
+        { field: 'performedDateTime', value: observation.performedDateTime },
+        { field: 'performedPeriod.start', value: observation.performedPeriod?.start },
+        { field: 'recordedDate', value: observation.recordedDate }
+    ];
+
+    for (const { field, value } of dateFields) {
+        if (value) {
+            try {
+                const date = new Date(value);
+                if (!isNaN(date)) {
+                    return date.toISOString().split('T')[0];
+                }
+            } catch (error) {
+                // Silently continue to next field
+            }
+        }
+    }
+
+    return 'No date';
+}
 
 function analyzeObservations(observations) {
     const patientStats = {};
 
-    observations.forEach(obs => {
+    observations.forEach((obs) => {
         try {
-            if (obs.resourceType !== 'Observation') {
-                return;
-            }
+            if (obs.resourceType !== 'Observation') return;
 
             // Get patient info
             const patientId = obs.subject?.reference?.split('/')[1];
             const patientName = obs.subject?.display || 'Unknown Patient';
             
-            if (!patientId) {
-                return;
-            }
+            if (!patientId) return;
 
             // Initialize patient stats if not exists
             if (!patientStats[patientId]) {
@@ -970,44 +1139,14 @@ function analyzeObservations(observations) {
                     normalCount: 0,
                     abnormalCount: 0,
                     normalObservations: [],
-                    abnormalReadings: []
+                    abnormalReadings: [],
+                    lastProcessed: new Date().toISOString()
                 };
             }
 
-            // Determine observation type
-            let observationType = null;
             const observationId = obs.id;
-
-            // Try to identify type from code.text
-            if (['BP', 'Temp', 'Pulse'].includes(obs.code?.text)) {
-                observationType = obs.code.text;
-            }
-
-            // If type is still null, search coding for known codes
-            if (!observationType) {
-                const codingArray = obs.code?.coding || [];
-                for (const coding of codingArray) {
-                    if (VITAL_SIGNS_CODE_MAP[coding.code]) {
-                        observationType = VITAL_SIGNS_CODE_MAP[coding.code];
-                        break;
-                    }
-                }
-            }
-
-            // Get observation date
-            const dateField = obs.effectiveDateTime || 
-                            obs.effectivePeriod?.start || 
-                            obs.effectiveInstant || 
-                            obs.issued || 
-                            obs.meta?.lastUpdated || 
-                            obs.date || 
-                            obs.performedDateTime || 
-                            obs.performedPeriod?.start || 
-                            obs.recordedDate;
-
-            const formattedDate = dateField ? 
-                new Date(dateField).toISOString().split('T')[0] : 
-                'No date';
+            const observationType = getObservationType(obs);
+            const formattedDate = getObservationDate(obs);
 
             // Handle BP observations
             if (observationType === 'BP') {
@@ -1018,8 +1157,10 @@ function analyzeObservations(observations) {
                     comp.code?.coding?.some(coding => coding.code === '8462-4')
                 );
 
-                const systolic = systolicComponent?.valueQuantity?.value;
-                const diastolic = diastolicComponent?.valueQuantity?.value;
+                if (!systolicComponent || !diastolicComponent) return;
+
+                const systolic = systolicComponent.valueQuantity?.value;
+                const diastolic = diastolicComponent.valueQuantity?.value;
 
                 if (systolic && diastolic) {
                     const ranges = VITAL_SIGNS_RANGES.BP;
@@ -1032,8 +1173,8 @@ function analyzeObservations(observations) {
                     const observationRecord = {
                         observationId,
                         type: observationType,
-                        value: `${systolic}/${diastolic} mmHg`,
-                        referenceRange: '90-140/60-90',
+                        value: `${systolic}/${diastolic} ${ranges.unit}`,
+                        referenceRange: `${ranges.systolic.min}-${ranges.systolic.max}/${ranges.diastolic.min}-${ranges.diastolic.max} ${ranges.unit}`,
                         status: isAbnormal ? 'ABNORMAL' : 'NORMAL',
                         date: formattedDate
                     };
@@ -1059,7 +1200,7 @@ function analyzeObservations(observations) {
                 // Get reference range based on observation type
                 if (observationType && VITAL_SIGNS_RANGES[observationType]) {
                     const range = VITAL_SIGNS_RANGES[observationType];
-                    referenceText = `${range.min}-${range.max}`;
+                    referenceText = `${range.min}-${range.max} ${range.unit}`;
                     if (value < range.min) {
                         status = 'ABNORMAL (Low)';
                     } else if (value > range.max) {
@@ -1077,7 +1218,7 @@ function analyzeObservations(observations) {
 
                 const observationRecord = {
                     observationId,
-                    type: observationType || obs.code?.coding?.[0]?.display || 'Unknown Type',
+                    type: observationType,
                     value: `${value}${unit ? ' ' + unit : ''}`,
                     referenceRange: referenceText || 'No range specified',
                     status,
@@ -1093,7 +1234,7 @@ function analyzeObservations(observations) {
                 }
             }
         } catch (error) {
-            console.warn(`Error processing observation ${obs?.id || 'unknown'}: ${error.message} [Source: backend_epic_using_jwt.js]`);
+            console.error(`Error processing observation ${obs?.id || 'unknown'}: ${error.message}`);
         }
     });
 
@@ -1153,43 +1294,33 @@ async function main() {
         // Initialize logger first
         logger = new Logger();
         
-        console.log(`Starting ${scriptName}...`);
+        // All subsequent logging will go through the Logger class
+        logger.writeLog('INFO', [`Starting ${scriptName}...`], console.log);
         
         // Initialize configuration
         const configManager = new ConfigManager();
         config = await configManager.loadConfig();
         
         // Clear export directory
-        const exportDir = config.paths.epic_data_export_folder;
-        console.log(`\nClearing export directory: ${exportDir}`);
         await logger.clearExportDirectory();
         
         // Initialize key manager
-        console.log('Initializing key manager...');
         const keyManager = new KeyManager(config);
         await keyManager.generateKeyPair();
         
-        // Initialize EPIC client
-        console.log('Initializing EPIC client...');
+        // Initialize EPIC client and get data
         const epicClient = new EpicClient(config);
-        
-        // Get access token
-        console.log('Requesting access token...');
         const accessToken = await epicClient.getAccessToken();
-        console.log('Access token received successfully');
-        
-        // Get data for all resources and patients
-        console.log('Retrieving resource data...');
         exportedFiles = await epicClient.getAllResourceData(accessToken);
         
         success = true;
-        console.log(`\n${scriptName} completed successfully`);
+        logger.writeLog('INFO', [`\n${scriptName} completed successfully`], console.log);
         
     } catch (error) {
-        console.error('Application error:', error.message);
+        logger.writeLog('ERROR', ['Application error:', error.message], console.error);
         if (error.response) {
-            console.error('Response data:', error.response.data);
-            console.error('Response status:', error.response.status);
+            logger.writeLog('ERROR', ['Response data:', error.response.data], console.error);
+            logger.writeLog('ERROR', ['Response status:', error.response.status], console.error);
         }
         success = false;
     } finally {
