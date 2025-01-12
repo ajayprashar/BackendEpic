@@ -1213,6 +1213,33 @@ function generateReport(patientStats) {
     return reportString;
 }
 
+async function clearExportDirectory(dirPath) {
+    try {
+        if (fs.existsSync(dirPath)) {
+            const files = fs.readdirSync(dirPath);
+            const singlePatientFiles = files.filter(file => file.startsWith('single_patient_'));
+            
+            logger.writeLog('INFO', [
+                `Found ${singlePatientFiles.length} single patient files to remove`,
+                'Files to be removed:',
+                ...singlePatientFiles.map(file => `• ${file}`),
+                ''
+            ]);
+
+            for (const file of singlePatientFiles) {
+                const filePath = path.join(dirPath, file);
+                await fs.promises.unlink(filePath);
+            }
+            logger.writeLog('INFO', ['Successfully cleared all single patient files']);
+        } else {
+            await fs.promises.mkdir(dirPath, { recursive: true });
+            logger.writeLog('INFO', ['Created new export directory']);
+        }
+    } catch (error) {
+        throw new Error(`Failed to clear export directory: ${error.message}`);
+    }
+}
+
 async function main() {
     const startTime = new Date().toISOString();
     let success = false;
@@ -1232,7 +1259,7 @@ async function main() {
         config = await configManager.loadConfig();
         
         // Clear export directory
-        await logger.clearExportDirectory();
+        await clearExportDirectory(config.paths.epic_data_export_folder);
         
         // Initialize key manager
         const keyManager = new KeyManager(config);

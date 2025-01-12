@@ -20,17 +20,25 @@ async function clearExportDirectory(dirPath, logger) {
             '--------------------',
             'Preparing environment for bulk data export...',
             `• Export Directory: ${dirPath}`,
-            '• Action: Clearing previous export files'
+            '• Action: Clearing previous bulk export files'
         ]);
 
         if (fs.existsSync(dirPath)) {
             const files = fs.readdirSync(dirPath);
-            logger.writeLog('INFO', [`• Found ${files.length} files to remove`]);
-            for (const file of files) {
+            const bulkFiles = files.filter(file => file.startsWith('bulk_fhir_'));
+            
+            logger.writeLog('INFO', [
+                `• Found ${bulkFiles.length} bulk FHIR files to remove`,
+                'Files to be removed:',
+                ...bulkFiles.map(file => `• ${file}`),
+                ''
+            ]);
+
+            for (const file of bulkFiles) {
                 const filePath = path.join(dirPath, file);
                 await fs.promises.unlink(filePath);
             }
-            logger.writeLog('INFO', ['• Successfully cleared all existing files']);
+            logger.writeLog('INFO', ['• Successfully cleared all bulk FHIR files']);
         } else {
             await fs.promises.mkdir(dirPath, { recursive: true });
             logger.writeLog('INFO', ['• Created new export directory']);
@@ -477,6 +485,12 @@ async function main() {
         
         // Initialize logger with config and script name
         logger = Logger.getInstance(config, scriptName);
+
+        // Initialize export directory path
+        const exportDir = path.resolve(config.paths.epic_data_export_folder);
+        
+        // Clear export directory
+        await clearExportDirectory(exportDir, logger);
         
         logger.writeLog('INFO', [
             '================================================================================',
@@ -493,14 +507,7 @@ async function main() {
             '• Clear previous export files',
             '• Initialize logging',
             '• Load configuration',
-            ''
-        ]);
-
-        // Clear the export directory
-        const exportDir = path.resolve(config.paths.epic_data_export_folder);
-        await clearExportDirectory(exportDir, logger);
-        
-        logger.writeLog('INFO', [
+            '',
             '',
             'STEP 2: JWT CREATION AND SIGNING',
             '---------------------------',

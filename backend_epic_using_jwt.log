@@ -538,3 +538,546 @@ Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No rang
 
 
 === End of Session ===
+
+================================================================================
+New Session Started: 2025-01-12T22:23:40.347Z
+================================================================================
+
+Starting backend_epic_using_jwt.js...
+
+================================================================================
+                         Configuration Loading Tutorial                          
+================================================================================
+
+Loading configuration from: backend_epic_using_jwt.ini
+Understanding Configuration Sources:
+----------------------------------
+When you see a value in the configuration, it will show its source:
+
+1. (Source: INI file)
+   • Values read directly from the INI configuration file
+   • These are the raw, unprocessed values
+
+2. (Source: Variable substitution)
+   • Values that contained variables (${variable}) that have been resolved
+   • Example: ${app_folder_name}/epic_data_export → C:/FHIR/BackendEpic/epic_data_export
+
+3. (Source: Environment variable)
+   • Values that were overridden by environment variables
+   • Useful for sensitive information like API keys
+
+Now loading the configuration values...
+--------------------------------------------------------------------------------
+
+Found 0 single patient files to remove
+Files to be removed:
+
+Successfully cleared all single patient files
+Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
+
+================================================================================
+                         Epic OAuth 2.0 Token Request Tutorial                   
+================================================================================
+
+STEP 1: JWT ASSERTION GENERATION
+--------------------------------------------------------------------------------
+Timestamp Configuration:
+  Current time (iat): 2025-01-12T22:23:40.000Z
+  Not Before (nbf) : 2025-01-12T22:23:40.000Z
+  Expiry time (exp): 2025-01-12T22:28:40.000Z
+  Token validity   : 5 minutes
+
+JWT Claims:
+
+{
+  "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
+  "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
+  "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
+  "jti": "5e34832f-ce03-4add-997c-e1db29ff325d",
+  "exp": 1736720920,
+  "nbf": 1736720620,
+  "iat": 1736720620
+}
+
+Required Claims Explanation:
+  iss (Issuer)  : Client ID assigned by Epic
+  sub (Subject) : Same as Issuer for backend services
+  aud (Audience): Epic's token endpoint
+  jti (JWT ID)  : Unique identifier for this JWT. This means we randomly generate this while respecting the format of the jti in Epic documentation.
+  exp           : Expiration time
+  nbf           : Not valid before time
+  iat           : Time when JWT was issued
+
+STEP 2: PREPARING TOKEN REQUEST
+--------------------------------------------------------------------------------
+Request Configuration:
+  Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+  Grant Type           : client_credentials
+  Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+
+Request Body:
+
+{
+  "grant_type": "client_credentials",
+  "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiYzliMmRiOTItYTAxMi00MjcwLWI2MDctNjZkODk2ODhhZGRiIiwiZXhwIjoxNzM2NzIwOTIwLCJuYmYiOjE3MzY3MjA2MjAsImlhdCI6MTczNjcyMDYyMH0.pXq8F-YeQxT4k8WMZr2HVciH2C8L_Tk-np4BoAeJB9nXWBdkunLnKqvse8ZlBPJkL3IlJJjMseOiROQE4rAxNKoAxE0dBi6BSVBdDe6P71ahCovvXBxqrvZZcjSGj7_tUZ8qNRD3xbaNdmQLpaYOWzGAR2NOwIirNwWw9kd0iI_JdM2h6MJAxJa8pakO9UoM-Ps5yObbm9JHNdj6uHJIdwsuaOJZx1zb5BtWHbwkOHmvyyu-DVWEPTQeqK3rFgIt9yQoIhhZ0IoxHPzUotQykHEPH0lqHPjXxKLwG2E4U4zy5FmZ13WMMcTiSysOLecH7K-SdoEdjUP4EIXaQZU_UA"
+}
+
+STEP 3: SENDING TOKEN REQUEST
+--------------------------------------------------------------------------------
+Understanding the Token Request Process:
+
+1. What happens when we send this request:
+   • Our JWT (shown above) is sent to Epic's authorization server
+   • The JWT contains our identity claims and is signed with our private key
+   • Epic's server receives our request and begins the validation process
+
+2. How Epic validates our request:
+   • Epic retrieves our registered public key using the key ID in the JWT header
+   • They verify the JWT's signature using this public key
+   • They check the JWT's claims (expiry time, issuer, etc.)
+
+3. What happens after successful validation:
+   • Epic generates a new access token specifically for our session
+   • This token grants us access to Epic's FHIR API endpoints
+   • The token will be valid for 60 minutes
+   • We must include this token in all subsequent API requests
+
+Now sending the request with these parameters:
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• Method: POST
+• Headers:
+    Content-Type: application/x-www-form-urlencoded
+• Request Body Parameters:
+    1. grant_type: client_credentials
+    2. client_assertion_type: JWT Bearer Token
+    3. client_assertion: [Generated JWT containing claims shown above]
+
+STEP 4: TOKEN RESPONSE
+--------------------------------------------------------------------------------
+✓ Access token received successfully
+================================================================================
+
+
+Processing Resources
+
+backend_epic_using_jwt.js completed successfully
+
+================================================================================
+                         Observation Analysis Report                             
+================================================================================
+
+EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT
+==============================================================
+
+Summary:
+---------
+Total Observations: 396
+Total Normal Readings: 318
+Total Abnormal Readings: 78
+
+Detailed Observations:
+--------------------
+Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status
+-----|--------------|------------|------------------|--------|----------------|--------
+2024-12-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | No range specified | NORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Height | 197 cm | No range specified | NORMAL
+2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Weight | 120 kg | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | No range specified | ABNORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
+2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
+2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | No range specified | ABNORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
+2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | No range specified | NORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | No range specified | NORMAL
+2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 120 kg | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | No range specified | NORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 52.7 kg | No range specified | NORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-04 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
+2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | No range specified | NORMAL
+2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 79 kg | No range specified | NORMAL
+2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | No range specified | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | No range specified | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | No range specified | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | No range specified | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | No range specified | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 62.8 kg | No range specified | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | No range specified | NORMAL
+2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | No range specified | NORMAL
+2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | No range specified | NORMAL
+2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | No range specified | NORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | No range specified | NORMAL
+2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
+2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
+2020-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 150 kg | No range specified | ABNORMAL
+2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | No range specified | NORMAL
+2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
+2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
+2020-05-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 132 kg | No range specified | NORMAL
+2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
+2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 124 kg | No range specified | NORMAL
+2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | No range specified | NORMAL
+2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 90 kg | No range specified | NORMAL
+2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | No range specified | NORMAL
+2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 123 kg | No range specified | NORMAL
+2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | No range specified | NORMAL
+2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 125 kg | No range specified | NORMAL
+2020-01-02 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 55 kg | No range specified | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | No range specified | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 58 kg | No range specified | NORMAL
+2019-09-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 95 kg | No range specified | NORMAL
+2019-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
+2019-08-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
+2019-07-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
+2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Cholesterol [Mass/volume] in Serum or Plasma | 187 mg/dL | -  | NORMAL
+2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+
+================================================================================
+
+
+=== End of Session ===
