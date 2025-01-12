@@ -1,0 +1,58 @@
+================================================================================
+                        EPIC FHIR BULK DATA EXPORT TUTORIAL                      
+================================================================================
+
+STEP 1: INITIALIZATION
+--------------------
+Preparing environment for bulk data export...
+• Export Directory: C:\FHIR\BackendEpic\${app_folder_name}\epic_data_export
+• Action: Clearing previous export files
+• Found 0 files to remove
+• Successfully cleared all existing files
+
+STEP 2: KEY MANAGEMENT
+--------------------
+• Initializing RSA key pair for JWT signing
+• Key Size: 2048 bits
+• Private Key Path: ${app_folder_name}\private.key
+• Public Key Path: ${app_folder_name}\publickey509.pem
+
+STEP 3: OAUTH 2.0 AUTHENTICATION
+-----------------------------
+• Epic Base URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/
+• OAuth Token Endpoint:
+  https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• Client ID:
+  e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
+
+JWT CREATION
+------------
+• Creating JWT for OAuth 2.0 token request
+
+JWT Timestamps:
+--------------
+• Current Time (iat): 2025-01-04T16:39:30.000Z
+• Not Before (nbf) : 2025-01-04T16:39:30.000Z
+• Expiry Time (exp): 2025-01-04T16:44:30.000Z
+• Token Validity  : 5 minutes
+
+JWT Claims:
+-----------
+• iss: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
+• sub: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
+• aud: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• jti: 9281a385-ab55-4ffc-9be3-e8c0ff5f33f4
+• exp: 1736009070
+• nbf: 1736008770
+• iat: 1736008770
+
+TOKEN REQUEST
+-------------
+• Endpoint:
+  https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+
+• Request Parameters:
+  - grant_type: client_credentials
+  - client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+  - client_assertion: [JWT Token]

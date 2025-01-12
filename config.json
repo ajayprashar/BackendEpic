@@ -1,0 +1,63 @@
+{
+    "paths": {
+        "app_folder_name": "C:\\FHIR\\BackendEpic",
+        "epic_data_export_folder": "C:\\FHIR\\BackendEpic\\epic_data_export",
+        "private_key": "C:\\FHIR\\BackendEpic\\private.key",
+        "public_key": "C:\\FHIR\\BackendEpic\\publickey509.pem",
+        "base64_public_key": "C:\\FHIR\\BackendEpic\\publickey509.b64"
+    },
+    "rsa_settings": {
+        "rsa_key_size": 2048,
+        "rsa_public_encoding": "spki",
+        "rsa_private_encoding": "pkcs8"
+    },
+    "jwt_settings": {
+        "jwt_algorithm": "RS384",
+        "jwt_expiry_minutes": 5
+    },
+    "oauth_settings": {
+        "client_id": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
+        "token_endpoint": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
+        "grant_type": "client_credentials",
+        "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+    },
+    "epic_settings": {
+        "epic_endpoint": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/",
+        "test_patient_id": "erXuFYUfucBZaryVksYEcMg3"
+    },
+    "lab_data_settings": {
+        "lab_data_category": "laboratory",
+        "lab_data_format": "application/fhir+ndjson",
+        "lab_data_fallback_formats": "application/json,application/fhir+json",
+        "lab_data_max_attempts": 30,
+        "lab_data_check_interval": 5000,
+        "lab_data_timeout": 150000
+    },
+    "data_sources": {
+        "epic_sandbox_roster": "C:\\FHIR\\BackendEpic\\epic_sandbox_roster.csv",
+        "epic_sandbox_resources": "C:\\FHIR\\BackendEpic\\epic_sandbox_resources.csv"
+    },
+    "email": {
+        "smtp_host": "127.0.0.1",
+        "smtp_port": 1025,
+        "smtp_secure": false,
+        "smtp_user": "ajay@aprashar.com",
+        "smtp_pass": "5_kv7wSMQotniFGXWy1pbA",
+        "notification_to": "ajay@aprashar.com",
+        "notification_from": "ajay@aprashar.com"
+    },
+    "api_settings": {
+        "page_size": 100,
+        "max_pages": 100
+    },
+    "data_export": {
+        "format": "application/fhir+json",
+        "ndjson_format": "application/fhir+ndjson",
+        "json_format": "application/json",
+        "default_count": 100
+    },
+    "file_patterns": {
+        "resource_data_file": "${ResourceType}_data_${Timestamp}.ndjson",
+        "timestamp_format": "YYYY-MM-DDTHH-mm-ss-SSSZ"
+    }
+} 

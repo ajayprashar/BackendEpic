@@ -94,10 +94,13 @@ require('dotenv').config();
 const ConfigManager = require('./src/managers/ConfigManager');
 const Logger = require('./src/utils/Logger');
 
-const scriptName = path.basename(process.argv[1]);
+const scriptName = path.basename(__filename);
 
-// Get logger instance
-const logger = Logger.getInstance();
+// Reset any existing logger instance
+Logger.resetInstance();
+
+// Get logger instance with script name
+const logger = Logger.getInstance(null, scriptName);
 
 // Ensure logger is closed properly on exit
 process.on('exit', () => {

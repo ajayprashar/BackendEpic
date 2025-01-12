@@ -1,6 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-03T16:13:21.550Z
+New Session Started: 2025-01-12T13:29:55.359Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -29,87 +29,7 @@ When you see a value in the configuration, it will show its source:
 Now loading the configuration values...
 --------------------------------------------------------------------------------
 
-Configuration values before resolution:
-paths.app_folder_name: C:\FHIR\BackendEpic (Source: INI file)
-paths.epic_data_export_folder: ${app_folder_name}\epic_data_export (Source: INI file)
-paths.private_key: ${app_folder_name}\private.key (Source: INI file)
-paths.public_key: ${app_folder_name}\publickey509.pem (Source: INI file)
-paths.base64_public_key: ${app_folder_name}\publickey509.b64 (Source: INI file)
-rsa_settings.rsa_key_size: 2048 (Source: INI file)
-rsa_settings.rsa_public_encoding: spki (Source: INI file)
-rsa_settings.rsa_private_encoding: pkcs8 (Source: INI file)
-jwt_settings.jwt_algorithm: RS384 (Source: INI file)
-jwt_settings.jwt_expiry_minutes: 5 (Source: INI file)
-oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: INI file)
-oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: INI file)
-oauth_settings.grant_type: client_credentials (Source: INI file)
-oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: INI file)
-epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: INI file)
-epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: INI file)
-lab_data_settings.lab_data_category: laboratory (Source: INI file)
-lab_data_settings.lab_data_format: application/fhir+ndjson (Source: INI file)
-lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: INI file)
-lab_data_settings.lab_data_max_attempts: 30 (Source: INI file)
-lab_data_settings.lab_data_check_interval: 5000 (Source: INI file)
-lab_data_settings.lab_data_timeout: 150000 (Source: INI file)
-data_sources.epic_sandbox_roster: ${app_folder_name}\epic_sandbox_roster.csv (Source: INI file)
-data_sources.epic_sandbox_resources: ${app_folder_name}\epic_sandbox_resources.csv (Source: INI file)
-email.smtp_host: 127.0.0.1 (Source: INI file)
-email.smtp_port: 1025 (Source: INI file)
-email.smtp_secure: false (Source: INI file)
-email.smtp_user: ajay@aprashar.com (Source: INI file)
-email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: INI file)
-email.notification_to: ajay@aprashar.com (Source: INI file)
-email.notification_from: ajay@aprashar.com (Source: INI file)
-api_settings.page_size: 100 (Source: INI file)
-api_settings.max_pages: 100 (Source: INI file)
-data_export.format: application/fhir+json (Source: INI file)
-data_export.ndjson_format: application/fhir+ndjson (Source: INI file)
-data_export.json_format: application/json (Source: INI file)
-data_export.default_count: 100 (Source: INI file)
-file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: INI file)
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: INI file)
-Configuration values after resolution:
-paths.app_folder_name: C:\FHIR\BackendEpic (Source: Variable substitution)
-paths.epic_data_export_folder: C:\FHIR\BackendEpic\epic_data_export (Source: Variable substitution)
-paths.private_key: C:\FHIR\BackendEpic\private.key (Source: Variable substitution)
-paths.public_key: C:\FHIR\BackendEpic\publickey509.pem (Source: Variable substitution)
-paths.base64_public_key: C:\FHIR\BackendEpic\publickey509.b64 (Source: Variable substitution)
-rsa_settings.rsa_key_size: 2048 (Source: Variable substitution)
-rsa_settings.rsa_public_encoding: spki (Source: Variable substitution)
-rsa_settings.rsa_private_encoding: pkcs8 (Source: Variable substitution)
-jwt_settings.jwt_algorithm: RS384 (Source: Variable substitution)
-jwt_settings.jwt_expiry_minutes: 5 (Source: Variable substitution)
-oauth_settings.client_id: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190 (Source: Variable substitution)
-oauth_settings.token_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token (Source: Variable substitution)
-oauth_settings.grant_type: client_credentials (Source: Variable substitution)
-oauth_settings.client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer (Source: Variable substitution)
-epic_settings.epic_endpoint: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/ (Source: Variable substitution)
-epic_settings.test_patient_id: erXuFYUfucBZaryVksYEcMg3 (Source: Variable substitution)
-lab_data_settings.lab_data_category: laboratory (Source: Variable substitution)
-lab_data_settings.lab_data_format: application/fhir+ndjson (Source: Variable substitution)
-lab_data_settings.lab_data_fallback_formats: application/json,application/fhir+json (Source: Variable substitution)
-lab_data_settings.lab_data_max_attempts: 30 (Source: Variable substitution)
-lab_data_settings.lab_data_check_interval: 5000 (Source: Variable substitution)
-lab_data_settings.lab_data_timeout: 150000 (Source: Variable substitution)
-data_sources.epic_sandbox_roster: C:\FHIR\BackendEpic\epic_sandbox_roster.csv (Source: Variable substitution)
-data_sources.epic_sandbox_resources: C:\FHIR\BackendEpic\epic_sandbox_resources.csv (Source: Variable substitution)
-email.smtp_host: 127.0.0.1 (Source: Variable substitution)
-email.smtp_port: 1025 (Source: Variable substitution)
-email.smtp_secure: false (Source: Variable substitution)
-email.smtp_user: ajay@aprashar.com (Source: Variable substitution)
-email.smtp_pass: 5_kv7wSMQotniFGXWy1pbA (Source: Variable substitution)
-email.notification_to: ajay@aprashar.com (Source: Variable substitution)
-email.notification_from: ajay@aprashar.com (Source: Variable substitution)
-api_settings.page_size: 100 (Source: Variable substitution)
-api_settings.max_pages: 100 (Source: Variable substitution)
-data_export.format: application/fhir+json (Source: Variable substitution)
-data_export.ndjson_format: application/fhir+ndjson (Source: Variable substitution)
-data_export.json_format: application/json (Source: Variable substitution)
-data_export.default_count: 100 (Source: Variable substitution)
-file_patterns.resource_data_file: ${ResourceType}_data_${Timestamp}.ndjson (Source: Variable substitution)
-file_patterns.timestamp_format: YYYY-MM-DDTHH-mm-ss-SSSZ (Source: Variable substitution)
-Export directory prepared
+Cleared 0 files from epic_data_export
 Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
 
 ================================================================================
@@ -119,9 +39,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-03T16:13:21.000Z
-  Not Before (nbf) : 2025-01-03T16:13:21.000Z
-  Expiry time (exp): 2025-01-03T16:18:21.000Z
+  Current time (iat): 2025-01-12T13:29:55.000Z
+  Not Before (nbf) : 2025-01-12T13:29:55.000Z
+  Expiry time (exp): 2025-01-12T13:34:55.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -130,10 +50,10 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "f3526bb3-7801-413c-b09b-f37fd528de50",
-  "exp": 1735921101,
-  "nbf": 1735920801,
-  "iat": 1735920801
+  "jti": "c0a78376-82a1-44fe-acd1-907ecd5b02e3",
+  "exp": 1736688895,
+  "nbf": 1736688595,
+  "iat": 1736688595
 }
 
 Required Claims Explanation:
@@ -157,7 +77,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiYWEyMTIzMGMtYWVjOC00OTFhLWI2ZDMtMGU1NDgyMmQ2MjBiIiwiZXhwIjoxNzM1OTIxMTAxLCJuYmYiOjE3MzU5MjA4MDEsImlhdCI6MTczNTkyMDgwMX0.QZscWEUwp92Nf5CCdrcVdZukFXY4yskNsBgj8IiDA_OENVeGuLiB3FjcKrlghE4CCbvcA_44c1ZDVzBC7_Ym77zqHHRkq3Vv3o98jrJU0v1YbTeAMNBGezcxC5Tx68sMgdoOiVdEpLRulOkA8hlTLKI8wJ4sFbnde4c1Y-ws1L53VUW8qI8_X34GR5R5xopga2tY63UJo1oXOBKzmwqZDr5GWhUg04Xher7FjSup9Sf3lQF3O7XgY_qoZ40WuCCf85R5bj12Bjmh31lRYsfjblQPW-uNjQBC3K8YhauQGBWa00ck4eIZ8Dzn3k_iyI1MuoSqZYmnBm3C3MfFwfeFZg"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiZjY4OTMwYWYtMzg5NC00NTQ5LTkzMDgtYWI2ODgyMzgyODQ4IiwiZXhwIjoxNzM2Njg4ODk1LCJuYmYiOjE3MzY2ODg1OTUsImlhdCI6MTczNjY4ODU5NX0.BHK5VjlyPIT5NZszhdE-7c8vgH5tzSSmwhHLmfE4-sW0nHuC5kvyt82P0UpoDRuDr4Z1LCn8LmJuD-12ioetUam9QeA3jOQ4JLfuVkvTU_DwZ2egyrG86ZxG7kbvboD-XOBa6lSHZpDfRvLJZN-QMZxdOu4p4N3qgVdokYgwl3zgON0zpNFtQI_HBE-1Fnuw5YT6X5DEn2LhJrXJm4fN4VzoNz7Fp4ordfNbT_CV7ypsQVHpPwDI7QWxyh9o2s-81-NfSPdvb9dGidHP-Qr0J5jGQU_zmCFjEsAasalh5_MPnQXem8EbOcPNGy1SXyK6Chyuzzjr3ujY6UE7VuDPCw"
 }
 
 STEP 3: SENDING TOKEN REQUEST
@@ -195,7 +115,9 @@ STEP 4: TOKEN RESPONSE
 ✓ Access token received successfully
 ================================================================================
 
+
 Processing Resources
+
 backend_epic_using_jwt.js completed successfully
 
 ================================================================================
@@ -269,13 +191,13 @@ uses these predefined standard ranges.
 2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
 2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/72 mmHg | 90-140/60-90 mmHg | NORMAL
 2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 119/77 mmHg | 90-140/60-90 mmHg | NORMAL
+2024-12-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
 2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
 2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
 2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | 36.5-37.5 °C | NORMAL
 2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
 2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | 60-100 bpm | NORMAL
 2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 82 /min | 60-100 bpm | NORMAL
 2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 153/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
 2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
 2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
@@ -622,6 +544,5 @@ uses these predefined standard ranges.
 
 ================================================================================
 
-Completion email sent successfully
 
 === End of Session ===

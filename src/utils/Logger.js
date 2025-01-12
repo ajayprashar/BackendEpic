@@ -23,16 +23,18 @@
 const fs = require('fs');
 const path = require('path');
 
-// Create a single logger instance
 let loggerInstance = null;
 
 class Logger {
-    constructor() {
+    constructor(config = null, scriptName = null) {
         if (loggerInstance) {
             return loggerInstance;
         }
         
-        this.LOG_FILE = 'backend_epic.log';
+        this.config = config;
+        this.LOG_FILE = scriptName ? 
+            scriptName.replace('.js', '.log') : 
+            'backend_epic.log';
         this.MAX_LOG_SIZE = 10 * 1024 * 1024; // 10MB
         this.logStream = null;
         this.initialized = false;
@@ -42,6 +44,14 @@ class Logger {
         
         loggerInstance = this;
         return loggerInstance;
+    }
+
+    // Reset the singleton instance (useful when switching between scripts)
+    static resetInstance() {
+        if (loggerInstance && loggerInstance.logStream) {
+            loggerInstance.close();
+        }
+        loggerInstance = null;
     }
 
     initializeLogStream() {
@@ -59,9 +69,8 @@ class Logger {
                 }
             }
 
-            // Create write stream and set up console overrides
+            // Create write stream
             this.logStream = fs.createWriteStream(this.LOG_FILE, { flags: 'a' });
-            this.setupConsoleOverrides();
 
             // Write session start directly to stream to avoid duplication
             const timestamp = new Date().toISOString();
@@ -81,47 +90,40 @@ class Logger {
         }
     }
 
-    setupConsoleOverrides() {
-        const originalLog = console.log;
-        const originalWarn = console.warn;
-        const originalError = console.error;
-
-        console.log = (...args) => this.writeLog('INFO', args, originalLog);
-        console.warn = (...args) => this.writeLog('WARN', args, originalWarn);
-        console.error = (...args) => this.writeLog('ERROR', args, originalError);
-    }
-
     formatMessage(level, args) {
-        const timestamp = new Date().toISOString();
-        
-        // Format any JSON objects in the message
-        const formattedArgs = args.map(arg => {
-            if (typeof arg === 'object' && arg !== null) {
-                return '\n' + JSON.stringify(arg, null, 2) + '\n';
-            }
-            return String(arg);
-        });
-        
-        // Join all arguments with spaces and trim any extra whitespace
-        let message = formattedArgs.join(' ').trim();
-        
-        // Remove redundant level prefix if it exists
-        message = message.replace(new RegExp(`^${level}:\\s*`, 'i'), '');
-        
-        // For tutorial content, return as is without any prefixes
-        if (level === 'TUTORIAL') {
-            return message;
+        if (!args || args.length === 0) {
+            return null;
         }
         
-        // For regular log messages, only add timestamp for errors
+        const timestamp = new Date().toISOString();
+        let message = '';
+        
+        if (Array.isArray(args)) {
+            // Handle array of messages
+            message = args.map(arg => {
+                if (typeof arg === 'object') {
+                    return JSON.stringify(arg, null, 2);
+                }
+                return arg.toString();
+            }).join('\n');
+        } else {
+            // Handle single message
+            message = typeof args === 'object' ? JSON.stringify(args, null, 2) : args.toString();
+        }
+        
+        // Add timestamp for ERROR level
         if (level === 'ERROR') {
-            return `[${timestamp}] ${message}`;
+            message = `[${timestamp}] ${message}`;
         }
         
         return message;
     }
 
-    writeLog(level, args, originalMethod) {
+    writeLog(level, args) {
+        if (!this.initialized || !this.logStream) {
+            this.initializeLogStream();
+        }
+
         try {
             const formattedMessage = this.formatMessage(level, args);
             
@@ -158,22 +160,21 @@ class Logger {
             // Write to console with color
             switch (level) {
                 case 'WARN':
-                    originalMethod('\x1b[33m' + formattedMessage + '\x1b[0m'); // Yellow
+                    console.log('\x1b[33m' + formattedMessage + '\x1b[0m'); // Yellow
                     break;
                 case 'ERROR':
-                    originalMethod('\x1b[31m' + formattedMessage + '\x1b[0m'); // Red
+                    console.error('\x1b[31m' + formattedMessage + '\x1b[0m'); // Red
                     break;
                 default:
-                    originalMethod(formattedMessage);
+                    console.log(formattedMessage);
             }
         } catch (error) {
-            // Fallback to original console if logging fails
-            originalMethod(...args);
-            originalMethod(`Logger error: ${error.message}`);
+            // Fallback to basic console if logging fails
+            console.error(...args);
+            console.error(`Logger error: ${error.message}`);
         }
     }
 
-    // Add a method for direct writing to log file
     writeDirectly(message) {
         if (!this.initialized || !this.logStream) {
             this.initializeLogStream();
@@ -182,39 +183,36 @@ class Logger {
     }
 
     clearExportDirectory() {
-        const exportDir = 'epic_data_export';
+        const exportDir = this.config?.paths?.epic_data_export_folder || 'epic_data_export';
         
         try {
             if (fs.existsSync(exportDir)) {
                 const files = fs.readdirSync(exportDir);
                 files.forEach(file => {
-                    try {
-                        fs.unlinkSync(path.join(exportDir, file));
-                    } catch (error) {
-                        console.error(`Failed to delete file ${file}: ${error.message}`);
-                    }
+                    const filePath = path.join(exportDir, file);
+                    fs.unlinkSync(filePath);
                 });
+                this.writeLog('INFO', [`Cleared ${files.length} files from ${exportDir}`]);
             } else {
                 fs.mkdirSync(exportDir, { recursive: true });
+                this.writeLog('INFO', [`Created export directory: ${exportDir}`]);
             }
-            console.log('Export directory prepared');
         } catch (error) {
-            console.error(`Failed to prepare export directory: ${error.message}`);
-            throw error;
+            throw new Error(`Failed to clear export directory: ${error.message}`);
         }
     }
 
     close() {
         if (this.logStream) {
-            this.logStream.end('\n=== End of Session ===\n');
-            this.logStream.close();
+            this.logStream.write('\n=== End of Session ===\n');
+            this.logStream.end();
         }
     }
 
     // Static method to get logger instance
-    static getInstance() {
+    static getInstance(config = null, scriptName = null) {
         if (!loggerInstance) {
-            loggerInstance = new Logger();
+            loggerInstance = new Logger(config, scriptName);
         }
         return loggerInstance;
     }
