@@ -5,6 +5,7 @@ const Logger = require('./src/utils/Logger');
 const { loadConfig } = require('./config_loader');
 const { FHIRQueryClient } = require('./fhir_query_client');
 const { KeyManager } = require('./key_manager');
+const axios = require('axios');
 
 const scriptName = path.basename(__filename);
 
@@ -36,6 +37,251 @@ async function clearExportDirectory(dirPath, logger) {
         }
     } catch (error) {
         throw new Error(`Failed to clear export directory: ${error.message}`);
+    }
+}
+
+async function monitorExportStatus(statusUrl, accessToken, logger, maxAttempts = 60) {
+    logger.writeLog('INFO', [
+        'EXPORT STATUS MONITORING',
+        '----------------------',
+        '• Poll Interval: 10 seconds',
+        `• Maximum Attempts: ${maxAttempts}`,
+        '• Status URL:',
+        `  ${statusUrl}`,
+        '',
+        'Beginning status checks...',
+        ''
+    ]);
+
+    let attempt = 1;
+    let lastProgress = '';
+
+    while (attempt <= maxAttempts) {
+        logger.writeLog('INFO', [
+            `Status Check #${attempt}`,
+            '----------------',
+            'STATUS CHECK REQUEST',
+            '------------------',
+            '• URL:',
+            `  ${statusUrl}`,
+            '',
+            '• Headers:',
+            '  Authorization: Bearer [TOKEN]',
+            '  Accept: application/json',
+            ''
+        ]);
+
+        try {
+            const response = await axios.get(statusUrl, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/json'
+                }
+            });
+
+            logger.writeLog('INFO', [
+                'STATUS CHECK RESPONSE',
+                '-------------------',
+                '• Status Code:',
+                `  ${response.status} ${response.statusText}`,
+                '',
+                '• Response Headers:',
+                ...Object.entries(response.headers).map(([key, value]) => `  ${key}: ${value}`),
+                ''
+            ]);
+
+            // Check for completion (200 OK)
+            if (response.status === 200) {
+                logger.writeLog('INFO', [
+                    '• Status: COMPLETED',
+                    '',
+                    'Export completed successfully. Processing output files...',
+                    '',
+                    'Response Data:',
+                    JSON.stringify(response.data, null, 2)
+                ]);
+                
+                // The response should contain an output array with file URLs
+                if (response.data && response.data.output) {
+                    return response.data.output;
+                } else {
+                    throw new Error('No output URLs found in completion response');
+                }
+            }
+
+            // Still processing (202 Accepted)
+            const progress = response.headers['x-progress'] || 'No progress information available';
+            if (progress !== lastProgress) {
+                logger.writeLog('INFO', [
+                    '• Current Progress:',
+                    `  ${progress}`,
+                    ''
+                ]);
+                lastProgress = progress;
+            }
+
+            // Extract numbers from progress header (e.g., "Searched 0 of 7 patients")
+            const progressMatch = progress.match(/Searched (\d+) of (\d+) patients/);
+            if (progressMatch) {
+                const [, current, total] = progressMatch;
+                const percentComplete = (parseInt(current) / parseInt(total) * 100).toFixed(1);
+                logger.writeLog('INFO', [
+                    `• Progress: ${percentComplete}% complete (${current}/${total} patients)`,
+                    ''
+                ]);
+            }
+
+            logger.writeLog('INFO', [
+                '• Status: IN PROGRESS',
+                '• Waiting 10 seconds before next check...',
+                ''
+            ]);
+
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            attempt++;
+        } catch (error) {
+            // Check if it's a 429 (Too Many Requests) error
+            if (error.response && error.response.status === 429) {
+                const retryAfter = parseInt(error.response.headers['retry-after'] || '30');
+                logger.writeLog('WARN', [
+                    '• Rate limit exceeded. Waiting before retry...',
+                    `• Retry-After: ${retryAfter} seconds`,
+                    ''
+                ]);
+                await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+                continue;
+            }
+
+            // Handle other errors
+            logger.writeLog('ERROR', [
+                'Error checking export status:',
+                error.message,
+                '',
+                'Response details (if available):',
+                error.response ? JSON.stringify(error.response.data, null, 2) : 'No response data',
+                '',
+                'Retrying in 10 seconds...',
+                ''
+            ]);
+
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            attempt++;
+        }
+    }
+
+    throw new Error(`Export monitoring timed out after ${maxAttempts} attempts`);
+}
+
+async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) {
+    if (!outputFiles || !Array.isArray(outputFiles)) {
+        throw new Error('No valid output files received from export');
+    }
+
+    logger.writeLog('INFO', [
+        'DOWNLOADING EXPORT FILES',
+        '----------------------',
+        `• Total files to download: ${outputFiles.length}`,
+        `• Export directory: ${exportDir}`,
+        '',
+        'File Details:',
+        ...outputFiles.map((file, i) => `• File ${i + 1}: ${file.type || 'unknown type'}`),
+        ''
+    ]);
+
+    for (let i = 0; i < outputFiles.length; i++) {
+        const file = outputFiles[i];
+        const filename = `${file.type || `export_${i + 1}`}.ndjson`;
+        const filepath = path.join(exportDir, filename);
+
+        logger.writeLog('INFO', [
+            `Downloading file ${i + 1} of ${outputFiles.length}:`,
+            `• Type: ${file.type || 'unknown'}`,
+            `• URL: ${file.url}`,
+            `• Saving to: ${filepath}`,
+            ''
+        ]);
+
+        try {
+            const response = await axios({
+                method: 'GET',
+                url: file.url,
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/fhir+ndjson'
+                },
+                validateStatus: function (status) {
+                    return status === 200; // Only accept 200 OK
+                },
+                maxRedirects: 5,
+                timeout: 30000 // 30 second timeout
+            });
+
+            // Check if we got any data
+            if (!response.data) {
+                throw new Error('Received empty response from server');
+            }
+
+            // Log response headers for debugging
+            logger.writeLog('INFO', [
+                'Download Response Headers:',
+                ...Object.entries(response.headers).map(([key, value]) => `  ${key}: ${value}`),
+                ''
+            ]);
+
+            // Create write stream with error handling
+            const writer = fs.createWriteStream(filepath);
+            
+            let dataReceived = false;
+            let bytesWritten = 0;
+
+            response.data.on('data', (chunk) => {
+                dataReceived = true;
+                bytesWritten += chunk.length;
+                logger.writeLog('INFO', [`• Received ${bytesWritten} bytes for ${file.type}`]);
+            });
+
+            await new Promise((resolve, reject) => {
+                writer.on('finish', () => {
+                    if (!dataReceived) {
+                        reject(new Error('No data was written to file'));
+                    } else {
+                        resolve();
+                    }
+                });
+                writer.on('error', reject);
+                response.data.pipe(writer);
+            });
+
+            // Verify file was created and has content
+            const stats = await fs.promises.stat(filepath);
+            if (stats.size === 0) {
+                throw new Error('Downloaded file is empty');
+            }
+
+            logger.writeLog('INFO', [
+                `• Successfully downloaded ${file.type || 'file'} data`,
+                `• Saved to: ${filepath}`,
+                `• File size: ${stats.size} bytes`,
+                ''
+            ]);
+        } catch (error) {
+            const errorDetails = error.response ? {
+                status: error.response.status,
+                statusText: error.response.statusText,
+                headers: error.response.headers,
+                data: error.response.data
+            } : {};
+
+            logger.writeLog('ERROR', [
+                `Failed to download file ${i + 1}:`,
+                `• Error: ${error.message}`,
+                '• Error Details:',
+                JSON.stringify(errorDetails, null, 2),
+                '',
+                'Continuing with next file...',
+                ''
+            ]);
+        }
     }
 }
 
@@ -205,7 +451,8 @@ async function main() {
         ]);
 
         // Poll status and download results
-        await client.processBulkExport(statusUrl, accessToken);
+        const outputFiles = await monitorExportStatus(statusUrl, accessToken, logger);
+        await downloadExportFiles(outputFiles, accessToken, exportDir, logger);
         
         logger.writeLog('INFO', [
             '',

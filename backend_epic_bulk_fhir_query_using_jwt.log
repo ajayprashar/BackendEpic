@@ -1,6 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-12T13:30:43.871Z
+New Session Started: 2025-01-12T13:44:46.031Z
 ================================================================================
 
 ================================================================================
@@ -27,7 +27,7 @@ STEP 1: INITIALIZATION
 Preparing environment for bulk data export...
 • Export Directory: C:\FHIR\BackendEpic\epic_data_export
 • Action: Clearing previous export files
-• Found 11 files to remove
+• Found 0 files to remove
 • Successfully cleared all existing files
 
 STEP 2: JWT CREATION AND SIGNING
@@ -81,9 +81,9 @@ JWT CREATION
 
 JWT Timestamps:
 --------------
-• Current Time (iat): 2025-01-12T13:30:43.000Z
-• Not Before (nbf) : 2025-01-12T13:30:43.000Z
-• Expiry Time (exp): 2025-01-12T13:35:43.000Z
+• Current Time (iat): 2025-01-12T13:44:46.000Z
+• Not Before (nbf) : 2025-01-12T13:44:46.000Z
+• Expiry Time (exp): 2025-01-12T13:49:46.000Z
 • Token Validity  : 5 minutes
 
 JWT Claims:
@@ -91,10 +91,10 @@ JWT Claims:
 • iss: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
 • sub: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
 • aud: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-• jti: dbe7c3f2-e998-49e6-b58d-8a53d0cff27f
-• exp: 1736688943
-• nbf: 1736688643
-• iat: 1736688643
+• jti: 7a903ca0-fb97-4b81-b4d3-a0fa1ed3ca7f
+• exp: 1736689786
+• nbf: 1736689486
+• iat: 1736689486
 
 TOKEN REQUEST
 -------------
@@ -116,15 +116,15 @@ TOKEN RESPONSE
   pragma: no-cache
   content-type: application/json; charset=utf-8
   expires: -1
-  set-cookie: ASP.NET_SessionId=lmrzesa4ngz3rcvh4pzfyp4o; path=/Interconnect-fhir-oauth; secure; HttpOnly; SameSite=Lax,EpicPersistenceCookie=!ZzueP5NV4Yeb6CbU12A6425ur3acAQ36L45EkQ6hAXPDo82AFV1F/+oXjztq6K0ftE9SmT83m6U69HQ=; path=/; Httponly; Secure
-  servermetrics: {"BlockReads":5,"BlockWrites":1,"BlocksAllocated":0,"DBTime":12,"DatabaseCPUTime":13,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":14,"GREF":749,"JournalEntries":11,"LockWait":0.02,"LocksFailed":0,"LocksGranted":0,"MCommands":12417,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":5,"WorkflowEventDBTime":12,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":749}
+  set-cookie: ASP.NET_SessionId=15wfsp00qr4bcxcqnpjschio; path=/Interconnect-fhir-oauth; secure; HttpOnly; SameSite=Lax,EpicPersistenceCookie=!RInJoTeb23ZnXRzU12A6425ur3acAVtY2/n9FR4SvARFQqPz822MpzCu9JW8omXbD43lPQkTTGgfrWQ=; path=/; Httponly; Secure
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":17,"DatabaseCPUTime":12,"ECFNetworkTime":6,"ECFRequestCount":1,"ECFRequestTime":23,"GREF":625,"JournalEntries":1,"LockWait":0.037,"LocksFailed":0,"LocksGranted":0,"MCommands":11709,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":17,"WorkflowEventECFNetworkTime":5,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":625}
   strict-transport-security: max-age=31536000; includeSubDomains
   x-frame-options: sameorigin
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:30:44 GMT
+  date: Sun, 12 Jan 2025 13:44:46 GMT
   content-length: 3301
 
 • Response Body:
@@ -199,19 +199,19 @@ RESPONSE RECEIVED
   cache-control: no-cache,no-store
   pragma: no-cache
   content-type: text/plain; charset=utf-8
-  content-location: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  content-location: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
   expires: -1
-  servermetrics: {"BlockReads":58,"BlockWrites":1,"BlocksAllocated":0,"DBTime":55,"DatabaseCPUTime":30,"ECFNetworkTime":0,"ECFRequestCount":1,"ECFRequestTime":55,"GREF":1325,"JournalEntries":10,"LockWait":0.02,"LocksFailed":0,"LocksGranted":0,"MCommands":50406,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":58,"WorkflowEventDBTime":55,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1325}
+  servermetrics: {"BlockReads":1,"BlockWrites":1,"BlocksAllocated":0,"DBTime":29,"DatabaseCPUTime":19,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":31,"GREF":1320,"JournalEntries":10,"LockWait":0.017,"LocksFailed":0,"LocksGranted":0,"MCommands":50012,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":1,"WorkflowEventDBTime":29,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1320}
   strict-transport-security: max-age=31536000; includeSubDomains
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:30:44 GMT
+  date: Sun, 12 Jan 2025 13:44:46 GMT
   content-length: 0
 
 • Content-Location (Status URL):
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 STEP 5: EXPORT MONITORING AND DOWNLOAD
 ----------------------------------
@@ -222,16 +222,15 @@ The export process is asynchronous. We will:
 4. Process observation data for analysis
 
 Status URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 Starting export status monitoring...
-
 EXPORT STATUS MONITORING
 ----------------------
 • Poll Interval: 10 seconds
-• Maximum Duration: 5 minutes
+• Maximum Attempts: 60
 • Status URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 Beginning status checks...
 
@@ -240,7 +239,7 @@ Status Check #1
 STATUS CHECK REQUEST
 ------------------
 • URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 • Headers:
   Authorization: Bearer [TOKEN]
@@ -256,18 +255,19 @@ STATUS CHECK RESPONSE
   pragma: no-cache
   content-type: text/plain; charset=utf-8
   expires: -1
-  servermetrics: {"BlockReads":2,"BlockWrites":0,"BlocksAllocated":0,"DBTime":19,"DatabaseCPUTime":19,"ECFNetworkTime":1,"ECFRequestCount":0,"ECFRequestTime":20,"GREF":679,"JournalEntries":4,"LockWait":0.017,"LocksFailed":0,"LocksGranted":0,"MCommands":32478,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":2,"WorkflowEventDBTime":19,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":0,"WorkflowEventGREF":679}
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":10,"DatabaseCPUTime":11,"ECFNetworkTime":1,"ECFRequestCount":0,"ECFRequestTime":11,"GREF":572,"JournalEntries":0,"LockWait":0.01,"LocksFailed":0,"LocksGranted":0,"MCommands":31672,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":10,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":0,"WorkflowEventGREF":572}
   x-progress: Searched 0 patients
   strict-transport-security: max-age=31536000; includeSubDomains
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:30:44 GMT
+  date: Sun, 12 Jan 2025 13:44:46 GMT
   content-length: 0
 
-• Response Body:
-  ""
+• Current Progress:
+  Searched 0 patients
+
 • Status: IN PROGRESS
 • Waiting 10 seconds before next check...
 
@@ -276,7 +276,7 @@ Status Check #2
 STATUS CHECK REQUEST
 ------------------
 • URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 • Headers:
   Authorization: Bearer [TOKEN]
@@ -292,19 +292,17 @@ STATUS CHECK RESPONSE
   pragma: no-cache
   content-type: text/plain; charset=utf-8
   expires: -1
-  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":20,"DatabaseCPUTime":22,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":21,"GREF":811,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43202,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":20,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":811}
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":17,"DatabaseCPUTime":18,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":18,"GREF":818,"JournalEntries":0,"LockWait":0.015,"LocksFailed":0,"LocksGranted":0,"MCommands":43111,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":17,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":818}
   x-progress: Searched 0 patients
   strict-transport-security: max-age=31536000; includeSubDomains
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:30:54 GMT
+  date: Sun, 12 Jan 2025 13:44:56 GMT
   content-length: 0
-  set-cookie: EpicPersistenceCookie=!1q8ET15Y0xdOU6XU12A6425ur3acAX230304xbH/5tZVb6trdtpYvmXZQWe2ppHOXOciXn1dvkYrD0c=; path=/; Httponly; Secure
+  set-cookie: EpicPersistenceCookie=!tiV/AALV0M7ox9nU12A6425ur3acAbBr6Lw60Q18adHUXu25nGGnKRvv57mVsTLaZ4p3g+4AumRSv9E=; path=/; Httponly; Secure
 
-• Response Body:
-  ""
 • Status: IN PROGRESS
 • Waiting 10 seconds before next check...
 
@@ -313,7 +311,7 @@ Status Check #3
 STATUS CHECK REQUEST
 ------------------
 • URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 • Headers:
   Authorization: Bearer [TOKEN]
@@ -329,19 +327,17 @@ STATUS CHECK RESPONSE
   pragma: no-cache
   content-type: text/plain; charset=utf-8
   expires: -1
-  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":14,"DatabaseCPUTime":16,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":16,"GREF":813,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":14,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  servermetrics: {"BlockReads":25,"BlockWrites":0,"BlocksAllocated":0,"DBTime":43,"DatabaseCPUTime":13,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":45,"GREF":814,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43106,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":25,"WorkflowEventDBTime":43,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
   x-progress: Searched 0 patients
   strict-transport-security: max-age=31536000; includeSubDomains
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:31:04 GMT
+  date: Sun, 12 Jan 2025 13:45:06 GMT
   content-length: 0
-  set-cookie: EpicPersistenceCookie=!C4Hdq/2VrBZ97WjU12A6425ur3acASfLh4yUd6h15LJ0xwHq2tafpMVEsq28Qr4PhissTV/iJaN+O54=; path=/; Httponly; Secure
+  set-cookie: EpicPersistenceCookie=!MfJxmH8pY4VoK7DU12A6425ur3acAdFWUur9Gd/gW6mtBKpiSRwPZsvYQZhB0/8317qNCB2lT7FfUFg=; path=/; Httponly; Secure
 
-• Response Body:
-  ""
 • Status: IN PROGRESS
 • Waiting 10 seconds before next check...
 
@@ -350,7 +346,7 @@ Status Check #4
 STATUS CHECK REQUEST
 ------------------
 • URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 • Headers:
   Authorization: Bearer [TOKEN]
@@ -366,19 +362,17 @@ STATUS CHECK RESPONSE
   pragma: no-cache
   content-type: text/plain; charset=utf-8
   expires: -1
-  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":11,"DatabaseCPUTime":12,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":12,"GREF":813,"JournalEntries":0,"LockWait":0.004,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":11,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
-  x-progress: Searched 0 of 7 patients
+  servermetrics: {"BlockReads":54,"BlockWrites":0,"BlocksAllocated":0,"DBTime":44,"DatabaseCPUTime":17,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":46,"GREF":812,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43111,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":54,"WorkflowEventDBTime":44,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":812}
+  x-progress: Searched 0 patients
   strict-transport-security: max-age=31536000; includeSubDomains
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:31:14 GMT
+  date: Sun, 12 Jan 2025 13:45:16 GMT
   content-length: 0
-  set-cookie: EpicPersistenceCookie=!NCQhVTfjLsGGQwPU12A6425ur3acAQLwRjb9TzLyfSlWtUyH2Prys28yfN3JwXLPoxqyUkqirh5zSHQ=; path=/; Httponly; Secure
+  set-cookie: EpicPersistenceCookie=!ZbabqWEMdfiE9LDU12A6425ur3acATeUTMs1iiVJx2+Dauyvok1Y+E2PBzoQSnxh1tVXluhroDGmH0E=; path=/; Httponly; Secure
 
-• Response Body:
-  ""
 • Status: IN PROGRESS
 • Waiting 10 seconds before next check...
 
@@ -387,7 +381,7 @@ Status Check #5
 STATUS CHECK REQUEST
 ------------------
 • URL:
-  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/6CC20DFBD0E911EF822B005056BECC4A
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
 
 • Headers:
   Authorization: Bearer [TOKEN]
@@ -403,18 +397,2013 @@ STATUS CHECK RESPONSE
   pragma: no-cache
   content-type: text/plain; charset=utf-8
   expires: -1
-  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":20,"DatabaseCPUTime":21,"ECFNetworkTime":0,"ECFRequestCount":1,"ECFRequestTime":20,"GREF":813,"JournalEntries":0,"LockWait":0.007,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":20,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  servermetrics: {"BlockReads":6,"BlockWrites":0,"BlocksAllocated":0,"DBTime":15,"DatabaseCPUTime":16,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":16,"GREF":811,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43175,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":6,"WorkflowEventDBTime":15,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":811}
   x-progress: Searched 0 of 7 patients
   strict-transport-security: max-age=31536000; includeSubDomains
   access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
   access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
   access-control-allow-origin: *
   access-control-allow-credentials: true
-  date: Sun, 12 Jan 2025 13:31:24 GMT
+  date: Sun, 12 Jan 2025 13:45:26 GMT
   content-length: 0
-  set-cookie: EpicPersistenceCookie=!Rx4NbgqFK35v+TLU12A6425ur3acAdtgMYpm1kg4OYYPzVODhv4na+m0lACGZ+ehU1LZaLmzw4R6xPI=; path=/; Httponly; Secure
+  set-cookie: EpicPersistenceCookie=!zVcgzkEoObRctU7U12A6425ur3acAQ+ZT3LVCfcOOkRTtDpi+wUmo9iKWa0cLEk/j/3RnZDPTYDRKIQ=; path=/; Httponly; Secure
 
-• Response Body:
-  ""
+• Current Progress:
+  Searched 0 of 7 patients
+
+• Progress: 0.0% complete (0/7 patients)
+
 • Status: IN PROGRESS
 • Waiting 10 seconds before next check...
+
+Status Check #6
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":10,"DatabaseCPUTime":11,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":812,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43118,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":10,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":812}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:45:37 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!84FM2OFgjnkCzj3U12A6425ur3acAehB7WRlkg51FmyRMOUjHZo8BBDiY6UbF2I1v7CKxAevF/Gstdg=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #7
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":14,"DatabaseCPUTime":15,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":16,"GREF":813,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":14,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:45:47 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!hdVG3Ijb6j0kmlTU12A6425ur3acAat3zb9aPiUJvQmAT6xbGaiQ2vwBFlzQxf5ciGMSsfiu0Miad+k=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #8
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":20,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":20,"GREF":814,"JournalEntries":0,"LockWait":0.01,"LocksFailed":0,"LocksGranted":0,"MCommands":43086,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:45:57 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!6UcRAx8IaJW+8BvU12A6425ur3acATgnaE9Bziia1+yf6Zl/QzqsxU75sZ6cJIH8ZSZv1OLk0dD5Pcs=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #9
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":13,"DatabaseCPUTime":16,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":817,"JournalEntries":0,"LockWait":0.012,"LocksFailed":0,"LocksGranted":0,"MCommands":43109,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":13,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":817}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:46:08 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!6iDtIJN2SQjR/G3U12A6425ur3acAcaL9q2swz76LZRfyMoD6/qmnDbJPIi+PVJxzpsCM8JMmSeD8Nw=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #10
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":15,"DatabaseCPUTime":16,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":17,"GREF":814,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43122,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":15,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:46:18 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!0b3eyaND3rHGu1HU12A6425ur3acAfnk0zqtuEFrM7jf8AOBqDEacJPYREYVEw0iYZfW5fO/zPDbN0c=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #11
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":13,"DatabaseCPUTime":15,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":16,"GREF":813,"JournalEntries":0,"LockWait":0.007,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":13,"WorkflowEventECFNetworkTime":2,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:46:28 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!JoBPAuFYsfYBIufU12A6425ur3acAb/3UCKybTCwVkbwtyaOCnKQJgSdeE/7N3bBlwQmjN3ExGdK21E=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #12
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":10,"DatabaseCPUTime":11,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":819,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43120,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":10,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":819}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:46:38 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!lBYPV8m9jEqL3T3U12A6425ur3acAVkLzc3Laf7vmq+TDlbRIz6XcKhRjVAD6f6vE7CWl0XyrLs+3Vc=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #13
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":20,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":20,"GREF":814,"JournalEntries":0,"LockWait":0.007,"LocksFailed":0,"LocksGranted":0,"MCommands":43122,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:46:47 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!CyrQjV2ZkCNWk8LU12A6425ur3acAX0ecQsgLK/iDAjGUdJOTFuOlNHN9gbijSMsO+bIQeYy0yxpV5U=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #14
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":10,"DatabaseCPUTime":11,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":813,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":10,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:46:58 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!mvCEiEfUc8TylbvU12A6425ur3acAalskQnucB3ceTruzILPStH7dadj7uV+rWrI4cbYwa6HY3SUTj0=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #15
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":9,"DatabaseCPUTime":11,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":813,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":9,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:47:08 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!rFUs+pRWGB7pRwfU12A6425ur3acAQw5U27pNB0mPHSiMkxuMbA/VUo1Bl99VaWwaEYBUB3JyB276LA=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #16
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":3,"BlockWrites":0,"BlocksAllocated":0,"DBTime":22,"DatabaseCPUTime":24,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":24,"GREF":814,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":3,"WorkflowEventDBTime":22,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:47:18 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!02SRv4EZAJcqrKTU12A6425ur3acAbc01t4/xVmRQ3BlRxcOgIdh0MCHJFqsooynf77UvJv4vi1qsRE=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #17
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":20,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":20,"GREF":814,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:47:29 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!6ceKmBcuYE1KWBrU12A6425ur3acAZpa40hDVZT5hnWyts93KgPhmKgYsSzeLZEPS8gmy6DpbbhxSK4=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #18
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":19,"DatabaseCPUTime":21,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":21,"GREF":813,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":19,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:47:39 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!h06S0LjaM+F80HHU12A6425ur3acAbNHSqnQvEzifoVyHG0X3agOkVdfBjyvYymgPLlAIwP8BgkOzXo=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #19
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":20,"DatabaseCPUTime":22,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":23,"GREF":819,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43171,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":20,"WorkflowEventECFNetworkTime":2,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":819}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:47:49 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!UBF7BpO0rFN5h5fU12A6425ur3acAeJyGTWlTQfZo/asMauaO6P91RbnNEhAmR9lkB0CljSiGqFWZxA=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #20
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":21,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":21,"GREF":817,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43331,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":817}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:47:59 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!li6j38oLTBmk2lrU12A6425ur3acAT57oiYcPSzGRVBmmPx+yy2uN2TvYtvoiVXdSER88fVhpQvVcEA=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #21
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":6,"BlockWrites":0,"BlocksAllocated":0,"DBTime":15,"DatabaseCPUTime":19,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":18,"GREF":1100,"JournalEntries":0,"LockWait":0.009,"LocksFailed":0,"LocksGranted":0,"MCommands":47606,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":6,"WorkflowEventDBTime":15,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1100}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:48:10 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!l6yhOqKiXA/9zB7U12A6425ur3acAaj0rsQDQe8wLLisVk7VGbZbTq4mQ66MAyjfA43XEXKbDXkPRSY=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #22
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  200 OK
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 600
+  content-type: application/json; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":12,"DatabaseCPUTime":13,"ECFNetworkTime":0,"ECFRequestCount":1,"ECFRequestTime":12,"GREF":1111,"JournalEntries":10,"LockWait":0.013000000000000001,"LocksFailed":0,"LocksGranted":0,"MCommands":45955,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":12,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1111}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:48:20 GMT
+  set-cookie: EpicPersistenceCookie=!XoUbRClBAvlVgN7U12A6425ur3acAepPKJvqFBxAzI75firNcHKUzoBljY4EsydPrrP2WDQKH2dRC24=; path=/; Httponly; Secure
+
+• Status: COMPLETED
+
+Export completed successfully. Processing output files...
+
+Response Data:
+{
+  "transactionTime": "2025-01-12T13:48:13Z",
+  "request": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Group/e3iabhmS8rsueyz7vaimuiaSmfGvi.QwjVXJANlPOgR83/$export?_type=patient,observation,condition,allergyintolerance,medicationrequest,procedure",
+  "requiresAccessToken": "true",
+  "output": [
+    {
+      "type": "MedicationRequest",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eCqjspIXi3IV9P44GJAskmA3"
+    },
+    {
+      "type": "Patient",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eQmoBU3pIhZ8HyL-.HCrZag3"
+    },
+    {
+      "type": "AllergyIntolerance",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eZZWc6DcX6TzvTp5wa7ZReQ3"
+    },
+    {
+      "type": "Observation",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eb9Xsrpps8cJwV32hpLQ77Q3"
+    },
+    {
+      "type": "Procedure",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/elfGVucXBEjod3eU2gHkEvg3"
+    },
+    {
+      "type": "Condition",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/exiaoGBGcdKMLugh4Iqbjaw3"
+    },
+    {
+      "type": "Observation",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/ezNgCceAu5bcjzL7XorY93Q3"
+    }
+  ],
+  "error": []
+}
+DOWNLOADING EXPORT FILES
+----------------------
+• Total files to download: 7
+• Export directory: C:\FHIR\BackendEpic\epic_data_export
+
+File Details:
+• File 1: MedicationRequest
+• File 2: Patient
+• File 3: AllergyIntolerance
+• File 4: Observation
+• File 5: Procedure
+• File 6: Condition
+• File 7: Observation
+
+Downloading file 1 of 7:
+• Type: MedicationRequest
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eCqjspIXi3IV9P44GJAskmA3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest.ndjson
+
+• Successfully downloaded MedicationRequest data
+• Saved to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest.ndjson
+
+Downloading file 2 of 7:
+• Type: Patient
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eQmoBU3pIhZ8HyL-.HCrZag3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Patient.ndjson
+
+• Successfully downloaded Patient data
+• Saved to: C:\FHIR\BackendEpic\epic_data_export\Patient.ndjson
+
+Downloading file 3 of 7:
+• Type: AllergyIntolerance
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eZZWc6DcX6TzvTp5wa7ZReQ3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance.ndjson
+
+• Successfully downloaded AllergyIntolerance data
+• Saved to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance.ndjson
+
+Downloading file 4 of 7:
+• Type: Observation
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/eb9Xsrpps8cJwV32hpLQ77Q3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Observation.ndjson
+
+• Successfully downloaded Observation data
+• Saved to: C:\FHIR\BackendEpic\epic_data_export\Observation.ndjson
+
+Downloading file 5 of 7:
+• Type: Procedure
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/elfGVucXBEjod3eU2gHkEvg3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Procedure.ndjson
+
+• Successfully downloaded Procedure data
+• Saved to: C:\FHIR\BackendEpic\epic_data_export\Procedure.ndjson
+
+Downloading file 6 of 7:
+• Type: Condition
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/exiaoGBGcdKMLugh4Iqbjaw3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Condition.ndjson
+
+• Successfully downloaded Condition data
+• Saved to: C:\FHIR\BackendEpic\epic_data_export\Condition.ndjson
+
+Downloading file 7 of 7:
+• Type: Observation
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/62B9F845D0EB11EF9F57005056BECC4A/ezNgCceAu5bcjzL7XorY93Q3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Observation.ndjson
+
+
+STEP 6: DATA ANALYSIS
+-------------------
+After downloading the bulk data, we:
+1. Parse the NDJSON files
+2. Analyze observation data
+3. Generate a summary report
+4. Save results to the export directory
+
+The observation report includes:
+• Reference ranges for vital signs
+• Normal vs abnormal readings
+• Patient-specific statistics
+
+================================================================================
+                               PROCESS COMPLETE                                  
+================================================================================
+
+Summary:
+• Successfully authenticated using JWT
+• Completed bulk FHIR data export
+• Downloaded and processed resource data
+• Generated observation analysis report
+
+All files can be found in:
+  C:\FHIR\BackendEpic\epic_data_export
+================================================================================
+
+================================================================================
+New Session Started: 2025-01-12T13:52:52.802Z
+================================================================================
+
+================================================================================
+                     EPIC BULK FHIR DATA EXPORT TUTORIAL                        
+================================================================================
+
+This script demonstrates the Epic Bulk FHIR Data Export process using JWT
+authentication. It will walk through each step of the process, explaining the
+technical details and showing the actual data involved.
+
+STEP 1: INITIALIZATION
+--------------------
+Before we begin, we need to set up our environment:
+• Clear previous export files
+• Initialize logging
+• Load configuration
+
+================================================================================
+                        EPIC FHIR BULK DATA EXPORT TUTORIAL                      
+================================================================================
+
+STEP 1: INITIALIZATION
+--------------------
+Preparing environment for bulk data export...
+• Export Directory: C:\FHIR\BackendEpic\epic_data_export
+• Action: Clearing previous export files
+• Found 6 files to remove
+• Successfully cleared all existing files
+
+STEP 2: JWT CREATION AND SIGNING
+---------------------------
+The JWT (JSON Web Token) is created with the following structure:
+
+Header:
+  {
+    "alg": "RS384",
+    "typ": "JWT"
+  }
+
+Claims:
+  {
+    "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
+    "sub": [same as iss],
+    "aud": [token endpoint],
+    "jti": [unique identifier],
+    "exp": [expiration time],
+    "iat": [issued at time]
+  }
+
+The JWT is signed using:
+• Algorithm: RS384
+• Key Size: 2048 bits
+• Private Key: C:\FHIR\BackendEpic\private.key
+• Public Key: C:\FHIR\BackendEpic\publickey509.pem
+
+
+STEP 3: OAUTH 2.0 TOKEN EXCHANGE
+-----------------------------
+The signed JWT is exchanged for an access token using:
+• Epic Base URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/
+• OAuth Token Endpoint:
+  https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• Client ID:
+  e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
+
+Request Parameters:
+  {
+    "grant_type": "client_credentials",
+    "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+    "client_assertion": [signed JWT]
+  }
+
+
+JWT CREATION
+------------
+• Creating JWT for OAuth 2.0 token request
+
+JWT Timestamps:
+--------------
+• Current Time (iat): 2025-01-12T13:52:52.000Z
+• Not Before (nbf) : 2025-01-12T13:52:52.000Z
+• Expiry Time (exp): 2025-01-12T13:57:52.000Z
+• Token Validity  : 5 minutes
+
+JWT Claims:
+-----------
+• iss: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
+• sub: e6adc0f2-7e22-4a86-9f11-5b8bae6e5190
+• aud: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+• jti: d410b7af-b46d-411b-82b1-5db5854744d4
+• exp: 1736690272
+• nbf: 1736689972
+• iat: 1736689972
+
+TOKEN REQUEST
+-------------
+• Endpoint:
+  https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+
+• Request Parameters:
+  - grant_type: client_credentials
+  - client_assertion_type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+  - client_assertion: [JWT Token]
+
+TOKEN RESPONSE
+--------------
+• Status Code:
+  200 OK
+
+• Response Headers:
+  cache-control: no-cache, no-store,no-store
+  pragma: no-cache
+  content-type: application/json; charset=utf-8
+  expires: -1
+  set-cookie: ASP.NET_SessionId=rniu345bwebnd2i1ihpamwnk; path=/Interconnect-fhir-oauth; secure; HttpOnly; SameSite=Lax,EpicPersistenceCookie=!B26x7PKckUUlSzvU12A6425ur3acATlX/UmIavbHA49dFDiTb+/fo2IxJM/J8DFTvah3lTuqIxP4A9U=; path=/; Httponly; Secure
+  servermetrics: {"BlockReads":5,"BlockWrites":0,"BlocksAllocated":0,"DBTime":11,"DatabaseCPUTime":11,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":12,"GREF":625,"JournalEntries":1,"LockWait":0.015,"LocksFailed":0,"LocksGranted":0,"MCommands":11709,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":5,"WorkflowEventDBTime":11,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":625}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  x-frame-options: sameorigin
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:52:53 GMT
+  content-length: 3301
+
+• Response Body:
+  token_type: Bearer
+  expires_in: 3600
+  scope: system/Account.read system/AdverseEvent.read system/AllergyIntolerance.Read system/AllergyIntolerance.read system/AllergyIntolerance.write system/Appointment.Read system/Appointment.Write system/Appointment.read system/Binary.Read system/Binary.read system/BodyStructure.read system/CarePlan.Read system/CarePlan.read system/CareTeam.read system/Communication.read system/Communication.write system/Condition.Read system/Condition.read system/Condition.write system/Consent.read system/Contract.read system/Coverage.read system/Device.Read system/Device.read system/DeviceRequest.read system/DeviceUseStatement.read system/DiagnosticReport.Read system/DiagnosticReport.read system/DocumentReference.Read system/DocumentReference.read system/DocumentReference.write system/Encounter.read system/Endpoint.read system/EpisodeOfCare.read system/ExplanationOfBenefit.read system/FamilyMemberHistory.Read system/FamilyMemberHistory.read system/Flag.read system/Goal.Read system/Goal.read system/Goal.write system/Group.read system/Immunization.Read system/Immunization.read system/ImmunizationRecommendation.read system/List.read system/Location.read system/Media.read system/Medication.Read system/Medication.read system/MedicationAdministration.read system/MedicationDispense.read system/MedicationOrder.Read system/MedicationRequest.read system/MedicationStatement.Read system/MedicationStatement.read system/NutritionOrder.read system/Observation.Read system/Observation.read system/Observation.write system/Organization.read system/Patient.Read system/Patient.read system/Patient.write system/Practitioner.Read system/Practitioner.read system/PractitionerRole.read system/Procedure.Read system/Procedure.read system/ProcedureRequest.read system/Provenance.read system/Questionnaire.read system/QuestionnaireResponse.Read system/QuestionnaireResponse.read system/QuestionnaireResponse.write system/RelatedPerson.read system/RequestGroup.read system/ResearchStudy.read system/ResearchSubject.read system/Schedule.read system/ServiceRequest.read system/Slot.read system/Specimen.read system/Substance.read system/Task.read system/Task.write system/ValueSet.Read
+  access_token: [TOKEN]
+• Successfully obtained access token
+
+STEP 4: BULK FHIR DATA EXPORT
+--------------------------
+The Bulk FHIR Data Export process follows these steps:
+
+1. Initiate Export:
+   • Send request to Group/$export endpoint
+   • Specify desired resource types
+   • Receive status URL in response
+
+2. Monitor Progress:
+   • Poll status URL periodically
+   • Check for completion or errors
+
+3. Download Results:
+   • Retrieve data for each resource type
+   • Save as NDJSON files
+
+Resource Types Requested:
+  - Patient
+  - Observation
+  - Condition
+  - AllergyIntolerance
+  - MedicationRequest
+  - Procedure
+
+Group Export Details:
+• Group ID: e3iabhmS8rsueyz7vaimuiaSmfGvi.QwjVXJANlPOgR83
+• Export URL Format:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Group/[id]/$export?_type=[types]
+
+Headers:
+  Authorization: Bearer [token]
+  Accept: application/fhir+json
+  Prefer: respond-async
+
+Initiating bulk export request...
+BULK EXPORT REQUEST DETAILS
+------------------------
+• Request URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Group/e3iabhmS8rsueyz7vaimuiaSmfGvi.QwjVXJANlPOgR83/$export?_type=patient,observation,condition,allergyintolerance,medicationrequest,procedure
+
+• Request Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/fhir+json
+  Prefer: respond-async
+
+• Request Parameters:
+  _type: patient,observation,condition,allergyintolerance,medicationrequest,procedure
+
+• Group ID:
+  e3iabhmS8rsueyz7vaimuiaSmfGvi.QwjVXJANlPOgR83
+
+• Expected Response:
+  - Status Code: 202 Accepted
+  - Content-Location header with status URL
+
+RESPONSE RECEIVED
+----------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  content-location: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+  expires: -1
+  servermetrics: {"BlockReads":31,"BlockWrites":2,"BlocksAllocated":0,"DBTime":30,"DatabaseCPUTime":17,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":32,"GREF":1433,"JournalEntries":14,"LockWait":0.024,"LocksFailed":0,"LocksGranted":0,"MCommands":50868,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":31,"WorkflowEventDBTime":30,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1433}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:52:53 GMT
+  content-length: 0
+
+• Content-Location (Status URL):
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+STEP 5: EXPORT MONITORING AND DOWNLOAD
+----------------------------------
+The export process is asynchronous. We will:
+1. Poll the status URL every 10 seconds
+2. Check for completion status
+3. Download each resource file when ready
+4. Process observation data for analysis
+
+Status URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+Starting export status monitoring...
+EXPORT STATUS MONITORING
+----------------------
+• Poll Interval: 10 seconds
+• Maximum Attempts: 60
+• Status URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+Beginning status checks...
+
+Status Check #1
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":8,"DatabaseCPUTime":9,"ECFNetworkTime":2,"ECFRequestCount":0,"ECFRequestTime":10,"GREF":679,"JournalEntries":4,"LockWait":0.01,"LocksFailed":0,"LocksGranted":0,"MCommands":32485,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":8,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":0,"WorkflowEventGREF":679}
+  x-progress: Searched 0 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:52:53 GMT
+  content-length: 0
+
+• Current Progress:
+  Searched 0 patients
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #2
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":19,"ECFNetworkTime":0,"ECFRequestCount":1,"ECFRequestTime":18,"GREF":811,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43202,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":811}
+  x-progress: Searched 0 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:53:03 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!gsfwcFZToJvzcgjU12A6425ur3acASYqGf7fa7lsSM0w0NV3W8Gh14AHWVWcqyYAnAB1e1Cgdm6l6qY=; path=/; Httponly; Secure
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #3
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":23,"DatabaseCPUTime":26,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":25,"GREF":928,"JournalEntries":10,"LockWait":0.01,"LocksFailed":0,"LocksGranted":0,"MCommands":43783,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":23,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":928}
+  x-progress: Searched 0 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:53:13 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!X82MSFzJ13EFAh/U12A6425ur3acAUR6d3XUdTnCW25jf6B0JhR4o0tc4g4DR/Aqat7gQKMSWRN9fc4=; path=/; Httponly; Secure
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #4
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":12,"DatabaseCPUTime":12,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":14,"GREF":818,"JournalEntries":0,"LockWait":0.007,"LocksFailed":0,"LocksGranted":0,"MCommands":43109,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":12,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":818}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:53:23 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!30O1O8jk3nxnh+fU12A6425ur3acAXOdoKBYwTFEJX+t2p1YxgUpME5fgEmja1whxAimWyQad+SWWBs=; path=/; Httponly; Secure
+
+• Current Progress:
+  Searched 0 of 7 patients
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #5
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":14,"DatabaseCPUTime":15,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":814,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43122,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":14,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:53:34 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!u2eKesMlapy3Ct/U12A6425ur3acAVXAvmxYNHONCywo2515GTmXkksQ5FAETTukp1i93azoemFUdmU=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #6
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":15,"DatabaseCPUTime":16,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":16,"GREF":929,"JournalEntries":4,"LockWait":0.015,"LocksFailed":0,"LocksGranted":0,"MCommands":43967,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":15,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":929}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:53:44 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!FPFoE4ijxYqqc/3U12A6425ur3acAUtIo1Qrau81USApTSrZMkywJfKlKtVXGuDP5VHQIAAbPngAKyA=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #7
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":9,"DatabaseCPUTime":12,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":924,"JournalEntries":4,"LockWait":0.029,"LocksFailed":0,"LocksGranted":0,"MCommands":43933,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":9,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":924}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:53:54 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!V7xoh9Z1VhkNdEbU12A6425ur3acAd9GyfJCXHFoPh+EOpZwRVoCDAyGkh0luWgxtodH9150Y2cFk7E=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #8
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":13,"DatabaseCPUTime":15,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":812,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43139,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":13,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":812}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:54:04 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!EukoFIDSodZYnATU12A6425ur3acAf6HQXTCcI2xJ/tiaSqK9rrJQ2/7XC2pT5Drw1O3MKfwoSLFR2g=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #9
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":13,"DatabaseCPUTime":16,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":814,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43122,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":13,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":814}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:54:14 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!CmkfaWRAdw3NeFvU12A6425ur3acAXiGb4dygFo6IY1nljEek51Y2mPVtNQHzNlKpxYn1iVqPJM98WQ=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #10
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":9,"DatabaseCPUTime":10,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":10,"GREF":813,"JournalEntries":0,"LockWait":0.004,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":9,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:54:25 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!j/AcpjCwz4PQQH3U12A6425ur3acAU6FWEYtU4clra6MlhvSG0NHQrVYLP5op4VSX0p5gnRvDuH0TNs=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #11
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":20,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":19,"GREF":813,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:54:34 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!39WFF1y07oOLFl3U12A6425ur3acAae5vdNdttAvO74QFKRivYKSLfCz8zldDEUPFuyKM+3wZlaGT1c=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #12
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":9,"DatabaseCPUTime":11,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":926,"JournalEntries":4,"LockWait":0.012,"LocksFailed":0,"LocksGranted":0,"MCommands":43942,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":9,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":926}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:54:45 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!ZCe6iFRtXN1XhpnU12A6425ur3acAWnY8QKVoO/tmkSTTyXvU47Yt7KgkaH1TbnFnDvIZV3tSgcVMFQ=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #13
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":18,"DatabaseCPUTime":20,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":20,"GREF":925,"JournalEntries":4,"LockWait":0.011,"LocksFailed":0,"LocksGranted":0,"MCommands":43935,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":18,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":925}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:54:55 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!NGefKVUH1l/E9GzU12A6425ur3acAabW0symJsABuB3OwkkYNcop0YtlN94obfqirF7jzhi3aXISMpA=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #14
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":14,"DatabaseCPUTime":16,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":932,"JournalEntries":10,"LockWait":0.013000000000000001,"LocksFailed":0,"LocksGranted":0,"MCommands":43915,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":14,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":932}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:55:05 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!utXZWjzgUN2e2GfU12A6425ur3acAamDRSXX19an5FbxZ3Sf9XwxpxHgke0yWwl9QxQdbPfEF3FIq3o=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #15
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":1,"BlocksAllocated":0,"DBTime":9,"DatabaseCPUTime":11,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":11,"GREF":813,"JournalEntries":0,"LockWait":0.005,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":9,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:55:15 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!jPuc+tHHeZojnhbU12A6425ur3acAVlloxwFop/ZrniQMrI+XmVbSNt8++Shm6UKRWhgS2T9dn/XOIM=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #16
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":2,"BlocksAllocated":0,"DBTime":14,"DatabaseCPUTime":15,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":813,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":14,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:55:25 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!x+EhAC6HX+gcUrjU12A6425ur3acAQEgag0jqqo3lQKQkjmVNs1Mn90lThJiExD+36YVmjAb3X6sG70=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #17
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":13,"DatabaseCPUTime":16,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":15,"GREF":813,"JournalEntries":0,"LockWait":0.006,"LocksFailed":0,"LocksGranted":0,"MCommands":43113,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":13,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":813}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:55:36 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!x00XPUD7labZusDU12A6425ur3acAd6wOla1LhtDNaTElyEciYku4UMmVo14j75q6fi+CzIO7t4PaXU=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #18
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":1,"BlocksAllocated":0,"DBTime":14,"DatabaseCPUTime":17,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":16,"GREF":928,"JournalEntries":4,"LockWait":0.02,"LocksFailed":0,"LocksGranted":0,"MCommands":43958,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":14,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":928}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:55:46 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!2WTH59DIEW8vQj/U12A6425ur3acAWdSXa/ZQRGAie9QXS2e0j+AuU494pgVd7NRbc4lW7SxOSf21Xk=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #19
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  202 Accepted
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-type: text/plain; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":1,"BlocksAllocated":0,"DBTime":16,"DatabaseCPUTime":19,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":17,"GREF":929,"JournalEntries":4,"LockWait":0.013,"LocksFailed":0,"LocksGranted":0,"MCommands":43967,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":16,"WorkflowEventECFNetworkTime":0,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":929}
+  x-progress: Searched 0 of 7 patients
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:55:56 GMT
+  content-length: 0
+  set-cookie: EpicPersistenceCookie=!oiAe4uU2VBi0/JzU12A6425ur3acAROeEQmUwtFJWP0El7ApSkx7kTxSf2qaUQnTItPgM/5IBNwxIwE=; path=/; Httponly; Secure
+
+• Progress: 0.0% complete (0/7 patients)
+
+• Status: IN PROGRESS
+• Waiting 10 seconds before next check...
+
+Status Check #20
+----------------
+STATUS CHECK REQUEST
+------------------
+• URL:
+  https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A
+
+• Headers:
+  Authorization: Bearer [TOKEN]
+  Accept: application/json
+
+STATUS CHECK RESPONSE
+-------------------
+• Status Code:
+  200 OK
+
+• Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 576
+  content-type: application/json; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":19,"DatabaseCPUTime":20,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":22,"GREF":1109,"JournalEntries":10,"LockWait":0.011,"LocksFailed":0,"LocksGranted":0,"MCommands":46017,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":19,"WorkflowEventECFNetworkTime":2,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1109}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:06 GMT
+  set-cookie: EpicPersistenceCookie=!EyfHdpwfTMja9nXU12A6425ur3acAUlpXoh+KkBhz1k+bl2r+3/0OZFCMGOxW94j/LmScNOSutdoYFI=; path=/; Httponly; Secure
+
+• Status: COMPLETED
+
+Export completed successfully. Processing output files...
+
+Response Data:
+{
+  "transactionTime": "2025-01-12T13:55:58Z",
+  "request": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Group/e3iabhmS8rsueyz7vaimuiaSmfGvi.QwjVXJANlPOgR83/$export?_type=patient,observation,condition,allergyintolerance,medicationrequest,procedure",
+  "requiresAccessToken": "true",
+  "output": [
+    {
+      "type": "AllergyIntolerance",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/e5Dv2wfBmQjskKXJYqi1xvA3"
+    },
+    {
+      "type": "Procedure",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/e5dW2kMM3J78N2.rKuHgk5w3"
+    },
+    {
+      "type": "Patient",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/eB.uY6C0NFjB1BWlvXjnRMg3"
+    },
+    {
+      "type": "MedicationRequest",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/eEMaaViGIDIC-nB8dErtpHA3"
+    },
+    {
+      "type": "Condition",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/ePtLiRz2gh-fLkm3uxH9G5g3"
+    },
+    {
+      "type": "Observation",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/ekl5W1K3qBb-HnloRkNPR5w3"
+    },
+    {
+      "type": "Observation",
+      "url": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/esziHCZ3nD3tM1L-x4mKLag3"
+    }
+  ],
+  "error": []
+}
+DOWNLOADING EXPORT FILES
+----------------------
+• Total files to download: 7
+• Export directory: C:\FHIR\BackendEpic\epic_data_export
+
+File Details:
+• File 1: AllergyIntolerance
+• File 2: Procedure
+• File 3: Patient
+• File 4: MedicationRequest
+• File 5: Condition
+• File 6: Observation
+• File 7: Observation
+
+Downloading file 1 of 7:
+• Type: AllergyIntolerance
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/e5Dv2wfBmQjskKXJYqi1xvA3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\AllergyIntolerance.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 11591
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":1,"BlockWrites":11,"BlocksAllocated":0,"DBTime":23,"DatabaseCPUTime":26,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":26,"GREF":1242,"JournalEntries":32,"LockWait":0.018000000000000002,"LocksFailed":0,"LocksGranted":0,"MCommands":54542,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":1,"WorkflowEventDBTime":23,"WorkflowEventECFNetworkTime":2,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1242}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:06 GMT
+
+[2025-01-12T13:56:07.401Z] Failed to download file 1:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+Downloading file 2 of 7:
+• Type: Procedure
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/e5dW2kMM3J78N2.rKuHgk5w3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Procedure.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 5824
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":1,"BlockWrites":2,"BlocksAllocated":1,"DBTime":10,"DatabaseCPUTime":13,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":13,"GREF":993,"JournalEntries":12,"LockWait":0.011,"LocksFailed":0,"LocksGranted":0,"MCommands":49063,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":1,"WorkflowEventDBTime":10,"WorkflowEventECFNetworkTime":2,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":993}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:06 GMT
+
+[2025-01-12T13:56:07.478Z] Failed to download file 2:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+Downloading file 3 of 7:
+• Type: Patient
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/eB.uY6C0NFjB1BWlvXjnRMg3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Patient.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 24154
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":26,"DatabaseCPUTime":20,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":28,"GREF":1238,"JournalEntries":32,"LockWait":0.013999999999999999,"LocksFailed":0,"LocksGranted":0,"MCommands":54533,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":26,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1238}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:07 GMT
+
+[2025-01-12T13:56:07.579Z] Failed to download file 3:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+Downloading file 4 of 7:
+• Type: MedicationRequest
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/eEMaaViGIDIC-nB8dErtpHA3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\MedicationRequest.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 22017
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":1,"BlocksAllocated":0,"DBTime":23,"DatabaseCPUTime":20,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":25,"GREF":1162,"JournalEntries":24,"LockWait":0.016,"LocksFailed":0,"LocksGranted":0,"MCommands":52823,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":23,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1162}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:07 GMT
+
+[2025-01-12T13:56:07.671Z] Failed to download file 4:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+Downloading file 5 of 7:
+• Type: Condition
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/ePtLiRz2gh-fLkm3uxH9G5g3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Condition.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 27612
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":17,"DatabaseCPUTime":19,"ECFNetworkTime":3,"ECFRequestCount":1,"ECFRequestTime":20,"GREF":1238,"JournalEntries":32,"LockWait":0.013000000000000001,"LocksFailed":0,"LocksGranted":0,"MCommands":54533,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":17,"WorkflowEventECFNetworkTime":2,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1238}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:07 GMT
+
+[2025-01-12T13:56:07.760Z] Failed to download file 5:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+Downloading file 6 of 7:
+• Type: Observation
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/ekl5W1K3qBb-HnloRkNPR5w3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Observation.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 4004805
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":12,"DatabaseCPUTime":14,"ECFNetworkTime":1,"ECFRequestCount":1,"ECFRequestTime":13,"GREF":1197,"JournalEntries":28,"LockWait":0.011,"LocksFailed":0,"LocksGranted":0,"MCommands":53473,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":12,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":1197}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:07 GMT
+
+[2025-01-12T13:56:09.570Z] Failed to download file 6:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+Downloading file 7 of 7:
+• Type: Observation
+• URL: https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/BulkRequest/84FDA040D0EC11EFA2BC005056BECC4A/esziHCZ3nD3tM1L-x4mKLag3
+• Saving to: C:\FHIR\BackendEpic\epic_data_export\Observation.ndjson
+
+Download Response Headers:
+  cache-control: no-cache,no-store
+  pragma: no-cache
+  content-length: 11343
+  content-type: application/fhir+ndjson; charset=utf-8
+  expires: -1
+  servermetrics: {"BlockReads":0,"BlockWrites":0,"BlocksAllocated":0,"DBTime":10,"DatabaseCPUTime":13,"ECFNetworkTime":2,"ECFRequestCount":1,"ECFRequestTime":12,"GREF":951,"JournalEntries":8,"LockWait":0.013000000000000001,"LocksFailed":0,"LocksGranted":0,"MCommands":47987,"MemoryDifference":0,"NetworkCacheMisses":0,"NetworkUpdates":0,"WorkflowEventBlockReads":0,"WorkflowEventDBTime":10,"WorkflowEventECFNetworkTime":1,"WorkflowEventECFRequestCount":1,"WorkflowEventGREF":951}
+  strict-transport-security: max-age=31536000; includeSubDomains
+  access-control-allow-headers: origin, authorization, accept, content-type, x-requested-with, prefer, Epic-User-ID, Epic-User-IDType, Epic-Client-ID, soapaction, Epic-MyChartUser-ID, Epic-MyChartUser-IDType
+  access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS
+  access-control-allow-origin: *
+  access-control-allow-credentials: true
+  date: Sun, 12 Jan 2025 13:56:09 GMT
+
+[2025-01-12T13:56:09.659Z] Failed to download file 7:
+• Error: response.data.on is not a function
+• Error Details:
+{}
+
+Continuing with next file...
+
+
+STEP 6: DATA ANALYSIS
+-------------------
+After downloading the bulk data, we:
+1. Parse the NDJSON files
+2. Analyze observation data
+3. Generate a summary report
+4. Save results to the export directory
+
+The observation report includes:
+• Reference ranges for vital signs
+• Normal vs abnormal readings
+• Patient-specific statistics
+
+================================================================================
+                               PROCESS COMPLETE                                  
+================================================================================
+
+Summary:
+• Successfully authenticated using JWT
+• Completed bulk FHIR data export
+• Downloaded and processed resource data
+• Generated observation analysis report
+
+All files can be found in:
+  C:\FHIR\BackendEpic\epic_data_export
+================================================================================
