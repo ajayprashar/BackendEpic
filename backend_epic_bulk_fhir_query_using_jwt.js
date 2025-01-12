@@ -209,17 +209,10 @@ async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) 
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept': 'application/fhir+ndjson'
                 },
-                validateStatus: function (status) {
-                    return status === 200; // Only accept 200 OK
-                },
+                responseType: 'stream',
                 maxRedirects: 5,
-                timeout: 30000 // 30 second timeout
+                timeout: 60000
             });
-
-            // Check if we got any data
-            if (!response.data) {
-                throw new Error('Received empty response from server');
-            }
 
             // Log response headers for debugging
             logger.writeLog('INFO', [
@@ -228,28 +221,21 @@ async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) 
                 ''
             ]);
 
-            // Create write stream with error handling
+            // Create write stream
             const writer = fs.createWriteStream(filepath);
             
-            let dataReceived = false;
             let bytesWritten = 0;
-
             response.data.on('data', (chunk) => {
-                dataReceived = true;
                 bytesWritten += chunk.length;
-                logger.writeLog('INFO', [`• Received ${bytesWritten} bytes for ${file.type}`]);
+                logger.writeLog('INFO', [`• Downloaded ${(bytesWritten / 1024 / 1024).toFixed(2)} MB for ${file.type}`]);
             });
 
+            // Use pipe to handle the streaming data
             await new Promise((resolve, reject) => {
-                writer.on('finish', () => {
-                    if (!dataReceived) {
-                        reject(new Error('No data was written to file'));
-                    } else {
-                        resolve();
-                    }
-                });
-                writer.on('error', reject);
                 response.data.pipe(writer);
+                response.data.on('end', resolve);
+                response.data.on('error', reject);
+                writer.on('error', reject);
             });
 
             // Verify file was created and has content
@@ -261,7 +247,7 @@ async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) 
             logger.writeLog('INFO', [
                 `• Successfully downloaded ${file.type || 'file'} data`,
                 `• Saved to: ${filepath}`,
-                `• File size: ${stats.size} bytes`,
+                `• File size: ${(stats.size / 1024 / 1024).toFixed(2)} MB`,
                 ''
             ]);
         } catch (error) {
