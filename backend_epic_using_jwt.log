@@ -1,6 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-12T13:29:55.359Z
+New Session Started: 2025-01-12T18:52:32.496Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -29,7 +29,7 @@ When you see a value in the configuration, it will show its source:
 Now loading the configuration values...
 --------------------------------------------------------------------------------
 
-Cleared 0 files from epic_data_export
+Cleared 11 files from epic_data_export
 Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
 
 ================================================================================
@@ -39,9 +39,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-12T13:29:55.000Z
-  Not Before (nbf) : 2025-01-12T13:29:55.000Z
-  Expiry time (exp): 2025-01-12T13:34:55.000Z
+  Current time (iat): 2025-01-12T18:52:32.000Z
+  Not Before (nbf) : 2025-01-12T18:52:32.000Z
+  Expiry time (exp): 2025-01-12T18:57:32.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -50,10 +50,10 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "c0a78376-82a1-44fe-acd1-907ecd5b02e3",
-  "exp": 1736688895,
-  "nbf": 1736688595,
-  "iat": 1736688595
+  "jti": "a1e811bb-5e72-4606-82f6-824345fc2651",
+  "exp": 1736708252,
+  "nbf": 1736707952,
+  "iat": 1736707952
 }
 
 Required Claims Explanation:
@@ -77,7 +77,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiZjY4OTMwYWYtMzg5NC00NTQ5LTkzMDgtYWI2ODgyMzgyODQ4IiwiZXhwIjoxNzM2Njg4ODk1LCJuYmYiOjE3MzY2ODg1OTUsImlhdCI6MTczNjY4ODU5NX0.BHK5VjlyPIT5NZszhdE-7c8vgH5tzSSmwhHLmfE4-sW0nHuC5kvyt82P0UpoDRuDr4Z1LCn8LmJuD-12ioetUam9QeA3jOQ4JLfuVkvTU_DwZ2egyrG86ZxG7kbvboD-XOBa6lSHZpDfRvLJZN-QMZxdOu4p4N3qgVdokYgwl3zgON0zpNFtQI_HBE-1Fnuw5YT6X5DEn2LhJrXJm4fN4VzoNz7Fp4ordfNbT_CV7ypsQVHpPwDI7QWxyh9o2s-81-NfSPdvb9dGidHP-Qr0J5jGQU_zmCFjEsAasalh5_MPnQXem8EbOcPNGy1SXyK6Chyuzzjr3ujY6UE7VuDPCw"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiM2NhOGZhMTctZTM1MS00Mjg1LTkzNDAtODM4OGYwZDk4ODdiIiwiZXhwIjoxNzM2NzA4MjUyLCJuYmYiOjE3MzY3MDc5NTIsImlhdCI6MTczNjcwNzk1Mn0.HNTZ-ZTX41wzizEsKl_13s1MhnOjyGTAyv8AhHmNHqf26X5aiv47kYeEuNrmu9i94VvkXL223e4coNF2syof-fP1wfqcWPTSNMGygUK406C5AF6HWlR556YQ-o1Kh4gCY4GE-GnD4JOkZiWlHpPyxNoJzL8aH1wmjSV0A2ILCDVZQZqriGkWnvWGmdJEWvIlFsdjR9Gj7afD3itlAa0iFnL_OtM7j2ZkpiQGshgaFnhuDP5XtIBgRjzqaLVa1eLrxSZhIcpImhGajVM1mbPh1RAdqdPHuCyMvjNHkZq3ElfTfHd__xtaiXcRjGXOuWsRwYbJM4xI0FlBX4ml4wVCuw"
 }
 
 STEP 3: SENDING TOKEN REQUEST
@@ -548,7 +548,7 @@ uses these predefined standard ranges.
 === End of Session ===
 
 ================================================================================
-New Session Started: 2025-01-12T13:38:36.472Z
+New Session Started: 2025-01-12T20:26:10.839Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -577,7 +577,7 @@ When you see a value in the configuration, it will show its source:
 Now loading the configuration values...
 --------------------------------------------------------------------------------
 
-Cleared 0 files from epic_data_export
+Cleared 7 files from epic_data_export
 Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
 
 ================================================================================
@@ -587,9 +587,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-12T13:38:36.000Z
-  Not Before (nbf) : 2025-01-12T13:38:36.000Z
-  Expiry time (exp): 2025-01-12T13:43:36.000Z
+  Current time (iat): 2025-01-12T20:26:10.000Z
+  Not Before (nbf) : 2025-01-12T20:26:10.000Z
+  Expiry time (exp): 2025-01-12T20:31:10.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -598,10 +598,10 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "2a7362be-19a6-47fe-84a2-f1f2ed7806e3",
-  "exp": 1736689416,
-  "nbf": 1736689116,
-  "iat": 1736689116
+  "jti": "5be316e1-ecd9-46b7-ae0e-6fff9d5d87bf",
+  "exp": 1736713870,
+  "nbf": 1736713570,
+  "iat": 1736713570
 }
 
 Required Claims Explanation:
@@ -625,7 +625,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiN2EwNzllNTctNjk0MS00ZTkyLWIzMmYtMDEyYmZmNjAzMmFkIiwiZXhwIjoxNzM2Njg5NDE2LCJuYmYiOjE3MzY2ODkxMTYsImlhdCI6MTczNjY4OTExNn0.FWrVemWcE4eHMRWi8eOQAJ7Cc_V4PoUeSVDvAzdu9yLN7lX8VlEm6FD_pPPoGiwPJ7lEYSz6V32qIzX9EkRg56nGpztaFUBFEhF1ato_4avSQaMvXD6SAbRGvMdlW5So-vjtwak8Cl7Gv3Gx9eIBP_kt6-CIxztSbaRKKCQ4M5sx-pM-_y3Ba-Fi-atXD4SaTBLEsc9FKiyfFvhldqh5Cc9FJpDY9d3MPqVEa7xT7yCcb7U7pkMV7utkQPgIykYZqHjH0vbHKE7us9ALRkNIK7RMgbKWia_tfEYobg6l_iPRhqmGcnvENW2dZslh8Ywb1eY1qdg-YAnS6sbBJE_P7w"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMjVhYTVhZjEtYmUyZC00ZmFhLTlmMDEtNjY1Y2MzOWNlYjYwIiwiZXhwIjoxNzM2NzEzODcwLCJuYmYiOjE3MzY3MTM1NzAsImlhdCI6MTczNjcxMzU3MH0.E-SQYJ0TT0nFV8DtjP6A03daKZbUMTQKL0zc8libBqEyWgdtDZ93M72prvLJpehzzYl_qU0A54OT1n35-LW59BG8JMlq6eVo03oX4dGS8UVun74c81540y3uIXm8x5LMzdvhK1cMjxWMEqgJps45IxFUl01ppunXq61FrdREAhT-gAGG84cF2QoXg_4KjvAQ6JoiP5pgVw11cS5TAnC0r0Cu0n4J4JIG8SgVfhlhIZPeOrJCt5mdh7D5p6WF8yVcfUMnLCqk4BNcqGXdypF3FDBBcXXIj0soqACG0XItkZfzAE03oiX0No7HSACBaCvXksoSW0ziWrI1bC9u1mWGVg"
 }
 
 STEP 3: SENDING TOKEN REQUEST

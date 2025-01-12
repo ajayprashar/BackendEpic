@@ -271,6 +271,157 @@ async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) 
     }
 }
 
+async function processObservationData(exportDir, logger) {
+    logger.writeLog('INFO', [
+        'PROCESSING OBSERVATION DATA',
+        '-----------------------',
+        'Analyzing downloaded observation files...',
+        ''
+    ]);
+
+    const observationFile = path.join(exportDir, 'Observation.ndjson');
+    if (!fs.existsSync(observationFile)) {
+        throw new Error('Observation file not found in export directory');
+    }
+
+    const observations = [];
+    const fileStream = fs.createReadStream(observationFile);
+    const rl = require('readline').createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+
+    for await (const line of rl) {
+        if (line.trim()) {
+            observations.push(JSON.parse(line));
+        }
+    }
+
+    // Process observations and generate statistics
+    const stats = {
+        totalObservations: observations.length,
+        vitalSigns: {},
+        abnormalReadings: 0,
+        normalReadings: 0
+    };
+
+    observations.forEach(obs => {
+        const code = obs.code?.coding?.[0]?.display || 'Unknown';
+        if (!stats.vitalSigns[code]) {
+            stats.vitalSigns[code] = {
+                count: 0,
+                min: Infinity,
+                max: -Infinity,
+                sum: 0
+            };
+        }
+
+        stats.vitalSigns[code].count++;
+        
+        if (obs.valueQuantity) {
+            const value = obs.valueQuantity.value;
+            stats.vitalSigns[code].min = Math.min(stats.vitalSigns[code].min, value);
+            stats.vitalSigns[code].max = Math.max(stats.vitalSigns[code].max, value);
+            stats.vitalSigns[code].sum += value;
+        }
+
+        if (obs.interpretation?.[0]?.coding?.[0]?.code) {
+            if (['A', 'H', 'L'].includes(obs.interpretation[0].coding[0].code)) {
+                stats.abnormalReadings++;
+            } else {
+                stats.normalReadings++;
+            }
+        }
+    });
+
+    return stats;
+}
+
+async function generateAndEmailReport(stats, config, logger) {
+    const reportContent = [
+        'EPIC BULK FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT',
+        '======================================================',
+        '',
+        `Report Generated: ${new Date().toISOString()}`,
+        '',
+        'SUMMARY STATISTICS',
+        '-----------------',
+        `Total Observations: ${stats.totalObservations}`,
+        `Normal Readings: ${stats.normalReadings}`,
+        `Abnormal Readings: ${stats.abnormalReadings}`,
+        '',
+        'VITAL SIGNS ANALYSIS',
+        '------------------'
+    ];
+
+    Object.entries(stats.vitalSigns).forEach(([code, data]) => {
+        if (data.count > 0) {
+            reportContent.push(
+                `\n${code}:`,
+                `• Count: ${data.count}`,
+                `• Range: ${data.min.toFixed(2)} - ${data.max.toFixed(2)}`,
+                `• Average: ${(data.sum / data.count).toFixed(2)}`
+            );
+        }
+    });
+
+    // Save report to file
+    const reportPath = path.join(config.paths.epic_data_export_folder, 'observation_report.txt');
+    await fs.promises.writeFile(reportPath, reportContent.join('\n'));
+
+    logger.writeLog('INFO', [
+        'REPORT GENERATION',
+        '-----------------',
+        '• Generated observation analysis report',
+        `• Saved to: ${reportPath}`,
+        ''
+    ]);
+
+    // Check if email configuration exists
+    if (!config.email?.smtp_user || !config.email?.smtp_pass) {
+        logger.writeLog('WARN', [
+            'Email configuration missing - check smtp_user and smtp_pass in INI file',
+            'Report has been saved but email notification could not be sent.',
+            ''
+        ]);
+        return;
+    }
+
+    // Send email using nodemailer
+    const transporter = require('nodemailer').createTransport({
+        host: config.email.smtp_host,
+        port: parseInt(config.email.smtp_port),
+        secure: config.email.smtp_secure === 'true',
+        auth: {
+            user: config.email.smtp_user,
+            pass: config.email.smtp_pass
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    await transporter.sendMail({
+        from: config.email.notification_from,
+        to: config.email.notification_to,
+        subject: 'Epic Bulk FHIR Data Export - Observation Analysis Report',
+        text: reportContent.join('\n'),
+        attachments: [{
+            filename: 'observation_report.txt',
+            path: reportPath
+        }]
+    });
+
+    logger.writeLog('INFO', [
+        'EMAIL NOTIFICATION',
+        '-----------------',
+        '• Sent observation analysis report via email',
+        `• From: ${config.email.notification_from}`,
+        `• To: ${config.email.notification_to}`,
+        ''
+    ]);
+}
+
 async function main() {
     let logger = null;
     let config = null;
@@ -440,6 +591,21 @@ async function main() {
         const outputFiles = await monitorExportStatus(statusUrl, accessToken, logger);
         await downloadExportFiles(outputFiles, accessToken, exportDir, logger);
         
+        // Process observations and send report
+        logger.writeLog('INFO', [
+            '',
+            'STEP 6: DATA ANALYSIS AND REPORTING',
+            '--------------------------------',
+            'Processing downloaded data to:',
+            '1. Analyze observation patterns',
+            '2. Generate statistical report',
+            '3. Email findings to stakeholders',
+            ''
+        ]);
+
+        const stats = await processObservationData(exportDir, logger);
+        await generateAndEmailReport(stats, config, logger);
+
         logger.writeLog('INFO', [
             '',
             'STEP 6: DATA ANALYSIS',
