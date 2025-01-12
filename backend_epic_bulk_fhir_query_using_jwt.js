@@ -190,7 +190,7 @@ async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) 
 
     for (let i = 0; i < outputFiles.length; i++) {
         const file = outputFiles[i];
-        const filename = `${file.type || `export_${i + 1}`}.ndjson`;
+        const filename = `bulk_fhir_${file.type || `export_${i + 1}`}.ndjson`;
         const filepath = path.join(exportDir, filename);
 
         logger.writeLog('INFO', [
@@ -279,7 +279,29 @@ async function processObservationData(exportDir, logger) {
         ''
     ]);
 
-    const observationFile = path.join(exportDir, 'Observation.ndjson');
+    // First, load Patient data to get names
+    const patientFile = path.join(exportDir, 'bulk_fhir_Patient.ndjson');
+    const patients = {};
+    if (fs.existsSync(patientFile)) {
+        const patientStream = fs.createReadStream(patientFile);
+        const patientRL = require('readline').createInterface({
+            input: patientStream,
+            crlfDelay: Infinity
+        });
+
+        for await (const line of patientRL) {
+            if (line.trim()) {
+                const patient = JSON.parse(line);
+                patients[patient.id] = {
+                    name: patient.name?.[0]?.family 
+                          ? `${patient.name[0].family}, ${patient.name[0].given?.join(' ') || ''}`
+                          : 'Unknown Patient'
+                };
+            }
+        }
+    }
+
+    const observationFile = path.join(exportDir, 'bulk_fhir_Observation.ndjson');
     if (!fs.existsSync(observationFile)) {
         throw new Error('Observation file not found in export directory');
     }
@@ -293,89 +315,107 @@ async function processObservationData(exportDir, logger) {
 
     for await (const line of rl) {
         if (line.trim()) {
-            observations.push(JSON.parse(line));
+            const obs = JSON.parse(line);
+            const patientId = obs.subject?.reference?.split('/')[1];
+            const patientName = patients[patientId]?.name || 'Unknown Patient';
+            
+            const value = obs.valueQuantity 
+                ? `${obs.valueQuantity.value} ${obs.valueQuantity.unit || ''}`
+                : (obs.valueString || 'No value recorded');
+
+            const referenceRange = obs.referenceRange?.[0]
+                ? `${obs.referenceRange[0].low?.value || ''}-${obs.referenceRange[0].high?.value || ''} ${obs.referenceRange[0].high?.unit || ''}`
+                : 'No range specified';
+
+            const status = obs.interpretation?.[0]?.coding?.[0]?.code
+                ? ['A', 'H', 'L'].includes(obs.interpretation[0].coding[0].code)
+                    ? 'ABNORMAL'
+                    : 'NORMAL'
+                : 'NORMAL';
+
+            observations.push({
+                date: new Date(obs.effectiveDateTime || obs.issued),
+                patientName,
+                patientId,
+                code: obs.code?.coding?.[0]?.display || 'Unknown',
+                value,
+                referenceRange,
+                status,
+                raw: obs // Keep raw data for statistics
+            });
         }
     }
 
-    // Process observations and generate statistics
+    // Sort by date descending
+    observations.sort((a, b) => b.date - a.date);
+
+    // Calculate statistics
     const stats = {
         totalObservations: observations.length,
         vitalSigns: {},
-        abnormalReadings: 0,
-        normalReadings: 0
+        abnormalReadings: observations.filter(o => o.status === 'ABNORMAL').length,
+        normalReadings: observations.filter(o => o.status === 'NORMAL').length,
+        detailedObservations: observations
     };
-
-    observations.forEach(obs => {
-        const code = obs.code?.coding?.[0]?.display || 'Unknown';
-        if (!stats.vitalSigns[code]) {
-            stats.vitalSigns[code] = {
-                count: 0,
-                min: Infinity,
-                max: -Infinity,
-                sum: 0
-            };
-        }
-
-        stats.vitalSigns[code].count++;
-        
-        if (obs.valueQuantity) {
-            const value = obs.valueQuantity.value;
-            stats.vitalSigns[code].min = Math.min(stats.vitalSigns[code].min, value);
-            stats.vitalSigns[code].max = Math.max(stats.vitalSigns[code].max, value);
-            stats.vitalSigns[code].sum += value;
-        }
-
-        if (obs.interpretation?.[0]?.coding?.[0]?.code) {
-            if (['A', 'H', 'L'].includes(obs.interpretation[0].coding[0].code)) {
-                stats.abnormalReadings++;
-            } else {
-                stats.normalReadings++;
-            }
-        }
-    });
 
     return stats;
 }
 
 async function generateAndEmailReport(stats, config, logger) {
+    // Generate detailed report content
     const reportContent = [
         'EPIC BULK FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT',
         '======================================================',
         '',
-        `Report Generated: ${new Date().toISOString()}`,
-        '',
-        'SUMMARY STATISTICS',
-        '-----------------',
+        'Summary:',
+        '---------',
         `Total Observations: ${stats.totalObservations}`,
-        `Normal Readings: ${stats.normalReadings}`,
-        `Abnormal Readings: ${stats.abnormalReadings}`,
+        `Total Normal Readings: ${stats.normalReadings}`,
+        `Total Abnormal Readings: ${stats.abnormalReadings}`,
         '',
-        'VITAL SIGNS ANALYSIS',
-        '------------------'
+        'Observation Details by Date:',
+        '--------------------------',
+        'Date | Patient Name | Patient ID | Observation | Value | Reference Range | Status',
+        '-----|--------------|------------|-------------|-------|-----------------|--------'
     ];
 
-    Object.entries(stats.vitalSigns).forEach(([code, data]) => {
-        if (data.count > 0) {
-            reportContent.push(
-                `\n${code}:`,
-                `• Count: ${data.count}`,
-                `• Range: ${data.min.toFixed(2)} - ${data.max.toFixed(2)}`,
-                `• Average: ${(data.sum / data.count).toFixed(2)}`
-            );
-        }
+    // Add detailed observations in the same format as backend_epic_using_jwt.js
+    stats.detailedObservations.forEach(obs => {
+        const dateStr = obs.date instanceof Date && !isNaN(obs.date) 
+            ? obs.date.toISOString().split('T')[0]
+            : 'Unknown Date';
+        reportContent.push(
+            `${dateStr} | ${obs.patientName} | ${obs.patientId} | ${obs.code} | ${obs.value} | ${obs.referenceRange} | ${obs.status}`
+        );
     });
 
-    // Save report to file
-    const reportPath = path.join(config.paths.epic_data_export_folder, 'observation_report.txt');
-    await fs.promises.writeFile(reportPath, reportContent.join('\n'));
-
-    logger.writeLog('INFO', [
-        'REPORT GENERATION',
+    // Add a footer with file information
+    reportContent.push(
+        '',
+        'Export Information:',
         '-----------------',
-        '• Generated observation analysis report',
-        `• Saved to: ${reportPath}`,
+        `• Export Directory: ${config.paths.epic_data_export_folder}`,
+        `• Report Generated: ${new Date().toISOString()}`
+    );
+
+    const reportString = reportContent.join('\n');
+
+    // Write report to log file
+    logger.writeLog('INFO', [
+        '',
+        '================================================================================',
+        '                         Observation Analysis Report                             ',
+        '================================================================================',
+        '',
+        reportString,
+        '',
+        '================================================================================',
         ''
     ]);
+
+    // Save report to file
+    const reportPath = path.join(config.paths.epic_data_export_folder, 'bulk_fhir_observation_report.txt');
+    await fs.promises.writeFile(reportPath, reportString);
 
     // Check if email configuration exists
     if (!config.email?.smtp_user || !config.email?.smtp_pass) {
@@ -401,16 +441,18 @@ async function generateAndEmailReport(stats, config, logger) {
         }
     });
 
-    await transporter.sendMail({
+    const mailOptions = {
         from: config.email.notification_from,
         to: config.email.notification_to,
-        subject: 'Epic Bulk FHIR Data Export - Observation Analysis Report',
-        text: reportContent.join('\n'),
+        subject: `EPIC BULK FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT`,
+        text: reportString,
         attachments: [{
-            filename: 'observation_report.txt',
+            filename: 'bulk_fhir_observation_report.txt',
             path: reportPath
         }]
-    });
+    };
+
+    await transporter.sendMail(mailOptions);
 
     logger.writeLog('INFO', [
         'EMAIL NOTIFICATION',

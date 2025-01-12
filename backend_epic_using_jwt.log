@@ -1,554 +1,6 @@
 
 ================================================================================
-New Session Started: 2025-01-12T18:52:32.496Z
-================================================================================
-
-Starting backend_epic_using_jwt.js...
-
-================================================================================
-                         Configuration Loading Tutorial                          
-================================================================================
-
-Loading configuration from: backend_epic_using_jwt.ini
-Understanding Configuration Sources:
-----------------------------------
-When you see a value in the configuration, it will show its source:
-
-1. (Source: INI file)
-   • Values read directly from the INI configuration file
-   • These are the raw, unprocessed values
-
-2. (Source: Variable substitution)
-   • Values that contained variables (${variable}) that have been resolved
-   • Example: ${app_folder_name}/epic_data_export → C:/FHIR/BackendEpic/epic_data_export
-
-3. (Source: Environment variable)
-   • Values that were overridden by environment variables
-   • Useful for sensitive information like API keys
-
-Now loading the configuration values...
---------------------------------------------------------------------------------
-
-Cleared 11 files from epic_data_export
-Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
-
-================================================================================
-                         Epic OAuth 2.0 Token Request Tutorial                   
-================================================================================
-
-STEP 1: JWT ASSERTION GENERATION
---------------------------------------------------------------------------------
-Timestamp Configuration:
-  Current time (iat): 2025-01-12T18:52:32.000Z
-  Not Before (nbf) : 2025-01-12T18:52:32.000Z
-  Expiry time (exp): 2025-01-12T18:57:32.000Z
-  Token validity   : 5 minutes
-
-JWT Claims:
-
-{
-  "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
-  "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
-  "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "a1e811bb-5e72-4606-82f6-824345fc2651",
-  "exp": 1736708252,
-  "nbf": 1736707952,
-  "iat": 1736707952
-}
-
-Required Claims Explanation:
-  iss (Issuer)  : Client ID assigned by Epic
-  sub (Subject) : Same as Issuer for backend services
-  aud (Audience): Epic's token endpoint
-  jti (JWT ID)  : Unique identifier for this JWT. This means we randomly generate this while respecting the format of the jti in Epic documentation.
-  exp           : Expiration time
-  nbf           : Not valid before time
-  iat           : Time when JWT was issued
-
-STEP 2: PREPARING TOKEN REQUEST
---------------------------------------------------------------------------------
-Request Configuration:
-  Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-  Grant Type           : client_credentials
-  Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-
-Request Body:
-
-{
-  "grant_type": "client_credentials",
-  "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiM2NhOGZhMTctZTM1MS00Mjg1LTkzNDAtODM4OGYwZDk4ODdiIiwiZXhwIjoxNzM2NzA4MjUyLCJuYmYiOjE3MzY3MDc5NTIsImlhdCI6MTczNjcwNzk1Mn0.HNTZ-ZTX41wzizEsKl_13s1MhnOjyGTAyv8AhHmNHqf26X5aiv47kYeEuNrmu9i94VvkXL223e4coNF2syof-fP1wfqcWPTSNMGygUK406C5AF6HWlR556YQ-o1Kh4gCY4GE-GnD4JOkZiWlHpPyxNoJzL8aH1wmjSV0A2ILCDVZQZqriGkWnvWGmdJEWvIlFsdjR9Gj7afD3itlAa0iFnL_OtM7j2ZkpiQGshgaFnhuDP5XtIBgRjzqaLVa1eLrxSZhIcpImhGajVM1mbPh1RAdqdPHuCyMvjNHkZq3ElfTfHd__xtaiXcRjGXOuWsRwYbJM4xI0FlBX4ml4wVCuw"
-}
-
-STEP 3: SENDING TOKEN REQUEST
---------------------------------------------------------------------------------
-Understanding the Token Request Process:
-
-1. What happens when we send this request:
-   • Our JWT (shown above) is sent to Epic's authorization server
-   • The JWT contains our identity claims and is signed with our private key
-   • Epic's server receives our request and begins the validation process
-
-2. How Epic validates our request:
-   • Epic retrieves our registered public key using the key ID in the JWT header
-   • They verify the JWT's signature using this public key
-   • They check the JWT's claims (expiry time, issuer, etc.)
-
-3. What happens after successful validation:
-   • Epic generates a new access token specifically for our session
-   • This token grants us access to Epic's FHIR API endpoints
-   • The token will be valid for 60 minutes
-   • We must include this token in all subsequent API requests
-
-Now sending the request with these parameters:
-• URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-• Method: POST
-• Headers:
-    Content-Type: application/x-www-form-urlencoded
-• Request Body Parameters:
-    1. grant_type: client_credentials
-    2. client_assertion_type: JWT Bearer Token
-    3. client_assertion: [Generated JWT containing claims shown above]
-
-STEP 4: TOKEN RESPONSE
---------------------------------------------------------------------------------
-✓ Access token received successfully
-================================================================================
-
-
-Processing Resources
-
-backend_epic_using_jwt.js completed successfully
-
-================================================================================
-                         Reference Ranges Tutorial                              
-================================================================================
-
-Blood Pressure (BP) Reference Ranges:
---------------------------------
-• Normal Systolic Range: 90-140 mmHg
-• Normal Diastolic Range: 60-90 mmHg
-
-Format in Report: [systolic range]/[diastolic range] [unit]
-Example: 90-140/60-90 mmHg
-
-Status Determination:
--------------------
-• NORMAL: When both systolic and diastolic are within their ranges
-• ABNORMAL: When either:
-  - Systolic is < 90 or > 140 mmHg
-  - Diastolic is < 60 or > 90 mmHg
-
-Source of Ranges:
----------------
-These ranges are based on standard medical guidelines for normal blood pressure readings.
-The system first checks for ranges provided in the Epic FHIR data, and if not found,
-uses these predefined standard ranges.
-
-================================================================================
-
-
-================================================================================
-                         Observation Analysis Report                             
-================================================================================
-
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/85 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 126/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 114/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/89 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/67 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 119/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2024-12-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | 36.5-37.5 °C | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | 60-100 bpm | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 153/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 157/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 169/91 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 155/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/79 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 161/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/74 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 66/43 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/76 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 162/100 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 142/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 84/53 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 1/1 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 150/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 159/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 152/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/85 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 108/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 111/65 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 115/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 114/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/88 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/88 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/66 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/85 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 118/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/61 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/85 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 143/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 147/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 152/87 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 66/49 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 142/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 127/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/63 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 124/66 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 135/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 129/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 115/63 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/64 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 112/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/63 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 108/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 140/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/61 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | 60-100 bpm | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | 60-100 bpm | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/95 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 170/58 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 118/99 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 172/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 122/94 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 128/50 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 166/69 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 143/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/99 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 147/52 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/98 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 136/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/55 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 173/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 104/52 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 175/63 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 153/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 141/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/94 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 168/74 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 163/113 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 146/71 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/128 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 139/108 mmHg | 90-140/60-90 mmHg | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/103 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 125/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 120/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | 60-100 bpm | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | 60-100 bpm | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | 60-100 bpm | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 121/59 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Weight | 120 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 111/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 117/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 116/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 132/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 125/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | 36.5-37.5 °C | NORMAL
-2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | 36.5-37.5 °C | NORMAL
-2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | 36.5-37.5 °C | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 bpm | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | 60-100 bpm | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 bpm | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | 60-100 bpm | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 bpm | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | 60-100 bpm | NORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 bpm | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | 60-100 bpm | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | 60-100 bpm | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | 60-100 bpm | NORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | 60-100 bpm | NORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 bpm | NORMAL
-2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 bpm | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 120 kg | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 52.7 kg | No range specified | NORMAL
-2021-01-04 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
-2020-12-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 79 kg | No range specified | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 62.8 kg | No range specified | NORMAL
-2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 150 kg | No range specified | NORMAL
-2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-05-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 132 kg | No range specified | NORMAL
-2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 124 kg | No range specified | NORMAL
-2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 90 kg | No range specified | NORMAL
-2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 123 kg | No range specified | NORMAL
-2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 125 kg | No range specified | NORMAL
-2020-01-02 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 55 kg | No range specified | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 58 kg | No range specified | NORMAL
-2019-09-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 95 kg | No range specified | NORMAL
-2019-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
-2019-08-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
-2019-07-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Cholesterol [Mass/volume] in Serum or Plasma | 187 mg/dL | <=200 mg/dL | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 170/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 164/90 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 156/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 150/97 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 148/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 149/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 121/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 115/110 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 124/93 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-
-================================================================================
-
-
-=== End of Session ===
-
-================================================================================
-New Session Started: 2025-01-12T20:26:10.839Z
+New Session Started: 2025-01-12T21:34:05.994Z
 ================================================================================
 
 Starting backend_epic_using_jwt.js...
@@ -587,9 +39,9 @@ Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4
 STEP 1: JWT ASSERTION GENERATION
 --------------------------------------------------------------------------------
 Timestamp Configuration:
-  Current time (iat): 2025-01-12T20:26:10.000Z
-  Not Before (nbf) : 2025-01-12T20:26:10.000Z
-  Expiry time (exp): 2025-01-12T20:31:10.000Z
+  Current time (iat): 2025-01-12T21:34:06.000Z
+  Not Before (nbf) : 2025-01-12T21:34:06.000Z
+  Expiry time (exp): 2025-01-12T21:39:06.000Z
   Token validity   : 5 minutes
 
 JWT Claims:
@@ -598,10 +50,10 @@ JWT Claims:
   "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
   "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "5be316e1-ecd9-46b7-ae0e-6fff9d5d87bf",
-  "exp": 1736713870,
-  "nbf": 1736713570,
-  "iat": 1736713570
+  "jti": "f3f62c84-761a-452d-8c8f-d0cf41ddc78a",
+  "exp": 1736717946,
+  "nbf": 1736717646,
+  "iat": 1736717646
 }
 
 Required Claims Explanation:
@@ -625,7 +77,7 @@ Request Body:
 {
   "grant_type": "client_credentials",
   "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMjVhYTVhZjEtYmUyZC00ZmFhLTlmMDEtNjY1Y2MzOWNlYjYwIiwiZXhwIjoxNzM2NzEzODcwLCJuYmYiOjE3MzY3MTM1NzAsImlhdCI6MTczNjcxMzU3MH0.E-SQYJ0TT0nFV8DtjP6A03daKZbUMTQKL0zc8libBqEyWgdtDZ93M72prvLJpehzzYl_qU0A54OT1n35-LW59BG8JMlq6eVo03oX4dGS8UVun74c81540y3uIXm8x5LMzdvhK1cMjxWMEqgJps45IxFUl01ppunXq61FrdREAhT-gAGG84cF2QoXg_4KjvAQ6JoiP5pgVw11cS5TAnC0r0Cu0n4J4JIG8SgVfhlhIZPeOrJCt5mdh7D5p6WF8yVcfUMnLCqk4BNcqGXdypF3FDBBcXXIj0soqACG0XItkZfzAE03oiX0No7HSACBaCvXksoSW0ziWrI1bC9u1mWGVg"
+  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiMTE5Y2MwMWMtYWNlZS00Njk0LTlkYzMtNjYyZTQ2ODQ2ZDJiIiwiZXhwIjoxNzM2NzE3OTQ2LCJuYmYiOjE3MzY3MTc2NDYsImlhdCI6MTczNjcxNzY0Nn0.QfPhrhqucOn5c2pkkVdiH0M0EdJLddC829AVzoK2Nt6knpCAvdI6xoYsCv86R-FwcQkmOfYQfgQMFtGU5kZJ-PxyzDNWBx16gkV94XxqsEuvRKRfczkGaaaai5x5Mei66vyK-NvzwH1i1FduS0jcGEFriperjmDIFmRufL-NwUVnJkCfmXmiyZNjJwiFBoJEsP9FZ17oA4LkIa9gVv4Cu1CkCDcdekX2ZZ4G-Rgtq8T8k7oBH3bofOLKw1IkNjTnGXp6_R5Qq2L-aCMIig2a-hhw14wtu2MUEveLFCnQfm4kgCWlYklRMVxnAn5YVgMeY5t21PA62VsMi7nrfjmhAw"
 }
 
 STEP 3: SENDING TOKEN REQUEST
@@ -669,426 +121,418 @@ Processing Resources
 backend_epic_using_jwt.js completed successfully
 
 ================================================================================
-                         Reference Ranges Tutorial                              
-================================================================================
-
-Blood Pressure (BP) Reference Ranges:
---------------------------------
-• Normal Systolic Range: 90-140 mmHg
-• Normal Diastolic Range: 60-90 mmHg
-
-Format in Report: [systolic range]/[diastolic range] [unit]
-Example: 90-140/60-90 mmHg
-
-Status Determination:
--------------------
-• NORMAL: When both systolic and diastolic are within their ranges
-• ABNORMAL: When either:
-  - Systolic is < 90 or > 140 mmHg
-  - Diastolic is < 60 or > 90 mmHg
-
-Source of Ranges:
----------------
-These ranges are based on standard medical guidelines for normal blood pressure readings.
-The system first checks for ranges provided in the Epic FHIR data, and if not found,
-uses these predefined standard ranges.
-
-================================================================================
-
-
-================================================================================
                          Observation Analysis Report                             
 ================================================================================
 
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/85 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 126/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 127/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 114/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 139/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 130/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 132/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 131/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 140/89 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 138/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 133/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 136/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 134/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 135/67 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 137/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 128/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 119/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2024-12-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | 36.5-37.5 °C | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | 60-100 bpm | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 153/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 157/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 169/91 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 155/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 147/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/79 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 158/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 161/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 145/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/74 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 66/43 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 149/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/76 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 160/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 162/100 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 142/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/77 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 84/53 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 146/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 144/80 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 143/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 141/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 1/1 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 150/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 154/82 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 159/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 152/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | 156/85 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 108/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 111/65 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 115/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 116/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 114/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 137/88 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/88 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/66 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 133/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 124/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/85 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 131/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 134/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 136/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 140/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 118/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/79 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 120/61 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 126/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 121/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/75 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 135/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 132/82 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 129/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 122/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 119/78 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 125/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 138/83 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/85 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 128/77 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 127/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 130/84 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 143/83 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 123/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 147/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 152/87 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 66/49 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | 142/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 127/81 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/63 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 124/66 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 135/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 129/74 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 115/63 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/64 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 112/69 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/63 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 108/86 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 140/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/73 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 125/61 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 100/60 mmHg | 90-140/60-90 mmHg | NORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/80 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | 36.5-37.5 °C | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | 60-100 bpm | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | 60-100 bpm | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | 60-100 bpm | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 123/95 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 170/58 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 118/99 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/92 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 172/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 122/94 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 128/50 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 166/69 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 143/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 103/99 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 147/52 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 131/98 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 136/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/55 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 173/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 104/52 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 175/63 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 153/73 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 141/84 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 107/94 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 168/74 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 163/113 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 146/71 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 133/128 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/174 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 213/132 mmHg | 90-140/60-90 mmHg | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 156/75 mmHg | 90-140/60-90 mmHg | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 139/108 mmHg | 90-140/60-90 mmHg | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | 120/103 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 125/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 120/60 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | 60-100 bpm | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | 60-100 bpm | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | 60-100 bpm | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | 121/59 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | 60-100 bpm | NORMAL
+EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT
+==============================================================
+
+Summary:
+---------
+Total Observations: 396
+Total Normal Readings: 318
+Total Abnormal Readings: 78
+
+Detailed Observations:
+--------------------
+Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status
+-----|--------------|------------|------------------|--------|----------------|--------
+2024-12-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | No range specified | NORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | No range specified | NORMAL
 2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Weight | 120 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 111/76 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 117/72 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 116/71 mmHg | 90-140/60-90 mmHg | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 132/87 mmHg | 90-140/60-90 mmHg | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 125/70 mmHg | 90-140/60-90 mmHg | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | 36.5-37.5 °C | NORMAL
-2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | 36.5-37.5 °C | NORMAL
-2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | 36.5-37.5 °C | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | 36.5-37.5 °C | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | 36.5-37.5 °C | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 bpm | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | 60-100 bpm | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | 60-100 bpm | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | 60-100 bpm | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 bpm | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | 60-100 bpm | NORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 bpm | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | 60-100 bpm | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | 60-100 bpm | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | 60-100 bpm | NORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | 60-100 bpm | NORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | 60-100 bpm | NORMAL
-2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | 60-100 bpm | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | 60-100 bpm | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | No range specified | ABNORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
+2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
+2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | No range specified | ABNORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
+2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | No range specified | NORMAL
+2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
 2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | No range specified | NORMAL
 2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | No range specified | NORMAL
+2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | No range specified | NORMAL
+2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
 2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
 2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | No range specified | NORMAL
+2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | No range specified | NORMAL
+2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | No range specified | NORMAL
+2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 120 kg | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
 2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
+2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | No range specified | NORMAL
 2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 52.7 kg | No range specified | NORMAL
+2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
 2021-01-04 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
+2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | No range specified | NORMAL
+2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
 2020-12-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 79 kg | No range specified | NORMAL
+2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
+2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | No range specified | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | No range specified | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | No range specified | NORMAL
+2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | No range specified | NORMAL
+2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | No range specified | NORMAL
 2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 62.8 kg | No range specified | NORMAL
+2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | No range specified | NORMAL
+2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | No range specified | NORMAL
+2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | No range specified | NORMAL
+2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | No range specified | NORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | No range specified | NORMAL
+2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
 2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 150 kg | No range specified | NORMAL
+2020-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 150 kg | No range specified | ABNORMAL
+2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | No range specified | NORMAL
 2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
+2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
 2020-05-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 132 kg | No range specified | NORMAL
+2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
 2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 124 kg | No range specified | NORMAL
+2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | No range specified | NORMAL
 2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 90 kg | No range specified | NORMAL
+2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | No range specified | NORMAL
 2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 123 kg | No range specified | NORMAL
+2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | No range specified | NORMAL
 2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 125 kg | No range specified | NORMAL
 2020-01-02 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 55 kg | No range specified | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | No range specified | NORMAL
 2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
+2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | No range specified | NORMAL
 2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 58 kg | No range specified | NORMAL
 2019-09-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 95 kg | No range specified | NORMAL
 2019-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
 2019-08-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
 2019-07-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Cholesterol [Mass/volume] in Serum or Plasma | 187 mg/dL | <=200 mg/dL | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 170/86 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 164/90 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 156/89 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 150/97 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 148/78 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 149/81 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 121/51 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 115/110 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | 124/93 mmHg | 90-140/60-90 mmHg | ABNORMAL
-2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | 36.5-37.5 °C | ABNORMAL (High)
-2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | 36.5-37.5 °C | ABNORMAL (Low)
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | 36.5-37.5 °C | ABNORMAL (Low)
+2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | No range specified | NORMAL
+2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Cholesterol [Mass/volume] in Serum or Plasma | 187 mg/dL | -  | NORMAL
+2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
+1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
+Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
 
 ================================================================================
 

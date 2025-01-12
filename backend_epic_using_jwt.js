@@ -603,29 +603,40 @@ class EpicClient {
 
     async saveResourceData(resourceType, data) {
         if (!data || data.length === 0) {
+            console.log(`No ${resourceType} data to save`);
             return;
         }
 
-        const timestamp = new Date().toISOString().replace(/:/g, '-');
-        const fileName = `${resourceType}_data_${timestamp}.ndjson`;
+        console.log(`Saving ${data.length} ${resourceType} records`);
+        
+        // Add single_patient_ prefix to distinguish from bulk export files
+        const fileName = `single_patient_${resourceType.toLowerCase()}_data.ndjson`;
         const filePath = path.join(this.config.paths.epic_data_export_folder, fileName);
         
-        // Convert data to NDJSON format
-        const ndjsonData = data.map(item => JSON.stringify(item)).join('\n');
-        
-        // Write to file
-        fs.writeFileSync(filePath, ndjsonData);
-        
-        // Calculate file size in KB
-        const stats = fs.statSync(filePath);
-        const fileSizeInKB = (stats.size / 1024).toFixed(2);
-        
-        // Add to exported files list
-        this.exportedFiles.push({
-            name: fileName,
-            size: fileSizeInKB,
-            path: filePath
-        });
+        try {
+            // Convert data to NDJSON format (one JSON object per line)
+            const ndjsonData = data.map(item => JSON.stringify(item)).join('\n') + '\n';
+            
+            // Write to file
+            await fs.promises.writeFile(filePath, ndjsonData);
+            
+            // Calculate file size in KB
+            const stats = await fs.promises.stat(filePath);
+            const fileSizeInKB = (stats.size / 1024).toFixed(2);
+            
+            console.log(`Saved ${resourceType} data to ${filePath} (${fileSizeInKB} KB)`);
+            
+            // Add to exported files list
+            this.exportedFiles.push({
+                name: fileName,
+                size: fileSizeInKB,
+                path: filePath,
+                type: resourceType
+            });
+        } catch (error) {
+            console.error(`Error saving ${resourceType} data:`, error.message);
+            throw error;
+        }
     }
 
     async getResourceDataForPatient(resourceType, patientId, accessToken) {
@@ -751,6 +762,63 @@ class EpicClient {
  * 
  * Error handling wraps the entire process to catch and log any failures
  */
+async function processObservationData(exportedFiles) {
+    const observations = [];
+    
+    // Find and read the observation file (case-insensitive search)
+    const observationFile = exportedFiles.find(f => f.name.toLowerCase().includes('observation'));
+    if (!observationFile) {
+        throw new Error('No observation file found in exported files');
+    }
+
+    try {
+        const data = fs.readFileSync(observationFile.path, 'utf8');
+        const lines = data.split('\n').filter(line => line.trim());
+        
+        for (const line of lines) {
+            try {
+                const obs = JSON.parse(line);
+                const patientRef = obs.subject?.reference || '';
+                const patientId = patientRef.split('/')[1] || 'Unknown';
+                const patientName = obs.subject?.display || 'Unknown Patient';
+
+                observations.push({
+                    date: new Date(obs.effectiveDateTime || obs.issued),
+                    patientName,
+                    patientId,
+                    type: obs.code?.coding?.[0]?.display || 'Unknown',
+                    value: obs.valueQuantity 
+                        ? `${obs.valueQuantity.value} ${obs.valueQuantity.unit}`
+                        : (obs.valueString || 'No value recorded'),
+                    referenceRange: obs.referenceRange?.[0]
+                        ? `${obs.referenceRange[0].low?.value || ''}-${obs.referenceRange[0].high?.value || ''} ${obs.referenceRange[0].high?.unit || ''}`
+                        : 'No range specified',
+                    status: obs.interpretation?.[0]?.coding?.[0]?.code
+                        ? ['A', 'H', 'L'].includes(obs.interpretation[0].coding[0].code)
+                            ? 'ABNORMAL'
+                            : 'NORMAL'
+                        : 'NORMAL'
+                });
+            } catch (parseError) {
+                logger.writeLog('ERROR', [`Error parsing observation: ${parseError.message}`]);
+            }
+        }
+
+        // Sort by date descending
+        observations.sort((a, b) => b.date - a.date);
+
+        return {
+            totalObservations: observations.length,
+            normalReadings: observations.filter(o => o.status === 'NORMAL').length,
+            abnormalReadings: observations.filter(o => o.status === 'ABNORMAL').length,
+            observations
+        };
+    } catch (error) {
+        logger.writeLog('ERROR', [`Error processing observation file: ${error.message}`]);
+        throw error;
+    }
+}
+
 async function sendCompletionEmail(success, startTime, endTime, exportedFiles, config) {
     if (!config.email?.smtp_user || !config.email?.smtp_pass) {
         console.error('Email configuration missing - check smtp_user and smtp_pass in INI file');
@@ -774,126 +842,66 @@ async function sendCompletionEmail(success, startTime, endTime, exportedFiles, c
     const exportDir = path.resolve(config.paths.epic_data_export_folder);
     
     try {
-        const observationFile = getLatestObservationFile(exportDir);
-        const observations = readNDJSON(observationFile);
-        const patientStats = analyzeObservations(observations);
+        // Process observation data
+        const stats = await processObservationData(exportedFiles);
         
-        // Write the observation analysis report with proper formatting
-        logger.writeDirectly('\n================================================================================\n');
-        logger.writeDirectly('                         Reference Ranges Tutorial                              \n');
-        logger.writeDirectly('================================================================================\n\n');
-        logger.writeDirectly('Blood Pressure (BP) Reference Ranges:\n');
-        logger.writeDirectly('--------------------------------\n');
-        logger.writeDirectly('• Normal Systolic Range: 90-140 mmHg\n');
-        logger.writeDirectly('• Normal Diastolic Range: 60-90 mmHg\n\n');
-        logger.writeDirectly('Format in Report: [systolic range]/[diastolic range] [unit]\n');
-        logger.writeDirectly('Example: 90-140/60-90 mmHg\n\n');
-        logger.writeDirectly('Status Determination:\n');
-        logger.writeDirectly('-------------------\n');
-        logger.writeDirectly('• NORMAL: When both systolic and diastolic are within their ranges\n');
-        logger.writeDirectly('• ABNORMAL: When either:\n');
-        logger.writeDirectly('  - Systolic is < 90 or > 140 mmHg\n');
-        logger.writeDirectly('  - Diastolic is < 60 or > 90 mmHg\n\n');
-        logger.writeDirectly('Source of Ranges:\n');
-        logger.writeDirectly('---------------\n');
-        logger.writeDirectly('These ranges are based on standard medical guidelines for normal blood pressure readings.\n');
-        logger.writeDirectly('The system first checks for ranges provided in the Epic FHIR data, and if not found,\n');
-        logger.writeDirectly('uses these predefined standard ranges.\n\n');
-        logger.writeDirectly('================================================================================\n\n');
+        // Generate report content
+        reportString = [
+            'EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT',
+            '==============================================================',
+            '',
+            'Summary:',
+            '---------',
+            `Total Observations: ${stats.totalObservations}`,
+            `Total Normal Readings: ${stats.normalReadings}`,
+            `Total Abnormal Readings: ${stats.abnormalReadings}`,
+            '',
+            'Detailed Observations:',
+            '--------------------',
+            'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status',
+            '-----|--------------|------------|------------------|--------|----------------|--------'
+        ];
 
-        logger.writeDirectly('\n================================================================================\n');
-        logger.writeDirectly('                         Observation Analysis Report                             \n');
-        logger.writeDirectly('================================================================================\n\n');
-
-        // Calculate totals
-        let totalNormal = 0;
-        let totalAbnormal = 0;
-        Object.values(patientStats).forEach(stats => {
-            totalNormal += stats.normalCount;
-            totalAbnormal += stats.abnormalCount;
+        // Add detailed observations
+        stats.observations.forEach(obs => {
+            const dateStr = obs.date instanceof Date && !isNaN(obs.date) 
+                ? obs.date.toISOString().split('T')[0]
+                : 'Unknown Date';
+            reportString.push(
+                `${dateStr} | ${obs.patientName} | ${obs.patientId} | ${obs.type} | ${obs.value} | ${obs.referenceRange} | ${obs.status}`
+            );
         });
 
-        // Build report string for email
-        reportString += 'Reference Ranges Tutorial\n';
-        reportString += '=======================\n\n';
-        reportString += 'Blood Pressure (BP) Reference Ranges:\n';
-        reportString += '--------------------------------\n';
-        reportString += '• Normal Systolic Range: 90-140 mmHg\n';
-        reportString += '• Normal Diastolic Range: 60-90 mmHg\n\n';
-        reportString += 'Format in Report: [systolic range]/[diastolic range] [unit]\n';
-        reportString += 'Example: 90-140/60-90 mmHg\n\n';
-        reportString += 'Status Determination:\n';
-        reportString += '-------------------\n';
-        reportString += '• NORMAL: When both systolic and diastolic are within their ranges\n';
-        reportString += '• ABNORMAL: When either:\n';
-        reportString += '  - Systolic is < 90 or > 140 mmHg\n';
-        reportString += '  - Diastolic is < 60 or > 90 mmHg\n\n';
-        reportString += 'Source of Ranges:\n';
-        reportString += '---------------\n';
-        reportString += 'These ranges are based on standard medical guidelines for normal blood pressure readings.\n';
-        reportString += 'The system first checks for ranges provided in the Epic FHIR data, and if not found,\n';
-        reportString += 'uses these predefined standard ranges.\n\n';
-        reportString += '=================================================================\n\n';
+        reportString = reportString.join('\n');
 
-        reportString += 'Summary:\n';
-        reportString += '---------\n';
-        reportString += `Total Observations: ${totalNormal + totalAbnormal}\n`;
-        reportString += `Total Normal Readings: ${totalNormal}\n`;
-        reportString += `Total Abnormal Readings: ${totalAbnormal}\n\n`;
+        // Write report to log file ONCE
+        logger.writeLog('INFO', [
+            '',
+            '================================================================================',
+            '                         Observation Analysis Report                             ',
+            '================================================================================',
+            '',
+            reportString,
+            '',
+            '================================================================================',
+            ''
+        ]);
 
-        reportString += 'Detailed Observations:\n';
-        reportString += '--------------------\n';
-        reportString += 'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status\n';
-        reportString += '-----|--------------|------------|------------------|--------|----------------|--------\n';
+        // Save report to file
+        const reportPath = path.join(exportDir, 'single_patient_observation_report.txt');
+        await fs.promises.writeFile(reportPath, reportString);
 
-        // Write patient-wise observations to both log and report string
-        Object.entries(patientStats).forEach(([patientId, stats]) => {
-            const allObservations = [...stats.normalObservations || [], ...stats.abnormalReadings || []];
-            allObservations.forEach(obs => {
-                const line = `${obs.date} | ${stats.name} | ${patientId} | ${obs.type} | ${obs.value} | ${obs.referenceRange || 'N/A'} | ${obs.status || 'NORMAL'}\n`;
-                logger.writeDirectly(line);
-                reportString += line;
-            });
-        });
+        const mailOptions = {
+            from: config.email.notification_from,
+            to: config.email.notification_to,
+            subject: `EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT`,
+            text: reportString,
+            attachments: [{
+                filename: 'single_patient_observation_report.txt',
+                path: reportPath
+            }]
+        };
 
-        logger.writeDirectly('\n================================================================================\n\n');
-        reportString += '\n=================================================================\n\n';
-    } catch (error) {
-        logger.writeDirectly('\n================================================================================\n');
-        logger.writeDirectly('                         Observation Analysis Report                             \n');
-        logger.writeDirectly('================================================================================\n\n');
-        logger.writeDirectly('No observation data available for analysis.\n\n');
-        logger.writeDirectly('================================================================================\n\n');
-        
-        reportString = 'No observation data available for analysis.\n\n';
-    }
-
-    const mailOptions = {
-        from: config.email.notification_from,
-        to: config.email.notification_to,
-        subject: `EPIC FHIR Sync ${success ? 'Success' : 'Failed'}`,
-        text: `
-${scriptName} Report
-${'='.repeat(scriptName.length + 7)}
-Start Time: ${startTime}
-End Time: ${endTime}
-Duration: ${Math.round((new Date(endTime) - new Date(startTime))/1000)} seconds
-Status: ${success ? 'Successful' : 'Failed'}
-
-${reportString}
-
-Export Directory:
-${exportDir}
-
-Exported Files:
-    ${exportedFiles.map(file => `${file.name} (${file.size} KB)`).join('\n    ')}
-
-Log File:
-${path.resolve('backend_epic.log')}
-        `
-    };
-
-    try {
         await transporter.sendMail(mailOptions);
         console.log('Completion email sent successfully');
         return { success: true, reportString };
