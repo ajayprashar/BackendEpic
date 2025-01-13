@@ -239,145 +239,9 @@ class JWTManager {
         this.tokenEndpoint = config.oauth_settings.token_endpoint;
         this.algorithm = config.jwt_settings.jwt_algorithm || 'RS384';
         this.expiryMinutes = parseInt(config.jwt_settings.jwt_expiry_minutes) || 5;
-        this.logger = Logger.getInstance();
     }
 
-    async getAccessToken(tutorialShown = false) {
-        try {
-            const logger = Logger.getInstance();
-            
-            // Only show tutorial if it hasn't been shown before
-            if (!tutorialShown) {
-                // Write directly to log file to avoid duplication
-                logger.writeDirectly('\n================================================================================\n');
-                logger.writeDirectly('                         Epic OAuth 2.0 Token Request Tutorial                   \n');
-                logger.writeDirectly('================================================================================\n\n');
-
-                logger.writeDirectly('STEP 1: JWT ASSERTION GENERATION\n');
-                logger.writeDirectly('--------------------------------------------------------------------------------\n');
-                
-                // Generate JWT with claims
-                const currentTime = Math.floor(Date.now() / 1000);
-                const expiryTime = currentTime + (this.expiryMinutes * 60);
-                
-                logger.writeDirectly('Timestamp Configuration:\n');
-                logger.writeDirectly(`  Current time (iat): ${new Date(currentTime * 1000).toISOString()}\n`);
-                logger.writeDirectly(`  Not Before (nbf) : ${new Date(currentTime * 1000).toISOString()}\n`);
-                logger.writeDirectly(`  Expiry time (exp): ${new Date(expiryTime * 1000).toISOString()}\n`);
-                logger.writeDirectly(`  Token validity   : ${this.expiryMinutes} minutes\n\n`);
-                
-                const claims = {
-                    iss: this.clientId,
-                    sub: this.clientId,
-                    aud: this.tokenEndpoint,
-                    jti: uuidv4(),
-                    exp: expiryTime,
-                    nbf: currentTime,
-                    iat: currentTime
-                };
-
-                logger.writeDirectly('JWT Claims:\n\n');
-                logger.writeDirectly(JSON.stringify(claims, null, 2) + '\n\n');
-                
-                logger.writeDirectly('Required Claims Explanation:\n');
-                logger.writeDirectly('  iss (Issuer)  : Client ID assigned by Epic\n');
-                logger.writeDirectly('  sub (Subject) : Same as Issuer for backend services\n');
-                logger.writeDirectly('  aud (Audience): Epic\'s token endpoint\n');
-                logger.writeDirectly('  jti (JWT ID)  : Unique identifier for this JWT. This means we randomly generate this while respecting the format of the jti in Epic documentation.\n');
-                logger.writeDirectly('  exp           : Expiration time\n');
-                logger.writeDirectly('  nbf           : Not valid before time\n');
-                logger.writeDirectly('  iat           : Time when JWT was issued\n\n');
-            }
-
-            // Generate JWT silently (without additional logging)
-            const jwt = this.generateJWTSilent();
-            
-            if (!tutorialShown) {
-                logger.writeDirectly('STEP 2: PREPARING TOKEN REQUEST\n');
-                logger.writeDirectly('--------------------------------------------------------------------------------\n');
-                logger.writeDirectly('Request Configuration:\n');
-                logger.writeDirectly(`  Token Endpoint       : ${this.tokenEndpoint}\n`);
-                logger.writeDirectly(`  Grant Type           : ${this.config.oauth_settings.grant_type}\n`);
-                logger.writeDirectly(`  Client Assertion Type: ${this.config.oauth_settings.client_assertion_type}\n\n`);
-                
-                const requestBody = {
-                    grant_type: this.config.oauth_settings.grant_type,
-                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
-                    client_assertion: jwt
-                };
-                
-                logger.writeDirectly('Request Body:\n\n');
-                logger.writeDirectly(JSON.stringify(requestBody, null, 2) + '\n\n');
-                
-                logger.writeDirectly('STEP 3: SENDING TOKEN REQUEST\n');
-                logger.writeDirectly('--------------------------------------------------------------------------------\n');
-                logger.writeDirectly('Understanding the Token Request Process:\n');
-                logger.writeDirectly('\n1. What happens when we send this request:\n');
-                logger.writeDirectly('   • Our JWT (shown above) is sent to Epic\'s authorization server\n');
-                logger.writeDirectly('   • The JWT contains our identity claims and is signed with our private key\n');
-                logger.writeDirectly('   • Epic\'s server receives our request and begins the validation process\n');
-                logger.writeDirectly('\n2. How Epic validates our request:\n');
-                logger.writeDirectly('   • Epic retrieves our registered public key using the key ID in the JWT header\n');
-                logger.writeDirectly('   • They verify the JWT\'s signature using this public key\n');
-                logger.writeDirectly('   • They check the JWT\'s claims (expiry time, issuer, etc.)\n');
-                logger.writeDirectly('\n3. What happens after successful validation:\n');
-                logger.writeDirectly('   • Epic generates a new access token specifically for our session\n');
-                logger.writeDirectly('   • This token grants us access to Epic\'s FHIR API endpoints\n');
-                logger.writeDirectly('   • The token will be valid for 60 minutes\n');
-                logger.writeDirectly('   • We must include this token in all subsequent API requests\n');
-                logger.writeDirectly('\nNow sending the request with these parameters:\n');
-                logger.writeDirectly('• URL: ' + this.tokenEndpoint + '\n');
-                logger.writeDirectly('• Method: POST\n');
-                logger.writeDirectly('• Headers:\n');
-                logger.writeDirectly('    Content-Type: application/x-www-form-urlencoded\n');
-                logger.writeDirectly('• Request Body Parameters:\n');
-                logger.writeDirectly('    1. grant_type: client_credentials\n');
-                logger.writeDirectly('    2. client_assertion_type: JWT Bearer Token\n');
-                logger.writeDirectly('    3. client_assertion: [Generated JWT containing claims shown above]\n\n');
-            }
-            
-            const response = await axios.post(this.tokenEndpoint, 
-                new URLSearchParams({
-                    grant_type: this.config.oauth_settings.grant_type,
-                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
-                    client_assertion: jwt
-                }), 
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
-            );
-
-            if (!response.data.access_token) {
-                throw new Error('No access token received in response');
-            }
-
-            if (!tutorialShown) {
-                logger.writeDirectly('STEP 4: TOKEN RESPONSE\n');
-                logger.writeDirectly('--------------------------------------------------------------------------------\n');
-                logger.writeDirectly('✓ Access token received successfully\n');
-                logger.writeDirectly('================================================================================\n\n');
-            }
-
-            return response.data.access_token;
-        } catch (error) {
-            const logger = Logger.getInstance();
-            logger.writeLog('ERROR', ['❌ Error in token request process:'], console.error);
-            logger.writeLog('ERROR', ['--------------------------------------------------------------------------------'], console.error);
-            logger.writeLog('ERROR', ['Error Details:'], console.error);
-            logger.writeLog('ERROR', ['\n', {
-                message: error.message,
-                status: error.response?.status,
-                data: error.response?.data
-            }, '\n'], console.error);
-            logger.writeLog('ERROR', ['================================================================================\n'], console.error);
-            throw error;
-        }
-    }
-
-    // Silent version of generateJWT that doesn't output tutorial messages
-    generateJWTSilent() {
+    generateJWT() {
         const publicKey = fs.readFileSync(this.config.paths.public_key, 'utf8');
         const publicKeyId = crypto.createHash('sha1')
             .update(Buffer.from(publicKey.replace(/-----BEGIN (?:PUBLIC KEY|CERTIFICATE)-----|\n|-----END (?:PUBLIC KEY|CERTIFICATE)-----/g, ''), 'base64'))
@@ -405,8 +269,127 @@ class JWTManager {
 
         return jwt.sign(claims, this.privateKey, {
             algorithm: this.algorithm,
-            header: header
+            header: header,
+            noTimestamp: true
         });
+    }
+
+    async getAccessToken() {
+        try {
+            const jwt = this.generateJWT();
+            
+            const response = await axios.post(this.tokenEndpoint, 
+                new URLSearchParams({
+                    grant_type: this.config.oauth_settings.grant_type,
+                    client_assertion_type: this.config.oauth_settings.client_assertion_type,
+                    client_assertion: jwt
+                }), 
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            );
+
+            if (!response.data.access_token) {
+                throw new Error('No access token received in response');
+            }
+
+            return response.data.access_token;
+        } catch (error) {
+            console.error('Error in token request process:', {
+                message: error.message,
+                status: error.response?.status,
+                data: error.response?.data
+            });
+            throw error;
+        }
+    }
+}
+
+/**
+ * Reads and parses a CSV file
+ * @param {string} filePath - Path to the CSV file
+ * @returns {Array} Parsed CSV data as array of objects
+ */
+async function readCSVFile(filePath, logger) {
+    try {
+        const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+        return csv.parse(fileContent, {
+            columns: true,
+            skip_empty_lines: true,
+            trim: true
+        });
+    } catch (error) {
+        logger.writeLog('ERROR', [
+            `Failed to read CSV file: ${filePath}`,
+            `Error: ${error.message}`
+        ]);
+        throw error;
+    }
+}
+
+/**
+ * Loads patient roster and resources configuration
+ */
+async function loadDataSources(config, logger) {
+    logger.writeLog('INFO', [
+        'Loading data sources...',
+        `• Patient Roster: ${path.basename(config.data_sources.epic_sandbox_roster)}`,
+        `• Resources: ${path.basename(config.data_sources.epic_sandbox_resources)}`,
+        ''
+    ]);
+
+    try {
+        const roster = await readCSVFile(config.data_sources.epic_sandbox_roster, logger);
+        const resources = await readCSVFile(config.data_sources.epic_sandbox_resources, logger);
+
+        // Validate roster data
+        if (!roster.every(patient => patient.fhir_id)) {
+            throw new Error('Invalid roster format: Missing fhir_id column');
+        }
+
+        // Validate resources data
+        if (!resources.every(resource => resource.resource)) {
+            throw new Error('Invalid resources format: Missing resource column');
+        }
+
+        // Map the CSV data to the expected format
+        const mappedRoster = roster.map(patient => ({
+            PatientID: patient.fhir_id,
+            name: patient.name
+        }));
+
+        const mappedResources = resources.map(resource => ({
+            ResourceType: resource.resource,
+            description: resource.description
+        }));
+
+        logger.writeLog('INFO', [
+            'Data sources loaded:',
+            `• Found ${mappedRoster.length} patients in roster:`,
+            ...mappedRoster.map(p => `  - ${p.name} (${p.PatientID})`),
+            '',
+            `• Found ${mappedResources.length} resource types configured:`,
+            ...mappedResources.map(r => `  - ${r.ResourceType}: ${r.description}`),
+            ''
+        ]);
+
+        return { 
+            roster: mappedRoster, 
+            resources: mappedResources.filter(r => r.ResourceType?.trim())
+        };
+    } catch (error) {
+        logger.writeLog('ERROR', [
+            'Failed to load data sources:',
+            `• Error: ${error.message}`,
+            '',
+            'Please ensure the CSV files exist and have the correct format:',
+            '• Roster CSV must have "fhir_id" and "name" columns',
+            '• Resources CSV must have "resource" and "description" columns',
+            ''
+        ]);
+        throw error;
     }
 }
 
@@ -434,11 +417,10 @@ class EpicClient {
             throw new Error('Configuration object is required');
         }
         this.config = config;
-        this.jwtManager = new JWTManager(config);
+        this.exportDir = path.resolve(config.paths.epic_data_export_folder);
         this.exportedFiles = [];
         this.epicEndpoint = config.epic_settings.epic_endpoint;
         this.tokenEndpoint = config.oauth_settings.token_endpoint;
-        this.tutorialShown = false;  // Add flag to track if tutorial has been shown
         
         // Add these lines to get the paths from config
         this.patientRosterPath = config.data_sources.epic_sandbox_roster;
@@ -451,235 +433,10 @@ class EpicClient {
         if (!this.resourcesListPath) {
             throw new Error('Resources list path not found in configuration');
         }
-    }
 
-    async getAccessToken() {
-        try {
-            // Pass the flag to JWTManager to control tutorial display
-            const accessToken = await this.jwtManager.getAccessToken(this.tutorialShown);
-            this.tutorialShown = true;  // Update flag after first tutorial
-            return accessToken;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async loadPatientRoster() {
-        try {
-            const rosterPath = this.patientRosterPath;
-            
-            if (!fs.existsSync(rosterPath)) {
-                throw new Error(`Patient roster file not found at: ${rosterPath}`);
-            }
-
-            const fileContent = fs.readFileSync(rosterPath, 'utf-8');
-            const records = csv.parse(fileContent, {
-                columns: true,
-                skip_empty_lines: true
-            });
-
-            return records;
-        } catch (error) {
-            logger.writeLog('ERROR', ['Error loading patient roster:', error.message], console.error);
-            throw error;
-        }
-    }
-
-    async loadResourcesList() {
-        try {
-            const resourcesPath = this.resourcesListPath;
-            
-            if (!fs.existsSync(resourcesPath)) {
-                throw new Error(`Resources list file not found at: ${resourcesPath}`);
-            }
-
-            const fileContent = fs.readFileSync(resourcesPath, 'utf-8');
-            const records = csv.parse(fileContent, {
-                columns: true,
-                skip_empty_lines: true
-            });
-
-            return records;
-        } catch (error) {
-            logger.writeLog('ERROR', ['Error loading resources list:', error.message], console.error);
-            throw error;
-        }
-    }
-
-    async getResourceData(accessToken, resourceType, patientId) {
-        console.log(`Querying ${resourceType} data for patient ${patientId}...`);
-        
-        // Initialize query parameters
-        const queryParams = new URLSearchParams({
-            '_format': this.config.data_export.format,
-            '_count': this.config.api_settings.page_size
-        });
-
-        // Build base URL
-        const baseUrl = this.epicEndpoint.replace(/\/$/, '');
-        let url;
-        
-        if (resourceType === 'Patient') {
-            url = `${baseUrl}/Patient/${patientId}`;
-        } else {
-            url = `${baseUrl}/${resourceType}`;
-            queryParams.append('patient', patientId);
-            
-            // Add category parameter for Observations
-            if (resourceType === 'Observation') {
-                queryParams.append('category', this.config.lab_data_category);
-            }
-        }
-
-        try {
-            let allResults = [];
-            let nextUrl = `${url}?${queryParams.toString()}`;
-            let pageCount = 0;
-
-            while (nextUrl && pageCount < this.config.api_settings.max_pages) {
-                pageCount++;
-                console.log(`\nPage ${pageCount} URL Details:`);
-                console.log('------------------');
-                console.log('Human readable URL:');
-                console.log(`${url}?${decodeURIComponent(queryParams.toString())}`);
-                console.log('\nActual URL used (encoded):');
-                console.log(nextUrl);
-                
-                const response = await axios.get(nextUrl, {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Accept': this.config.data_export.format
-                    }
-                });
-
-                // Handle single resource response (like Patient)
-                if (!response.data.entry && response.data.resourceType === resourceType) {
-                    allResults.push(response.data);
-                    console.log('Retrieved single resource');
-                    break;
-                }
-
-                // Handle bundle responses
-                if (response.data.entry) {
-                    const results = response.data.entry.map(e => e.resource);
-                    allResults = allResults.concat(results);
-                    console.log(`Retrieved ${results.length} results on this page`);
-                }
-
-                // Check for next page
-                nextUrl = null;
-                if (response.data.link) {
-                    const nextLink = response.data.link.find(link => link.relation === 'next');
-                    if (nextLink) {
-                        nextUrl = nextLink.url;
-                        // If there's a next page, show its URL preview
-                        if (nextUrl) {
-                            console.log('\nNext page URL preview:');
-                            console.log('Human readable:');
-                            console.log(decodeURIComponent(nextUrl));
-                            console.log('\nEncoded:');
-                            console.log(nextUrl);
-                        }
-                    }
-                }
-                
-                if (!nextUrl) {
-                    console.log('\nNo more pages available');
-                }
-            }
-
-            console.log(`\nTotal ${resourceType} results retrieved: ${allResults.length}`);
-            return allResults;
-
-        } catch (error) {
-            console.error(`Error fetching ${resourceType} for patient ${patientId}:`, {
-                message: error.message,
-                status: error.response?.status,
-                data: error.response?.data
-            });
-            throw error;
-        }
-    }
-
-    async saveResourceData(resourceType, data) {
-        if (!data || data.length === 0) {
-            console.log(`No ${resourceType} data to save`);
-            return;
-        }
-
-        console.log(`Saving ${data.length} ${resourceType} records`);
-        
-        // Add single_patient_ prefix to distinguish from bulk export files
-        const fileName = `single_patient_${resourceType.toLowerCase()}_data.ndjson`;
-        const filePath = path.join(this.config.paths.epic_data_export_folder, fileName);
-        
-        try {
-            // Convert data to NDJSON format (one JSON object per line)
-            const ndjsonData = data.map(item => JSON.stringify(item)).join('\n') + '\n';
-            
-            // Write to file
-            await fs.promises.writeFile(filePath, ndjsonData);
-            
-            // Calculate file size in KB
-            const stats = await fs.promises.stat(filePath);
-            const fileSizeInKB = (stats.size / 1024).toFixed(2);
-            
-            console.log(`Saved ${resourceType} data to ${filePath} (${fileSizeInKB} KB)`);
-            
-            // Add to exported files list
-            this.exportedFiles.push({
-                name: fileName,
-                size: fileSizeInKB,
-                path: filePath,
-                type: resourceType
-            });
-        } catch (error) {
-            console.error(`Error saving ${resourceType} data:`, error.message);
-            throw error;
-        }
-    }
-
-    async getResourceDataForPatient(resourceType, patientId, accessToken) {
-        try {
-            let url = `${this.epicEndpoint}${resourceType}`;
-            const params = new URLSearchParams({
-                _format: 'application/fhir+json',
-                _count: this.config.api_settings.page_size
-            });
-
-            if (resourceType === 'Patient') {
-                url = `${this.epicEndpoint}Patient/${patientId}`;
-            } 
-            else if (resourceType === 'Observation') {
-                params.append('patient', patientId);
-                params.append('category', 'vital-signs,laboratory');
-                params.append('_sort', '-date');
-            }
-            else {
-                params.append('patient', patientId);
-            }
-
-            const response = await axios.get(`${url}?${params}`, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Accept': 'application/fhir+json'
-                }
-            });
-
-            let results = [];
-            
-            if (response.data) {
-                if (response.data.resourceType === 'Bundle' && Array.isArray(response.data.entry)) {
-                    results = response.data.entry.map(entry => entry.resource);
-                } else if (response.data.resourceType === resourceType) {
-                    results = [response.data];
-                }
-            }
-
-            return results;
-
-        } catch (error) {
-            throw error;
+        // Create export directory if it doesn't exist
+        if (!fs.existsSync(this.exportDir)) {
+            fs.mkdirSync(this.exportDir, { recursive: true });
         }
     }
 
@@ -688,608 +445,613 @@ class EpicClient {
         try {
             this.exportedFiles = [];
             
-            const patients = await this.loadPatientRoster();
-            const resources = await this.loadResourcesList();
+            // Load data sources using the function defined above
+            const { roster, resources } = await loadDataSources(this.config, logger);
             
-            logger.writeLog('INFO', ['\nProcessing Resources'], console.log);
-            
-            for (const resource of resources) {
-                let allResourceResults = [];
-                
-                // Process each patient silently
-                for (const patient of patients) {
+            // Define resource types from resources
+            const resourceTypes = resources.map(r => r.ResourceType);
+
+            logger.writeLog('INFO', [
+                'STEP 2: DATA RETRIEVAL',
+                '--------------------',
+                'Retrieving data for the following resource types:',
+                ...resourceTypes.map(type => `• ${type}`),
+                '',
+                `Processing ${roster.length} patients:`,
+                ...roster.map(p => `• ${p.name} (${p.PatientID})`),
+                ''
+            ]);
+
+            // Download data for each resource type
+            const downloadedFiles = {};
+            for (const patient of roster) {
+                logger.writeLog('INFO', [
+                    `Processing patient: ${patient.name} (${patient.PatientID})`,
+                    '-'.repeat(50)
+                ]);
+
+                for (const resourceType of resourceTypes) {
                     try {
-                        const patientData = await this.getResourceDataForPatient(
-                            resource.resource, 
-                            patient.fhir_id, 
-                            accessToken
+                        const filepath = await downloadResourceData(
+                            resourceType, 
+                            accessToken, 
+                            this.exportDir, 
+                            logger, 
+                            this.config,
+                            patient.PatientID
                         );
-                        
-                        if (patientData && patientData.length > 0) {
-                            allResourceResults = allResourceResults.concat(patientData);
+                        if (filepath) {
+                            if (!downloadedFiles[resourceType]) {
+                                downloadedFiles[resourceType] = [];
+                            }
+                            downloadedFiles[resourceType].push(filepath);
                         }
                     } catch (error) {
-                        logger.writeLog('ERROR', [`Error processing ${resource.resource} for patient ${patient.fhir_id}: ${error.message}`], console.error);
+                        logger.writeLog('ERROR', [
+                            `Failed to download ${resourceType} for patient ${patient.name} (${patient.PatientID}):`,
+                            error.message,
+                            'Continuing with remaining resources...',
+                            ''
+                        ]);
                     }
                 }
-                
-                // Only log once when we have results
-                if (allResourceResults.length > 0) {
-                    await this.saveResourceData(resource.resource, allResourceResults);
-                    // Use process.stdout.write to ensure atomic write
-                    process.stdout.write(`${resource.resource} (${resource.description}): ${allResourceResults.length} records exported\n`);
-                }
             }
-            
-            // Log completion once at the end
-            logger.writeLog('INFO', [`\n${scriptName} completed successfully`], console.log);
-            
-            return this.exportedFiles;
-            
+
+            // Process downloaded data and generate report
+            await this.processDownloadedData(downloadedFiles, roster, logger);
+
         } catch (error) {
             logger.writeLog('ERROR', ['Error in data retrieval process:', error.message], console.error);
             throw error;
         }
     }
 
-    logExportSummary(files) {
-        if (files.length === 0) {
-            console.log('No files were exported');
-            return;
+    async processDownloadedData(downloadedFiles, roster, logger) {
+        logger.writeLog('INFO', [
+            'STEP 3: DATA PROCESSING',
+            '---------------------',
+            'Processing downloaded data...',
+            ''
+        ]);
+
+        // Process observation data
+        let observationStats = await this.processObservations(downloadedFiles.Observation, roster, logger);
+
+        // Generate report
+        logger.writeLog('INFO', [
+            'STEP 4: REPORT GENERATION',
+            '----------------------',
+            'Generating analysis report...',
+            ''
+        ]);
+
+        const reportPath = await generateReport(observationStats, this.exportDir, logger);
+
+        // Log completion summary
+        this.logCompletionSummary(downloadedFiles, reportPath, logger);
+    }
+
+    async processObservations(observationFiles, roster, logger) {
+        let observationStats = {
+            totalReadings: 0,
+            normalReadings: 0,
+            abnormalReadings: 0,
+            byType: {},
+            byPatient: {},
+            byCategory: {}
+        };
+
+        if (!observationFiles || observationFiles.length === 0) {
+            logger.writeLog('INFO', ['No observation files to process']);
+            return observationStats;
         }
-        
-        console.log('\nExported Files Summary');
-        console.log('=====================');
-        files.forEach(file => {
-            // Count lines in the file
-            const content = fs.readFileSync(file.path, 'utf8');
-            const lineCount = content.split('\n').filter(line => line.trim()).length;
-            
-            console.log(`${file.name} | ${file.size} KB | ${lineCount} records`);
-        });
-    }
-}
 
-/**
- * Main Application Flow
- * ====================
- * Orchestrates the authentication and API request process:
- * 1. Load configuration
- * 2. Verify/generate key pair
- * 3. Initialize EPIC client
- * 4. Obtain access token
- * 5. Make sample FHIR API request
- * 
- * Error handling wraps the entire process to catch and log any failures
- */
-async function processObservationData(exportedFiles) {
-    const observations = [];
-    
-    // Find and read the observation file (case-insensitive search)
-    const observationFile = exportedFiles.find(f => f.name.toLowerCase().includes('observation'));
-    if (!observationFile) {
-        throw new Error('No observation file found in exported files');
+        logger.writeLog('INFO', [
+            'PROCESSING OBSERVATION DATA',
+            '-------------------------',
+            `Processing files for ${observationFiles.length} patients`,
+            ''
+        ]);
+
+        for (const observationFile of observationFiles) {
+            const observationContent = await fs.promises.readFile(observationFile, 'utf8');
+            const observations = observationContent
+                .trim()
+                .split('\n')
+                .filter(line => line.trim())
+                .map(line => JSON.parse(line));
+
+            const fileStats = await processObservationData(observations, roster, logger);
+            this.mergeObservationStats(observationStats, fileStats);
+        }
+
+        return observationStats;
     }
 
-    try {
-        const data = fs.readFileSync(observationFile.path, 'utf8');
-        const lines = data.split('\n').filter(line => line.trim());
-        
-        for (const line of lines) {
-            try {
-                const obs = JSON.parse(line);
-                const patientRef = obs.subject?.reference || '';
-                const patientId = patientRef.split('/')[1] || 'Unknown';
-                const patientName = obs.subject?.display || 'Unknown Patient';
+    mergeObservationStats(target, source) {
+        target.totalReadings += source.totalReadings;
+        target.normalReadings += source.normalReadings;
+        target.abnormalReadings += source.abnormalReadings;
 
-                observations.push({
-                    date: new Date(obs.effectiveDateTime || obs.issued),
-                    patientName,
-                    patientId,
-                    type: obs.code?.coding?.[0]?.display || 'Unknown',
-                    value: obs.valueQuantity 
-                        ? `${obs.valueQuantity.value} ${obs.valueQuantity.unit}`
-                        : (obs.valueString || 'No value recorded'),
-                    referenceRange: obs.referenceRange?.[0]
-                        ? `${obs.referenceRange[0].low?.value || ''}-${obs.referenceRange[0].high?.value || ''} ${obs.referenceRange[0].high?.unit || ''}`
-                        : 'No range specified',
-                    status: obs.interpretation?.[0]?.coding?.[0]?.code
-                        ? ['A', 'H', 'L'].includes(obs.interpretation[0].coding[0].code)
-                            ? 'ABNORMAL'
-                            : 'NORMAL'
-                        : 'NORMAL'
-                });
-            } catch (parseError) {
-                logger.writeLog('ERROR', [`Error parsing observation: ${parseError.message}`]);
+        // Merge byType stats
+        for (const [type, stats] of Object.entries(source.byType)) {
+            if (!target.byType[type]) {
+                target.byType[type] = {
+                    total: 0,
+                    normal: 0,
+                    abnormal: 0,
+                    values: [],
+                    units: new Set(),
+                    referenceRanges: new Set()
+                };
+            }
+            target.byType[type].total += stats.total;
+            target.byType[type].normal += stats.normal;
+            target.byType[type].abnormal += stats.abnormal;
+            target.byType[type].values.push(...stats.values);
+            stats.units?.forEach(unit => target.byType[type].units.add(unit));
+            stats.referenceRanges?.forEach(range => target.byType[type].referenceRanges.add(range));
+        }
+
+        // Merge byPatient stats
+        for (const [patientId, stats] of Object.entries(source.byPatient)) {
+            if (!target.byPatient[patientId]) {
+                target.byPatient[patientId] = {
+                    name: stats.name,
+                    total: 0,
+                    normal: 0,
+                    abnormal: 0,
+                    byType: {}
+                };
+            }
+            target.byPatient[patientId].total += stats.total;
+            target.byPatient[patientId].normal += stats.normal;
+            target.byPatient[patientId].abnormal += stats.abnormal;
+
+            // Merge patient-specific observation types
+            for (const [type, typeStats] of Object.entries(stats.byType)) {
+                if (!target.byPatient[patientId].byType[type]) {
+                    target.byPatient[patientId].byType[type] = {
+                        total: 0,
+                        normal: 0,
+                        abnormal: 0,
+                        values: []
+                    };
+                }
+                target.byPatient[patientId].byType[type].total += typeStats.total;
+                target.byPatient[patientId].byType[type].normal += typeStats.normal;
+                target.byPatient[patientId].byType[type].abnormal += typeStats.abnormal;
+                target.byPatient[patientId].byType[type].values.push(...typeStats.values);
             }
         }
 
-        // Sort by date descending
-        observations.sort((a, b) => b.date - a.date);
+        // Merge byCategory stats
+        for (const [category, stats] of Object.entries(source.byCategory)) {
+            if (!target.byCategory[category]) {
+                target.byCategory[category] = {
+                    total: 0,
+                    types: new Set()
+                };
+            }
+            target.byCategory[category].total += stats.total;
+            stats.types.forEach(type => target.byCategory[category].types.add(type));
+        }
+    }
 
-        return {
-            totalObservations: observations.length,
-            normalReadings: observations.filter(o => o.status === 'NORMAL').length,
-            abnormalReadings: observations.filter(o => o.status === 'ABNORMAL').length,
-            observations
+    logCompletionSummary(downloadedFiles, reportPath, logger) {
+        logger.writeLog('INFO', [
+            '================================================================================',
+            '                               PROCESS COMPLETE                                  ',
+            '================================================================================',
+            '',
+            'Summary:',
+            '• Successfully retrieved data using individual queries',
+            `• Processed ${Object.keys(downloadedFiles).length} resource types`,
+            '• Generated observation analysis report',
+            '',
+            'Files Generated:',
+            ...Object.entries(downloadedFiles).map(([type, files]) => 
+                `• ${type}: ${files.length} files`
+            ),
+            reportPath ? `• Report: ${path.basename(reportPath)}` : '',
+            '',
+            'All files can be found in:',
+            `  ${this.exportDir}`,
+            '',
+            'Note: Compare these results with the bulk export method to understand:',
+            '• Performance differences',
+            '• Resource usage',
+            '• Error handling approaches',
+            '• Data consistency',
+            '================================================================================',
+        ].filter(Boolean));
+    }
+
+    // ... rest of the EpicClient class methods ...
+}
+
+/**
+ * Downloads data for a specific resource type and patient
+ */
+async function downloadResourceData(resourceType, accessToken, exportDir, logger, config, patientId) {
+    try {
+        // Ensure export directory exists
+        if (!fs.existsSync(exportDir)) {
+            fs.mkdirSync(exportDir, { recursive: true });
+        }
+
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `fhir_${resourceType}_${patientId}_${timestamp}.ndjson`;
+        const filepath = path.join(exportDir, filename);
+        
+        // Build query parameters based on resource type
+        const queryParams = {
+            _format: config.data_export.format,
+            _count: config.data_export.default_count
         };
+
+        // Add resource-specific parameters
+        switch (resourceType) {
+            case 'Patient':
+                queryParams._id = patientId;
+                break;
+            case 'Observation':
+                queryParams.patient = patientId;
+                queryParams.category = 'laboratory,vital-signs'; // Add standard FHIR categories
+                break;
+            default:
+                queryParams.patient = patientId;
+                break;
+        }
+
+        const batches = [];
+        let page = 1;
+        let hasMore = true;
+
+        logger.writeLog('INFO', [
+            `Downloading ${resourceType} data for patient ${patientId}`,
+            `• Output: ${filename}`,
+            `• Format: ${queryParams._format}`,
+            `• Batch size: ${queryParams._count}`,
+            ''
+        ]);
+
+        while (hasMore && page <= config.api_settings.max_pages) {
+            try {
+                const url = `${config.epic_settings.epic_endpoint}${resourceType}`;
+                queryParams._page = page;
+
+                const response = await axios.get(url, {
+                    params: queryParams,
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Accept': queryParams._format
+                    }
+                });
+
+                if (response.data.entry && response.data.entry.length > 0) {
+                    batches.push(...response.data.entry.map(e => e.resource));
+                    logger.writeLog('INFO', [
+                        `• Batch ${page}: Retrieved ${response.data.entry.length} resources`
+                    ]);
+                }
+
+                // Check if there are more pages
+                const nextLink = response.data.link?.find(link => link.relation === 'next')?.url;
+                hasMore = !!nextLink;
+                page++;
+
+            } catch (error) {
+                logger.writeLog('ERROR', [
+                    `Failed to retrieve batch ${page} for ${resourceType}:`,
+                    error.response?.data?.issue?.[0]?.diagnostics || error.message,
+                    ''
+                ]);
+                break;
+            }
+        }
+
+        if (batches.length > 0) {
+            // Write data to file
+            await fs.promises.writeFile(filepath, batches.map(resource => JSON.stringify(resource)).join('\n') + '\n');
+
+            logger.writeLog('INFO', [
+                `Successfully downloaded ${resourceType} data:`,
+                `• Total resources: ${batches.length}`,
+                `• File: ${filename}`,
+                `• Size: ${(fs.statSync(filepath).size / 1024).toFixed(2)} KB`,
+                ''
+            ]);
+
+            return filepath;
+        } else {
+            logger.writeLog('INFO', [
+                `No ${resourceType} data found for patient ${patientId}`,
+                ''
+            ]);
+            return null;
+        }
+
     } catch (error) {
-        logger.writeLog('ERROR', [`Error processing observation file: ${error.message}`]);
+        logger.writeLog('ERROR', [
+            `Failed to download ${resourceType} data:`,
+            error.message,
+            ''
+        ]);
         throw error;
     }
 }
 
-async function sendCompletionEmail(success, startTime, endTime, exportedFiles, config) {
-    if (!config.email?.smtp_user || !config.email?.smtp_pass) {
-        console.error('Email configuration missing - check smtp_user and smtp_pass in INI file');
-        return;
-    }
+/**
+ * Processes observation data and generates statistics
+ */
+async function processObservationData(observations, roster, logger) {
+    const stats = {
+        totalReadings: 0,
+        normalReadings: 0,
+        abnormalReadings: 0,
+        byType: {},
+        byPatient: {},
+        byCategory: {}
+    };
 
-    const transporter = nodemailer.createTransport({
-        host: config.email.smtp_host,
-        port: parseInt(config.email.smtp_port),
-        secure: config.email.smtp_secure === 'true',
-        auth: {
-            user: config.email.smtp_user,
-            pass: config.email.smtp_pass
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    });
+    // Create a map of patient IDs to names for faster lookup
+    const patientMap = new Map(roster.map(p => [p.PatientID, p.name]));
 
-    let reportString = '';
-    const exportDir = path.resolve(config.paths.epic_data_export_folder);
-    
-    try {
-        // Process observation data
-        const stats = await processObservationData(exportedFiles);
-        
-        // Generate report content
-        reportString = [
-            'EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT',
-            '==============================================================',
-            '',
-            'Summary:',
-            '---------',
-            `Total Observations: ${stats.totalObservations}`,
-            `Total Normal Readings: ${stats.normalReadings}`,
-            `Total Abnormal Readings: ${stats.abnormalReadings}`,
-            '',
-            'Detailed Observations:',
-            '--------------------',
-            'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status',
-            '-----|--------------|------------|------------------|--------|----------------|--------'
-        ];
-
-        // Add detailed observations
-        stats.observations.forEach(obs => {
-            const dateStr = obs.date instanceof Date && !isNaN(obs.date) 
-                ? obs.date.toISOString().split('T')[0]
-                : 'Unknown Date';
-            reportString.push(
-                `${dateStr} | ${obs.patientName} | ${obs.patientId} | ${obs.type} | ${obs.value} | ${obs.referenceRange} | ${obs.status}`
-            );
-        });
-
-        reportString = reportString.join('\n');
-
-        // Write report to log file ONCE
-        logger.writeLog('INFO', [
-            '',
-            '================================================================================',
-            '                         Observation Analysis Report                             ',
-            '================================================================================',
-            '',
-            reportString,
-            '',
-            '================================================================================',
-            ''
-        ]);
-
-        // Save report to file
-        const reportPath = path.join(exportDir, 'single_patient_observation_report.txt');
-        await fs.promises.writeFile(reportPath, reportString);
-
-        const mailOptions = {
-            from: config.email.notification_from,
-            to: config.email.notification_to,
-            subject: `EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT`,
-            text: reportString,
-            attachments: [{
-                filename: 'single_patient_observation_report.txt',
-                path: reportPath
-            }]
-        };
-
-        await transporter.sendMail(mailOptions);
-        console.log('Completion email sent successfully');
-        return { success: true, reportString };
-    } catch (error) {
-        console.error(`Error sending email: ${error.message}`);
-        return { success: false, reportString };
-    }
-}
-
-// Function to read and parse NDJSON file
-function readNDJSON(filePath) {
-    const data = fs.readFileSync(filePath, 'utf8');
-    return data.split('\n')
-        .filter(line => line.trim() !== '') // Filter out empty lines
-        .map(line => JSON.parse(line)); // Parse each line as JSON
-}
-
-// Function to get the latest Observation NDJSON file
-function getLatestObservationFile(directory) {
-    const files = fs.readdirSync(directory);
-    const observationFiles = files.filter(file => file.startsWith('Observation_data_'));
-    
-    if (observationFiles.length === 0) {
-        throw new Error('No Observation files found in the directory.');
-    }
-
-    // Sort files by timestamp in the filename
-    observationFiles.sort((a, b) => {
-        const timestampA = new Date(a.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)?.[1] || '');
-        const timestampB = new Date(b.match(/_(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)/)?.[1] || '');
-        return timestampB - timestampA; // Sort descending
-    });
-
-    return path.join(directory, observationFiles[0]);
-}
-
-// Define standard reference ranges with LOINC codes
-const VITAL_SIGNS_RANGES = {
-    'BP': {
-        systolic: { min: 90, max: 140 },
-        diastolic: { min: 60, max: 90 },
-        unit: 'mmHg'
-    },
-    'Temp': { 
-        min: 36.5, 
-        max: 37.5,
-        unit: '°C'
-    },
-    'Pulse': { 
-        min: 60, 
-        max: 100,
-        unit: 'bpm'
-    }
-};
-
-const LAB_REFERENCE_RANGES = {
-    'Cholesterol [Mass/volume] in Serum or Plasma': {
-        type: 'max',
-        value: 200,
-        unit: 'mg/dL'
-    }
-};
-
-// LOINC code mapping for vital signs with descriptions
-const VITAL_SIGNS_CODE_MAP = {
-    // BP codes
-    '55284-4': { type: 'BP', description: 'Blood pressure systolic and diastolic' },
-    '85354-9': { type: 'BP', description: 'Blood pressure panel' },
-    '8480-6':  { type: 'BP', description: 'Systolic blood pressure' },
-    '8462-4':  { type: 'BP', description: 'Diastolic blood pressure' },
-    
-    // Temperature codes
-    '8310-5':  { type: 'Temp', description: 'Body temperature' },
-    
-    // Pulse codes
-    '8867-4':  { type: 'Pulse', description: 'Heart rate' }
-};
-
-function getObservationType(observation) {
-    // Try to identify type from code.text
-    if (observation.code?.text && ['BP', 'Temp', 'Pulse'].includes(observation.code.text)) {
-        return observation.code.text;
-    }
-
-    // Search coding for known codes
-    const codingArray = observation.code?.coding || [];
-    for (const coding of codingArray) {
-        const mappedCode = VITAL_SIGNS_CODE_MAP[coding.code];
-        if (mappedCode) {
-            return mappedCode.type;
-        }
-    }
-
-    return observation.code?.coding?.[0]?.display || 'Unknown Type';
-}
-
-function getObservationDate(observation) {
-    const dateFields = [
-        { field: 'effectiveDateTime', value: observation.effectiveDateTime },
-        { field: 'effectivePeriod.start', value: observation.effectivePeriod?.start },
-        { field: 'effectiveInstant', value: observation.effectiveInstant },
-        { field: 'issued', value: observation.issued },
-        { field: 'meta.lastUpdated', value: observation.meta?.lastUpdated },
-        { field: 'date', value: observation.date },
-        { field: 'performedDateTime', value: observation.performedDateTime },
-        { field: 'performedPeriod.start', value: observation.performedPeriod?.start },
-        { field: 'recordedDate', value: observation.recordedDate }
-    ];
-
-    for (const { field, value } of dateFields) {
-        if (value) {
-            try {
-                const date = new Date(value);
-                if (!isNaN(date)) {
-                    return date.toISOString().split('T')[0];
-                }
-            } catch (error) {
-                // Silently continue to next field
-            }
-        }
-    }
-
-    return 'No date';
-}
-
-function analyzeObservations(observations) {
-    const patientStats = {};
-
-    observations.forEach((obs) => {
+    for (const observation of observations) {
         try {
-            if (obs.resourceType !== 'Observation') return;
+            // Skip observations without values
+            if (!observation.valueQuantity) continue;
 
-            // Get patient info
-            const patientId = obs.subject?.reference?.split('/')[1];
-            const patientName = obs.subject?.display || 'Unknown Patient';
-            
-            if (!patientId) return;
+            const type = observation.code?.coding?.[0]?.display || 'Unknown';
+            const value = observation.valueQuantity.value;
+            const unit = observation.valueQuantity.unit;
+            const patientId = observation.subject?.reference?.split('/')[1];
+            const category = observation.category?.[0]?.coding?.[0]?.code || 'uncategorized';
+            const referenceRange = observation.referenceRange?.[0];
+
+            // Update category stats
+            if (!stats.byCategory[category]) {
+                stats.byCategory[category] = {
+                    total: 0,
+                    types: new Set()
+                };
+            }
+            stats.byCategory[category].total++;
+            stats.byCategory[category].types.add(type);
+
+            // Initialize type stats if not exists
+            if (!stats.byType[type]) {
+                stats.byType[type] = {
+                    total: 0,
+                    normal: 0,
+                    abnormal: 0,
+                    values: [],
+                    units: new Set(),
+                    referenceRanges: new Set()
+                };
+            }
 
             // Initialize patient stats if not exists
-            if (!patientStats[patientId]) {
-                patientStats[patientId] = {
-                    name: patientName,
-                    normalCount: 0,
-                    abnormalCount: 0,
-                    normalObservations: [],
-                    abnormalReadings: [],
-                    lastProcessed: new Date().toISOString()
+            if (!stats.byPatient[patientId]) {
+                stats.byPatient[patientId] = {
+                    name: patientMap.get(patientId),
+                    total: 0,
+                    normal: 0,
+                    abnormal: 0,
+                    byType: {}
                 };
             }
 
-            const observationId = obs.id;
-            const observationType = getObservationType(obs);
-            const formattedDate = getObservationDate(obs);
-
-            // Handle BP observations
-            if (observationType === 'BP') {
-                const systolicComponent = obs.component?.find(comp =>
-                    comp.code?.coding?.some(coding => coding.code === '8480-6')
-                );
-                const diastolicComponent = obs.component?.find(comp =>
-                    comp.code?.coding?.some(coding => coding.code === '8462-4')
-                );
-
-                if (!systolicComponent || !diastolicComponent) return;
-
-                const systolic = systolicComponent.valueQuantity?.value;
-                const diastolic = diastolicComponent.valueQuantity?.value;
-
-                if (systolic && diastolic) {
-                    const ranges = VITAL_SIGNS_RANGES.BP;
-                    const isAbnormal =
-                        systolic > ranges.systolic.max ||
-                        systolic < ranges.systolic.min ||
-                        diastolic > ranges.diastolic.max ||
-                        diastolic < ranges.diastolic.min;
-
-                    const observationRecord = {
-                        observationId,
-                        type: observationType,
-                        value: `${systolic}/${diastolic} ${ranges.unit}`,
-                        referenceRange: `${ranges.systolic.min}-${ranges.systolic.max}/${ranges.diastolic.min}-${ranges.diastolic.max} ${ranges.unit}`,
-                        status: isAbnormal ? 'ABNORMAL' : 'NORMAL',
-                        date: formattedDate
-                    };
-
-                    if (isAbnormal) {
-                        patientStats[patientId].abnormalCount++;
-                        patientStats[patientId].abnormalReadings.push(observationRecord);
-                    } else {
-                        patientStats[patientId].normalCount++;
-                        patientStats[patientId].normalObservations.push(observationRecord);
-                    }
-                }
-                return;
+            // Initialize patient-specific type stats if not exists
+            if (!stats.byPatient[patientId].byType[type]) {
+                stats.byPatient[patientId].byType[type] = {
+                    total: 0,
+                    normal: 0,
+                    abnormal: 0,
+                    values: []
+                };
             }
 
-            // Handle other vital signs and lab results
-            if (obs.valueQuantity) {
-                const value = obs.valueQuantity.value;
-                const unit = obs.valueQuantity.unit;
-                let referenceText = '';
-                let status = 'NORMAL';
+            // Update stats
+            stats.totalReadings++;
+            stats.byType[type].total++;
+            stats.byType[type].values.push(value);
+            stats.byType[type].units.add(unit);
+            stats.byPatient[patientId].total++;
+            stats.byPatient[patientId].byType[type].total++;
+            stats.byPatient[patientId].byType[type].values.push(value);
 
-                // Get reference range based on observation type
-                if (observationType && VITAL_SIGNS_RANGES[observationType]) {
-                    const range = VITAL_SIGNS_RANGES[observationType];
-                    referenceText = `${range.min}-${range.max} ${range.unit}`;
-                    if (value < range.min) {
-                        status = 'ABNORMAL (Low)';
-                    } else if (value > range.max) {
-                        status = 'ABNORMAL (High)';
-                    }
-                } else if (LAB_REFERENCE_RANGES[obs.code?.coding?.[0]?.display]) {
-                    const range = LAB_REFERENCE_RANGES[obs.code.coding[0].display];
-                    referenceText = `<=${range.value} ${range.unit}`;
-                    if (value > range.value) {
-                        status = 'ABNORMAL (High)';
-                    }
-                } else if (obs.referenceRange?.[0]) {
-                    referenceText = obs.referenceRange[0].text || '';
-                }
+            if (referenceRange) {
+                const rangeStr = `${referenceRange.low?.value || '*'} - ${referenceRange.high?.value || '*'} ${unit}`;
+                stats.byType[type].referenceRanges.add(rangeStr);
 
-                const observationRecord = {
-                    observationId,
-                    type: observationType,
-                    value: `${value}${unit ? ' ' + unit : ''}`,
-                    referenceRange: referenceText || 'No range specified',
-                    status,
-                    date: formattedDate
-                };
+                const isNormal = (!referenceRange.low || value >= referenceRange.low.value) &&
+                                (!referenceRange.high || value <= referenceRange.high.value);
 
-                if (status === 'NORMAL') {
-                    patientStats[patientId].normalCount++;
-                    patientStats[patientId].normalObservations.push(observationRecord);
+                if (isNormal) {
+                    stats.normalReadings++;
+                    stats.byType[type].normal++;
+                    stats.byPatient[patientId].normal++;
+                    stats.byPatient[patientId].byType[type].normal++;
                 } else {
-                    patientStats[patientId].abnormalCount++;
-                    patientStats[patientId].abnormalReadings.push(observationRecord);
+                    stats.abnormalReadings++;
+                    stats.byType[type].abnormal++;
+                    stats.byPatient[patientId].abnormal++;
+                    stats.byPatient[patientId].byType[type].abnormal++;
                 }
             }
         } catch (error) {
-            console.error(`Error processing observation ${obs?.id || 'unknown'}: ${error.message}`);
-        }
-    });
-
-    return patientStats;
-}
-
-// Function to generate report string
-function generateReport(patientStats) {
-    let reportString = '';
-    
-    // Add Reference Ranges Tutorial
-    reportString += `Reference Ranges Tutorial\n`;
-    reportString += `=======================\n\n`;
-    reportString += `Blood Pressure (BP) Reference Ranges:\n`;
-    reportString += `--------------------------------\n`;
-    reportString += `• Normal Systolic Range: 90-140 mmHg\n`;
-    reportString += `• Normal Diastolic Range: 60-90 mmHg\n\n`;
-    reportString += `Format in Report: [systolic range]/[diastolic range] [unit]\n`;
-    reportString += `Example: 90-140/60-90 mmHg\n\n`;
-    reportString += `Status Determination:\n`;
-    reportString += `-------------------\n`;
-    reportString += `• NORMAL: When both systolic and diastolic are within their ranges\n`;
-    reportString += `• ABNORMAL: When either:\n`;
-    reportString += `  - Systolic is < 90 or > 140 mmHg\n`;
-    reportString += `  - Diastolic is < 60 or > 90 mmHg\n\n`;
-    reportString += `Source of Ranges:\n`;
-    reportString += `---------------\n`;
-    reportString += `These ranges are based on standard medical guidelines for normal blood pressure readings.\n`;
-    reportString += `The system first checks for ranges provided in the Epic FHIR data, and if not found,\n`;
-    reportString += `uses these predefined standard ranges.\n\n`;
-    reportString += `=================================================================\n\n`;
-
-    // Calculate totals
-    const totals = Object.values(patientStats).reduce((acc, stats) => {
-        acc.normal += stats.normalCount;
-        acc.abnormal += stats.abnormalCount;
-        return acc;
-    }, { normal: 0, abnormal: 0 });
-
-    // Summary section
-    reportString += `Summary:\n`;
-    reportString += `---------\n`;
-    reportString += `Total Observations: ${totals.normal + totals.abnormal}\n`;
-    reportString += `Total Normal Readings: ${totals.normal}\n`;
-    reportString += `Total Abnormal Readings: ${totals.abnormal}\n\n`;
-
-    // Detailed Observations Header
-    reportString += 'Detailed Observations:\n';
-    reportString += '--------------------\n';
-    reportString += 'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status\n';
-    reportString += '-----|--------------|------------|------------------|--------|----------------|--------\n';
-
-    // Patient-wise observations
-    Object.entries(patientStats).forEach(([patientId, stats]) => {
-        const allObservations = [...stats.normalObservations || [], ...stats.abnormalReadings || []];
-        
-        allObservations.forEach(obs => {
-            reportString += `${obs.date} | `;  // Add date to the output
-            reportString += `${stats.name} | `;
-            reportString += `${patientId} | `;
-            reportString += `${obs.type} | `;
-            reportString += `${obs.value} | `;
-            reportString += `${obs.referenceRange || 'N/A'} | `;
-            reportString += `${obs.status || 'NORMAL'}\n`;
-        });
-    });
-
-    return reportString;
-}
-
-async function clearExportDirectory(dirPath) {
-    try {
-        if (fs.existsSync(dirPath)) {
-            const files = fs.readdirSync(dirPath);
-            const singlePatientFiles = files.filter(file => file.startsWith('single_patient_'));
-            
-            logger.writeLog('INFO', [
-                `Found ${singlePatientFiles.length} single patient files to remove`,
-                'Files to be removed:',
-                ...singlePatientFiles.map(file => `• ${file}`),
+            logger.writeLog('ERROR', [
+                'Error processing observation:',
+                error.message,
+                JSON.stringify(observation, null, 2),
                 ''
             ]);
-
-            for (const file of singlePatientFiles) {
-                const filePath = path.join(dirPath, file);
-                await fs.promises.unlink(filePath);
-            }
-            logger.writeLog('INFO', ['Successfully cleared all single patient files']);
-        } else {
-            await fs.promises.mkdir(dirPath, { recursive: true });
-            logger.writeLog('INFO', ['Created new export directory']);
         }
-    } catch (error) {
-        throw new Error(`Failed to clear export directory: ${error.message}`);
     }
+
+    return stats;
 }
 
+/**
+ * Generates a detailed report from observation statistics
+ */
+async function generateReport(observationStats, exportDir, logger) {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const reportPath = path.join(exportDir, `observation_report_${timestamp}.txt`);
+    const reportLines = [];
+
+    // Add report header
+    reportLines.push(
+        '================================================================================',
+        '                           OBSERVATION ANALYSIS REPORT                           ',
+        '================================================================================',
+        '',
+        'OVERVIEW',
+        '--------',
+        `Total Readings: ${observationStats.totalReadings}`,
+        `Normal Readings: ${observationStats.normalReadings}`,
+        `Abnormal Readings: ${observationStats.abnormalReadings}`,
+        '',
+        'OBSERVATION CATEGORIES',
+        '---------------------'
+    );
+
+    // Add category analysis
+    for (const [category, stats] of Object.entries(observationStats.byCategory)) {
+        reportLines.push(
+            `Category: ${category}`,
+            `• Total Observations: ${stats.total}`,
+            `• Observation Types: ${Array.from(stats.types).join(', ')}`,
+            ''
+        );
+    }
+
+    // Add type analysis
+    reportLines.push(
+        'OBSERVATION TYPES',
+        '-----------------'
+    );
+
+    for (const [type, stats] of Object.entries(observationStats.byType)) {
+        const values = stats.values;
+        const avg = values.reduce((a, b) => a + b, 0) / values.length;
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        
+        reportLines.push(
+            `Type: ${type}`,
+            `• Total: ${stats.total}`,
+            `• Normal: ${stats.normal}`,
+            `• Abnormal: ${stats.abnormal}`,
+            `• Units: ${Array.from(stats.units).join(', ')}`,
+            `• Reference Ranges: ${Array.from(stats.referenceRanges).join(', ')}`,
+            `• Value Range: ${min.toFixed(2)} - ${max.toFixed(2)}`,
+            `• Average: ${avg.toFixed(2)}`,
+            ''
+        );
+    }
+
+    // Add patient analysis
+    reportLines.push(
+        'PATIENT ANALYSIS',
+        '----------------'
+    );
+
+    for (const [patientId, stats] of Object.entries(observationStats.byPatient)) {
+        reportLines.push(
+            `Patient: ${stats.name} (${patientId})`,
+            `• Total Readings: ${stats.total}`,
+            `• Normal: ${stats.normal}`,
+            `• Abnormal: ${stats.abnormal}`,
+            '',
+            'Observation Types:'
+        );
+
+        for (const [type, typeStats] of Object.entries(stats.byType)) {
+            const values = typeStats.values;
+            const avg = values.reduce((a, b) => a + b, 0) / values.length;
+            
+            reportLines.push(
+                `  ${type}:`,
+                `  • Total: ${typeStats.total}`,
+                `  • Normal: ${typeStats.normal}`,
+                `  • Abnormal: ${typeStats.abnormal}`,
+                `  • Average: ${avg.toFixed(2)}`,
+                ''
+            );
+        }
+        reportLines.push('');
+    }
+
+    // Write report to file
+    await fs.promises.writeFile(reportPath, reportLines.join('\n'));
+
+    logger.writeLog('INFO', [
+        'Report generated successfully:',
+        `• File: ${path.basename(reportPath)}`,
+        `• Size: ${(fs.statSync(reportPath).size / 1024).toFixed(2)} KB`,
+        ''
+    ]);
+
+    return reportPath;
+}
+
+/**
+ * Main application entry point
+ * Handles the complete flow of:
+ * 1. Configuration loading
+ * 2. Key management
+ * 3. JWT token acquisition
+ * 4. Data retrieval
+ * 5. Report generation
+ */
 async function main() {
-    const startTime = new Date().toISOString();
-    let success = false;
-    let exportedFiles = [];
-    let config = null;
-    let logger = null;
-    
     try {
-        // Initialize logger first
-        logger = new Logger();
-        
-        // All subsequent logging will go through the Logger class
-        logger.writeLog('INFO', [`Starting ${scriptName}...`], console.log);
-        
-        // Initialize configuration
-        const configManager = new ConfigManager();
-        config = await configManager.loadConfig();
-        
-        // Clear export directory
-        await clearExportDirectory(config.paths.epic_data_export_folder);
-        
-        // Initialize key manager
+        logger.writeLog('INFO', [
+            '================================================================================',
+            '                    EPIC FHIR Backend Data Integration System                    ',
+            '================================================================================',
+            '',
+            'STEP 1: INITIALIZATION',
+            '--------------------',
+            'Loading configuration and preparing environment...',
+            ''
+        ]);
+
+        // Load configuration
+        const config = await configManager.loadConfig();
+
+        // Initialize key manager and generate/verify keys
         const keyManager = new KeyManager(config);
         await keyManager.generateKeyPair();
-        
-        // Initialize EPIC client and get data
+
+        // Initialize JWT manager
+        const jwtManager = new JWTManager(config);
+
+        // Get access token
+        const accessToken = await jwtManager.getAccessToken();
+
+        // Initialize Epic client
         const epicClient = new EpicClient(config);
-        const accessToken = await epicClient.getAccessToken();
-        exportedFiles = await epicClient.getAllResourceData(accessToken);
-        
-        success = true;
-        logger.writeLog('INFO', [`\n${scriptName} completed successfully`], console.log);
-        
+
+        // Get all resource data
+        await epicClient.getAllResourceData(accessToken);
+
     } catch (error) {
-        logger.writeLog('ERROR', ['Application error:', error.message], console.error);
-        if (error.response) {
-            logger.writeLog('ERROR', ['Response data:', error.response.data], console.error);
-            logger.writeLog('ERROR', ['Response status:', error.response.status], console.error);
-        }
-        success = false;
-    } finally {
-        const endTime = new Date().toISOString();
-        if (config) {
-            const result = await sendCompletionEmail(success, startTime, endTime, exportedFiles, config);
-            if (!success) {
-                process.exit(1);
-            }
-        }
+        logger.writeLog('ERROR', [
+            'Process failed:',
+            error.message,
+            error.stack,
+            ''
+        ], console.error);
+        process.exit(1);
     }
 }
 
 // Application entry point
-main();
+main().catch(error => {
+    console.error('Fatal error:', error);
+    process.exit(1);
+});

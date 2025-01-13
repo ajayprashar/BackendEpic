@@ -1,15 +1,22 @@
 
 ================================================================================
-New Session Started: 2025-01-12T23:59:58.951Z
+New Session Started: 2025-01-13T03:57:08.777Z
 ================================================================================
 
-Starting backend_epic_using_jwt.js...
+================================================================================
+                    EPIC FHIR Backend Data Integration System                    
+================================================================================
+
+STEP 1: INITIALIZATION
+--------------------
+Loading configuration and preparing environment...
+
 
 ================================================================================
                          Configuration Loading Tutorial                          
 ================================================================================
 
-Loading configuration from: backend_epic_using_jwt.ini
+Loading configuration from: C:\FHIR\BackendEpic\backend_epic_using_jwt.ini
 Understanding Configuration Sources:
 ----------------------------------
 When you see a value in the configuration, it will show its source:
@@ -29,527 +36,2276 @@ When you see a value in the configuration, it will show its source:
 Now loading the configuration values...
 --------------------------------------------------------------------------------
 
-Found 12 single patient files to remove
-Files to be removed:
-• single_patient_allergyintolerance_data.ndjson
-• single_patient_condition_data.ndjson
-• single_patient_device_data.ndjson
-• single_patient_diagnosticreport_data.ndjson
-• single_patient_documentreference_data.ndjson
-• single_patient_goal_data.ndjson
-• single_patient_immunization_data.ndjson
-• single_patient_medicationrequest_data.ndjson
-• single_patient_observation_data.ndjson
-• single_patient_observation_report.txt
-• single_patient_patient_data.ndjson
-• single_patient_procedure_data.ndjson
-
-Successfully cleared all single patient files
 Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
+Loading data sources...
+• Patient Roster: epic_sandbox_roster.csv
+• Resources: epic_sandbox_resources.csv
 
-================================================================================
-                         Epic OAuth 2.0 Token Request Tutorial                   
-================================================================================
+Data sources loaded:
+• Found 7 patients in roster:
+  - Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+  - Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+  - Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+  - Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+  - Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+  - Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+  - Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3)
 
-STEP 1: JWT ASSERTION GENERATION
---------------------------------------------------------------------------------
-Timestamp Configuration:
-  Current time (iat): 2025-01-12T23:59:58.000Z
-  Not Before (nbf) : 2025-01-12T23:59:58.000Z
-  Expiry time (exp): 2025-01-13T00:04:58.000Z
-  Token validity   : 5 minutes
+• Found 11 resource types configured:
+  - AllergyIntolerance: Patient allergies and intolerances
+  - Condition: Patient conditions and diagnoses
+  - Device: Medical devices and implants
+  - DiagnosticReport: Clinical diagnostic reports
+  - DocumentReference: Clinical documents and notes
+  - Goal: Patient care goals
+  - Immunization: Vaccination records
+  - MedicationRequest: Medication prescriptions
+  - Observation: Lab results and vital signs
+  - Patient: Basic patient demographics
+  - Procedure: Medical procedures performed
 
-JWT Claims:
-
-{
-  "iss": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
-  "sub": "e6adc0f2-7e22-4a86-9f11-5b8bae6e5190",
-  "aud": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token",
-  "jti": "d0ffb4f8-a13c-40ef-a45c-98b1578c39fd",
-  "exp": 1736726698,
-  "nbf": 1736726398,
-  "iat": 1736726398
-}
-
-Required Claims Explanation:
-  iss (Issuer)  : Client ID assigned by Epic
-  sub (Subject) : Same as Issuer for backend services
-  aud (Audience): Epic's token endpoint
-  jti (JWT ID)  : Unique identifier for this JWT. This means we randomly generate this while respecting the format of the jti in Epic documentation.
-  exp           : Expiration time
-  nbf           : Not valid before time
-  iat           : Time when JWT was issued
-
-STEP 2: PREPARING TOKEN REQUEST
---------------------------------------------------------------------------------
-Request Configuration:
-  Token Endpoint       : https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-  Grant Type           : client_credentials
-  Client Assertion Type: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-
-Request Body:
-
-{
-  "grant_type": "client_credentials",
-  "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-  "client_assertion": "eyJhbGciOiJSUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6IkE5NDQ5MDYyOTQyREVCRjY2QjhCNDhCMTMxQUM0N0M5MTg5NTgzRjQifQ.eyJpc3MiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJzdWIiOiJlNmFkYzBmMi03ZTIyLTRhODYtOWYxMS01YjhiYWU2ZTUxOTAiLCJhdWQiOiJodHRwczovL2ZoaXIuZXBpYy5jb20vaW50ZXJjb25uZWN0LWZoaXItb2F1dGgvb2F1dGgyL3Rva2VuIiwianRpIjoiOGM0NDg1MGEtYzViZi00MmNiLWI3ZDYtZGI1MmRkNGVlNTk3IiwiZXhwIjoxNzM2NzI2Njk4LCJuYmYiOjE3MzY3MjYzOTgsImlhdCI6MTczNjcyNjM5OH0.SPEKdu8Yv8LkTkv_CftPI6r3TE0osEzqMzY9HXzK3ui-kQOCqoTHeacOTwde-8dPE64NUg22qbfsTtDV2I0DlaAxw8dxbICpZ13L3K2DBPajd2XR8Xups0Ul1sQ9iz_SZ8T4nMPkpO-QZOLMV3UOe28dBHLsmq7Tx--ydv6AeNUriDcIuU1f9EOksR-W7CcrYU3AqqujDcf6lVftzWSydUeXuT60ijIAFq2k8siGPrx3yu-jHlch_AL4W3t2lUrLFX7JrK1vURsWiBr0zCdGYnpUkx_w_z2340GgoBXKeyrGJasJZINygFC3PhkYT8Xp_5Of0fVv-nfRtYmwhXDLbw"
-}
-
-STEP 3: SENDING TOKEN REQUEST
---------------------------------------------------------------------------------
-Understanding the Token Request Process:
-
-1. What happens when we send this request:
-   • Our JWT (shown above) is sent to Epic's authorization server
-   • The JWT contains our identity claims and is signed with our private key
-   • Epic's server receives our request and begins the validation process
-
-2. How Epic validates our request:
-   • Epic retrieves our registered public key using the key ID in the JWT header
-   • They verify the JWT's signature using this public key
-   • They check the JWT's claims (expiry time, issuer, etc.)
-
-3. What happens after successful validation:
-   • Epic generates a new access token specifically for our session
-   • This token grants us access to Epic's FHIR API endpoints
-   • The token will be valid for 60 minutes
-   • We must include this token in all subsequent API requests
-
-Now sending the request with these parameters:
-• URL: https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
-• Method: POST
-• Headers:
-    Content-Type: application/x-www-form-urlencoded
-• Request Body Parameters:
-    1. grant_type: client_credentials
-    2. client_assertion_type: JWT Bearer Token
-    3. client_assertion: [Generated JWT containing claims shown above]
-
-STEP 4: TOKEN RESPONSE
---------------------------------------------------------------------------------
-✓ Access token received successfully
-================================================================================
-
-
-Processing Resources
-
-backend_epic_using_jwt.js completed successfully
-
-================================================================================
-                         Observation Analysis Report                             
-================================================================================
-
-EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT
-==============================================================
-
-Summary:
----------
-Total Observations: 396
-Total Normal Readings: 318
-Total Abnormal Readings: 78
-
-Detailed Observations:
+STEP 2: DATA RETRIEVAL
 --------------------
-Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status
------|--------------|------------|------------------|--------|----------------|--------
-2024-12-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | No range specified | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 84 /min | No range specified | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Pulse | 83 /min | No range specified | NORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Weight | 120 kg | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 12 Cel | No range specified | ABNORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
-2021-01-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
-2021-01-07 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37.2 Cel | No range specified | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
-2021-01-06 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 73 /min | No range specified | ABNORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 99 /min | No range specified | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Pulse | 83 /min | No range specified | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | Temp | 37 Cel | No range specified | NORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
-2020-11-01 | Roberts, Olivia Anne | eh2xYHuzl9nkSFVvV3osUHg3 | Pulse | 80 /min | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 38.9 Cel | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 90 /min | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.7 Cel | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 86 /min | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | BP | No value recorded | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Temp | 37.8 Cel | No range specified | NORMAL
-2019-05-24 | Ross, Linda Jane | eIXesllypH3M9tAA5WdJftQ3 | Pulse | 82 /min | No range specified | NORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 78 /min | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 78.6 kg | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | No range specified | NORMAL
-2021-02-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 81 /min | No range specified | NORMAL
-2021-02-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-02-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-02-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 80.3 kg | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 72 /min | No range specified | NORMAL
-2021-01-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | No range specified | NORMAL
-2021-01-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
-2021-01-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-24 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-23 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-22 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-21 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-20 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-19 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-18 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-17 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-16 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-14 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-13 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-12 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37 Cel | No range specified | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38 Cel | No range specified | NORMAL
-2021-01-11 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-10 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 120 kg | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Height | 197 cm | No range specified | NORMAL
-2021-01-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 100 kg | No range specified | NORMAL
-2021-01-09 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-08 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-08 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 89 /min | No range specified | NORMAL
-2021-01-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 52.7 kg | No range specified | NORMAL
-2021-01-07 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-06 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-05 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-04 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-04 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-04 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | No range specified | NORMAL
-2021-01-03 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-02 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-01 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2021-01-01 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-31 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-31 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-30 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-29 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-28 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 79 kg | No range specified | NORMAL
-2020-12-28 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-27 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-26 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-12-25 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-23 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-25 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | BP | No value recorded | No range specified | NORMAL
-2020-11-15 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 38.3 Cel | No range specified | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.1 Cel | No range specified | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.8 Cel | No range specified | NORMAL
-2020-11-02 | Lopez, Camila Maria | erXuFYUfucBZaryVksYEcMg3 | Temp | 37.2 Cel | No range specified | NORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-22 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-21 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-20 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-18 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-17 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-16 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-14 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-13 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-12 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-11 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-10 | Lin, Derrick | eq081-VQEgP8drUUqCWzHfw3 | BP | No value recorded | No range specified | NORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
-2020-12-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-13 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 91 /min | No range specified | NORMAL
-2020-12-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 88 /min | No range specified | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 62.8 kg | No range specified | NORMAL
-2020-12-09 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 64 /min | No range specified | NORMAL
-2020-12-09 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-08 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-05 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-03 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-02 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-12-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-30 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-27 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-26 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-25 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-24 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-23 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-22 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-17 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-16 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 38.1 Cel | No range specified | NORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2020-11-15 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-14 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-08 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 71 /min | No range specified | NORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-07 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 74 /min | No range specified | NORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-2020-11-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 80 /min | No range specified | NORMAL
-2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
-2020-09-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 150 kg | No range specified | ABNORMAL
-2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.8 Cel | No range specified | NORMAL
-2020-08-30 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-06-22 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
-2020-05-10 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 132 kg | No range specified | NORMAL
-2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 35.7 Cel | No range specified | NORMAL
-2020-04-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 124 kg | No range specified | NORMAL
-2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.3 Cel | No range specified | NORMAL
-2020-03-03 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 90 kg | No range specified | NORMAL
-2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.3 Cel | No range specified | NORMAL
-2020-01-11 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 123 kg | No range specified | NORMAL
-2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.7 Cel | No range specified | NORMAL
-2020-01-05 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 125 kg | No range specified | NORMAL
-2020-01-02 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 55 kg | No range specified | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.2 Cel | No range specified | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 112 kg | No range specified | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 37.2 Cel | No range specified | NORMAL
-2020-01-01 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 58 kg | No range specified | NORMAL
-2019-09-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 95 kg | No range specified | NORMAL
-2019-08-31 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 68 kg | No range specified | NORMAL
-2019-08-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
-2019-07-29 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Weight | 65 kg | No range specified | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2019-05-29 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | BP | No value recorded | No range specified | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Temp | 36.6 Cel | No range specified | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Pulse | 65 /min | No range specified | NORMAL
-2019-05-28 | McGinnis, Warren James III | e0w0LEDCYtfckT6N.CkJKCw3 | Cholesterol [Mass/volume] in Serum or Plasma | 187 mg/dL | -  | NORMAL
-2019-05-28 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-2019-05-19 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | NORMAL
-1970-01-01 | Powell, Desiree Caroline | eAB3mDIBBcyUKviyzrxsnAw3 | BP | No value recorded | No range specified | ABNORMAL
-Unknown Date | Unknown Patient | Unknown | Unknown | No value recorded | No range specified | NORMAL
+Retrieving data for the following resource types:
+• AllergyIntolerance
+• Condition
+• Device
+• DiagnosticReport
+• DocumentReference
+• Goal
+• Immunization
+• MedicationRequest
+• Observation
+• Patient
+• Procedure
+
+Processing 7 patients:
+• Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+• Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+• Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+• Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+• Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+• Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+• Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3)
+
+Processing patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_AllergyIntolerance_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-088Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+[2025-01-13T03:57:09.206Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-088Z.ndjson'
+
+[2025-01-13T03:57:09.206Z] Failed to download AllergyIntolerance for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-088Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Condition_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-206Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 10 resources
+[2025-01-13T03:57:09.361Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-206Z.ndjson'
+
+[2025-01-13T03:57:09.361Z] Failed to download Condition for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-206Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Device_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-361Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+[2025-01-13T03:57:09.446Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-361Z.ndjson'
+
+[2025-01-13T03:57:09.446Z] Failed to download Device for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-361Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_DiagnosticReport_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-446Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 8 resources
+[2025-01-13T03:57:09.609Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-446Z.ndjson'
+
+[2025-01-13T03:57:09.609Z] Failed to download DiagnosticReport for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-446Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_DocumentReference_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-609Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 61 resources
+[2025-01-13T03:57:10.111Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-609Z.ndjson'
+
+[2025-01-13T03:57:10.111Z] Failed to download DocumentReference for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-09-609Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Goal_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-111Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 13 resources
+[2025-01-13T03:57:10.256Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-111Z.ndjson'
+
+[2025-01-13T03:57:10.256Z] Failed to download Goal for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-111Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Immunization_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-257Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:10.353Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-257Z.ndjson'
+
+[2025-01-13T03:57:10.354Z] Failed to download Immunization for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-257Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_MedicationRequest_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-354Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:10.506Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-354Z.ndjson'
+
+[2025-01-13T03:57:10.506Z] Failed to download MedicationRequest for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-354Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Observation_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-506Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:10.585Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient erXuFYUfucBZaryVksYEcMg3
+
+Downloading Patient data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Patient_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-585Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:10.706Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-585Z.ndjson'
+
+[2025-01-13T03:57:10.706Z] Failed to download Patient for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-585Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Procedure_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-706Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 3 resources
+[2025-01-13T03:57:10.875Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-706Z.ndjson'
+
+[2025-01-13T03:57:10.875Z] Failed to download Procedure for patient Camila Lopez (erXuFYUfucBZaryVksYEcMg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-57-10-706Z.ndjson'
+Continuing with remaining resources...
+
+Processing patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_AllergyIntolerance_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-10-875Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:10.962Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-10-875Z.ndjson'
+
+[2025-01-13T03:57:10.963Z] Failed to download AllergyIntolerance for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-10-875Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Condition_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-10-963Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 4 resources
+[2025-01-13T03:57:11.136Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-10-963Z.ndjson'
+
+[2025-01-13T03:57:11.136Z] Failed to download Condition for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-10-963Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Device_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-136Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:11.221Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-136Z.ndjson'
+
+[2025-01-13T03:57:11.222Z] Failed to download Device for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-136Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_DiagnosticReport_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-222Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:11.313Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-222Z.ndjson'
+
+[2025-01-13T03:57:11.313Z] Failed to download DiagnosticReport for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-222Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_DocumentReference_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-313Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 21 resources
+[2025-01-13T03:57:11.655Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-313Z.ndjson'
+
+[2025-01-13T03:57:11.655Z] Failed to download DocumentReference for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-313Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Goal_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-655Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:11.761Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-655Z.ndjson'
+
+[2025-01-13T03:57:11.762Z] Failed to download Goal for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-655Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Immunization_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-763Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:11.838Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-763Z.ndjson'
+
+[2025-01-13T03:57:11.838Z] Failed to download Immunization for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-763Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_MedicationRequest_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-838Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:11.961Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-838Z.ndjson'
+
+[2025-01-13T03:57:11.962Z] Failed to download MedicationRequest for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-838Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Observation_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-11-962Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.038Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient eq081-VQEgP8drUUqCWzHfw3
+
+Downloading Patient data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Patient_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-12-039Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.149Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-12-039Z.ndjson'
+
+[2025-01-13T03:57:12.149Z] Failed to download Patient for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-12-039Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Procedure_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-12-149Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.269Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-12-149Z.ndjson'
+
+[2025-01-13T03:57:12.269Z] Failed to download Procedure for patient Derrick Lin (eq081-VQEgP8drUUqCWzHfw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T03-57-12-149Z.ndjson'
+Continuing with remaining resources...
+
+Processing patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_AllergyIntolerance_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-269Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.363Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-269Z.ndjson'
+
+[2025-01-13T03:57:12.364Z] Failed to download AllergyIntolerance for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-269Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Condition_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-364Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.487Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-364Z.ndjson'
+
+[2025-01-13T03:57:12.488Z] Failed to download Condition for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-364Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Device_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-488Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.581Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-488Z.ndjson'
+
+[2025-01-13T03:57:12.581Z] Failed to download Device for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-488Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_DiagnosticReport_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-582Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:12.678Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-582Z.ndjson'
+
+[2025-01-13T03:57:12.679Z] Failed to download DiagnosticReport for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-582Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_DocumentReference_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-679Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 14 resources
+[2025-01-13T03:57:12.940Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-679Z.ndjson'
+
+[2025-01-13T03:57:12.940Z] Failed to download DocumentReference for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-679Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Goal_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-940Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.028Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-940Z.ndjson'
+
+[2025-01-13T03:57:13.028Z] Failed to download Goal for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-12-940Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Immunization_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-028Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.142Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-028Z.ndjson'
+
+[2025-01-13T03:57:13.142Z] Failed to download Immunization for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-028Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_MedicationRequest_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-142Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.261Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-142Z.ndjson'
+
+[2025-01-13T03:57:13.261Z] Failed to download MedicationRequest for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-142Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Observation_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-262Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.350Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient eAB3mDIBBcyUKviyzrxsnAw3
+
+Downloading Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Patient_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-351Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.461Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-351Z.ndjson'
+
+[2025-01-13T03:57:13.461Z] Failed to download Patient for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-351Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Procedure_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-461Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.571Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-461Z.ndjson'
+
+[2025-01-13T03:57:13.572Z] Failed to download Procedure for patient Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T03-57-13-461Z.ndjson'
+Continuing with remaining resources...
+
+Processing patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_AllergyIntolerance_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-572Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.666Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-572Z.ndjson'
+
+[2025-01-13T03:57:13.667Z] Failed to download AllergyIntolerance for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-572Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Condition_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-667Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 5 resources
+[2025-01-13T03:57:13.815Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-667Z.ndjson'
+
+[2025-01-13T03:57:13.815Z] Failed to download Condition for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-667Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Device_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-815Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.887Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-815Z.ndjson'
+
+[2025-01-13T03:57:13.887Z] Failed to download Device for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-815Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_DiagnosticReport_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-887Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:13.970Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-887Z.ndjson'
+
+[2025-01-13T03:57:13.970Z] Failed to download DiagnosticReport for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-887Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_DocumentReference_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-970Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 18 resources
+[2025-01-13T03:57:14.300Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-970Z.ndjson'
+
+[2025-01-13T03:57:14.300Z] Failed to download DocumentReference for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-13-970Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Goal_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-301Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:14.389Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-301Z.ndjson'
+
+[2025-01-13T03:57:14.389Z] Failed to download Goal for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-301Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Immunization_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-389Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+[2025-01-13T03:57:14.482Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-389Z.ndjson'
+
+[2025-01-13T03:57:14.482Z] Failed to download Immunization for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-389Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_MedicationRequest_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-483Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+[2025-01-13T03:57:14.610Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-483Z.ndjson'
+
+[2025-01-13T03:57:14.610Z] Failed to download MedicationRequest for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-483Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Observation_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-610Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:14.689Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient egqBHVfQlt4Bw3XGXoxVxHg3
+
+Downloading Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Patient_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-689Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:14.808Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-689Z.ndjson'
+
+[2025-01-13T03:57:14.808Z] Failed to download Patient for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-689Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Procedure_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-808Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:14.925Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-808Z.ndjson'
+
+[2025-01-13T03:57:14.926Z] Failed to download Procedure for patient Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T03-57-14-808Z.ndjson'
+Continuing with remaining resources...
+
+Processing patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_AllergyIntolerance_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-14-926Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.023Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-14-926Z.ndjson'
+
+[2025-01-13T03:57:15.023Z] Failed to download AllergyIntolerance for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-14-926Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Condition_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-023Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.193Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-023Z.ndjson'
+
+[2025-01-13T03:57:15.193Z] Failed to download Condition for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-023Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Device_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-194Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.288Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-194Z.ndjson'
+
+[2025-01-13T03:57:15.288Z] Failed to download Device for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-194Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_DiagnosticReport_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-289Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.384Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-289Z.ndjson'
+
+[2025-01-13T03:57:15.384Z] Failed to download DiagnosticReport for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-289Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_DocumentReference_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-384Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.674Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-384Z.ndjson'
+
+[2025-01-13T03:57:15.675Z] Failed to download DocumentReference for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-384Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Goal_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-675Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.765Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-675Z.ndjson'
+
+[2025-01-13T03:57:15.766Z] Failed to download Goal for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-675Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Immunization_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-766Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:15.845Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-766Z.ndjson'
+
+[2025-01-13T03:57:15.845Z] Failed to download Immunization for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-766Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_MedicationRequest_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-845Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 3 resources
+[2025-01-13T03:57:15.960Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-845Z.ndjson'
+
+[2025-01-13T03:57:15.960Z] Failed to download MedicationRequest for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-845Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Observation_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-15-960Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.037Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient eIXesllypH3M9tAA5WdJftQ3
+
+Downloading Patient data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Patient_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-16-037Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.198Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-16-037Z.ndjson'
+
+[2025-01-13T03:57:16.198Z] Failed to download Patient for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-16-037Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Procedure_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-16-198Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.297Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-16-198Z.ndjson'
+
+[2025-01-13T03:57:16.297Z] Failed to download Procedure for patient Linda Ross (eIXesllypH3M9tAA5WdJftQ3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T03-57-16-198Z.ndjson'
+Continuing with remaining resources...
+
+Processing patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_AllergyIntolerance_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-297Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.382Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-297Z.ndjson'
+
+[2025-01-13T03:57:16.382Z] Failed to download AllergyIntolerance for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-297Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Condition_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-382Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.513Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-382Z.ndjson'
+
+[2025-01-13T03:57:16.513Z] Failed to download Condition for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-382Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Device_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-513Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.601Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-513Z.ndjson'
+
+[2025-01-13T03:57:16.602Z] Failed to download Device for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-513Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_DiagnosticReport_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-602Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.684Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-602Z.ndjson'
+
+[2025-01-13T03:57:16.684Z] Failed to download DiagnosticReport for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-602Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_DocumentReference_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-684Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 4 resources
+[2025-01-13T03:57:16.884Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-684Z.ndjson'
+
+[2025-01-13T03:57:16.885Z] Failed to download DocumentReference for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-684Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Goal_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-885Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:16.980Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-885Z.ndjson'
+
+[2025-01-13T03:57:16.980Z] Failed to download Goal for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-885Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Immunization_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-980Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.077Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-980Z.ndjson'
+
+[2025-01-13T03:57:17.078Z] Failed to download Immunization for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-16-980Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_MedicationRequest_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-078Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.168Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-078Z.ndjson'
+
+[2025-01-13T03:57:17.168Z] Failed to download MedicationRequest for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-078Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Observation_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-168Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.250Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient eh2xYHuzl9nkSFVvV3osUHg3
+
+Downloading Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Patient_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-251Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.351Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-251Z.ndjson'
+
+[2025-01-13T03:57:17.352Z] Failed to download Patient for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-251Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Procedure_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-352Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.459Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-352Z.ndjson'
+
+[2025-01-13T03:57:17.460Z] Failed to download Procedure for patient Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T03-57-17-352Z.ndjson'
+Continuing with remaining resources...
+
+Processing patient: Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_AllergyIntolerance_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-460Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.561Z] Failed to download AllergyIntolerance data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-460Z.ndjson'
+
+[2025-01-13T03:57:17.562Z] Failed to download AllergyIntolerance for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_AllergyIntolerance_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-460Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Condition_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-562Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.694Z] Failed to download Condition data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-562Z.ndjson'
+
+[2025-01-13T03:57:17.694Z] Failed to download Condition for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Condition_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-562Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Device data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Device_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-694Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.782Z] Failed to download Device data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-694Z.ndjson'
+
+[2025-01-13T03:57:17.783Z] Failed to download Device for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Device_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-694Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_DiagnosticReport_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-783Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:17.911Z] Failed to download DiagnosticReport data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-783Z.ndjson'
+
+[2025-01-13T03:57:17.911Z] Failed to download DiagnosticReport for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DiagnosticReport_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-783Z.ndjson'
+Continuing with remaining resources...
+
+Downloading DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_DocumentReference_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-911Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.245Z] Failed to download DocumentReference data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-911Z.ndjson'
+
+[2025-01-13T03:57:18.245Z] Failed to download DocumentReference for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_DocumentReference_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-17-911Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Goal_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-246Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.337Z] Failed to download Goal data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-246Z.ndjson'
+
+[2025-01-13T03:57:18.338Z] Failed to download Goal for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Goal_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-246Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Immunization_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-338Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.427Z] Failed to download Immunization data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-338Z.ndjson'
+
+[2025-01-13T03:57:18.428Z] Failed to download Immunization for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Immunization_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-338Z.ndjson'
+Continuing with remaining resources...
+
+Downloading MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_MedicationRequest_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-428Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.519Z] Failed to download MedicationRequest data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-428Z.ndjson'
+
+[2025-01-13T03:57:18.519Z] Failed to download MedicationRequest for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_MedicationRequest_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-428Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Observation data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Observation_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-519Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.618Z] Failed to retrieve batch 1 for Observation:
+Request failed with status code 400
+
+No Observation data found for patient e0w0LEDCYtfckT6N.CkJKCw3
+
+Downloading Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Patient_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-618Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.762Z] Failed to download Patient data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-618Z.ndjson'
+
+[2025-01-13T03:57:18.762Z] Failed to download Patient for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Patient_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-618Z.ndjson'
+Continuing with remaining resources...
+
+Downloading Procedure data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Procedure_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-762Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+[2025-01-13T03:57:18.889Z] Failed to download Procedure data:
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-762Z.ndjson'
+
+[2025-01-13T03:57:18.889Z] Failed to download Procedure for patient Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3):
+ENOENT: no such file or directory, stat 'C:\FHIR\BackendEpic\epic_data_export\fhir_Procedure_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T03-57-18-762Z.ndjson'
+Continuing with remaining resources...
+
+STEP 3: DATA PROCESSING
+---------------------
+Processing downloaded data...
+
+No observation files to process
+STEP 4: REPORT GENERATION
+----------------------
+Generating analysis report...
+
+Report generated successfully:
+• File: observation_report_2025-01-13T03-57-18-890Z.txt
+• Size: 0.43 KB
 
 ================================================================================
+                               PROCESS COMPLETE                                  
+================================================================================
+Summary:
+• Successfully retrieved data using individual queries
+• Processed 0 resource types
+• Generated observation analysis report
+Files Generated:
+• Report: observation_report_2025-01-13T03-57-18-890Z.txt
+All files can be found in:
+  C:\FHIR\BackendEpic\epic_data_export
+Note: Compare these results with the bulk export method to understand:
+• Performance differences
+• Resource usage
+• Error handling approaches
+• Data consistency
+================================================================================
 
+=== End of Session ===
+
+================================================================================
+New Session Started: 2025-01-13T03:59:40.934Z
+================================================================================
+
+================================================================================
+                    EPIC FHIR Backend Data Integration System                    
+================================================================================
+
+STEP 1: INITIALIZATION
+--------------------
+Loading configuration and preparing environment...
+
+
+================================================================================
+                         Configuration Loading Tutorial                          
+================================================================================
+
+Loading configuration from: C:\FHIR\BackendEpic\backend_epic_using_jwt.ini
+Understanding Configuration Sources:
+----------------------------------
+When you see a value in the configuration, it will show its source:
+
+1. (Source: INI file)
+   • Values read directly from the INI configuration file
+   • These are the raw, unprocessed values
+
+2. (Source: Variable substitution)
+   • Values that contained variables (${variable}) that have been resolved
+   • Example: ${app_folder_name}/epic_data_export → C:/FHIR/BackendEpic/epic_data_export
+
+3. (Source: Environment variable)
+   • Values that were overridden by environment variables
+   • Useful for sensitive information like API keys
+
+Now loading the configuration values...
+--------------------------------------------------------------------------------
+
+Using existing key pair (Public Key ID: A9449062942DEBF66B8B48B131AC47C9189583F4)
+Loading data sources...
+• Patient Roster: epic_sandbox_roster.csv
+• Resources: epic_sandbox_resources.csv
+
+Data sources loaded:
+• Found 7 patients in roster:
+  - Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+  - Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+  - Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+  - Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+  - Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+  - Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+  - Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3)
+
+• Found 11 resource types configured:
+  - AllergyIntolerance: Patient allergies and intolerances
+  - Condition: Patient conditions and diagnoses
+  - Device: Medical devices and implants
+  - DiagnosticReport: Clinical diagnostic reports
+  - DocumentReference: Clinical documents and notes
+  - Goal: Patient care goals
+  - Immunization: Vaccination records
+  - MedicationRequest: Medication prescriptions
+  - Observation: Lab results and vital signs
+  - Patient: Basic patient demographics
+  - Procedure: Medical procedures performed
+
+STEP 2: DATA RETRIEVAL
+--------------------
+Retrieving data for the following resource types:
+• AllergyIntolerance
+• Condition
+• Device
+• DiagnosticReport
+• DocumentReference
+• Goal
+• Immunization
+• MedicationRequest
+• Observation
+• Patient
+• Procedure
+
+Processing 7 patients:
+• Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+• Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+• Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+• Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+• Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+• Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+• Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3)
+
+Processing patient: Camila Lopez (erXuFYUfucBZaryVksYEcMg3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_AllergyIntolerance_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-469Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 2
+• File: fhir_AllergyIntolerance_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-469Z.ndjson
+• Size: 1.06 KB
+
+Downloading Condition data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Condition_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-570Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 10 resources
+Successfully downloaded Condition data:
+• Total resources: 10
+• File: fhir_Condition_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-570Z.ndjson
+• Size: 9.76 KB
+
+Downloading Device data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Device_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-744Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+Successfully downloaded Device data:
+• Total resources: 1
+• File: fhir_Device_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-744Z.ndjson
+• Size: 0.60 KB
+
+Downloading DiagnosticReport data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_DiagnosticReport_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-819Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 8 resources
+Successfully downloaded DiagnosticReport data:
+• Total resources: 8
+• File: fhir_DiagnosticReport_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-41-819Z.ndjson
+• Size: 14.14 KB
+
+Downloading DocumentReference data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_DocumentReference_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-001Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 61 resources
+Successfully downloaded DocumentReference data:
+• Total resources: 61
+• File: fhir_DocumentReference_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-001Z.ndjson
+• Size: 77.31 KB
+
+Downloading Goal data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Goal_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-617Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 13 resources
+Successfully downloaded Goal data:
+• Total resources: 13
+• File: fhir_Goal_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-617Z.ndjson
+• Size: 13.86 KB
+
+Downloading Immunization data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Immunization_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-759Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Immunization data:
+• Total resources: 2
+• File: fhir_Immunization_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-759Z.ndjson
+• Size: 1.82 KB
+
+Downloading MedicationRequest data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_MedicationRequest_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-878Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded MedicationRequest data:
+• Total resources: 2
+• File: fhir_MedicationRequest_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-42-878Z.ndjson
+• Size: 3.64 KB
+
+Downloading Observation data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Observation_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-43-003Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 101 resources
+• Batch 2: Retrieved 101 resources
+• Batch 3: Retrieved 101 resources
+• Batch 4: Retrieved 101 resources
+• Batch 5: Retrieved 101 resources
+• Batch 6: Retrieved 101 resources
+• Batch 7: Retrieved 101 resources
+• Batch 8: Retrieved 101 resources
+• Batch 9: Retrieved 101 resources
+• Batch 10: Retrieved 101 resources
+• Batch 11: Retrieved 101 resources
+• Batch 12: Retrieved 101 resources
+• Batch 13: Retrieved 101 resources
+• Batch 14: Retrieved 101 resources
+• Batch 15: Retrieved 101 resources
+• Batch 16: Retrieved 101 resources
+• Batch 17: Retrieved 101 resources
+• Batch 18: Retrieved 101 resources
+• Batch 19: Retrieved 101 resources
+• Batch 20: Retrieved 101 resources
+• Batch 21: Retrieved 101 resources
+• Batch 22: Retrieved 101 resources
+• Batch 23: Retrieved 101 resources
+• Batch 24: Retrieved 101 resources
+• Batch 25: Retrieved 101 resources
+• Batch 26: Retrieved 101 resources
+• Batch 27: Retrieved 101 resources
+• Batch 28: Retrieved 101 resources
+• Batch 29: Retrieved 101 resources
+• Batch 30: Retrieved 101 resources
+• Batch 31: Retrieved 101 resources
+• Batch 32: Retrieved 101 resources
+• Batch 33: Retrieved 101 resources
+• Batch 34: Retrieved 101 resources
+• Batch 35: Retrieved 101 resources
+• Batch 36: Retrieved 101 resources
+• Batch 37: Retrieved 101 resources
+• Batch 38: Retrieved 101 resources
+• Batch 39: Retrieved 101 resources
+• Batch 40: Retrieved 101 resources
+• Batch 41: Retrieved 101 resources
+• Batch 42: Retrieved 101 resources
+• Batch 43: Retrieved 101 resources
+• Batch 44: Retrieved 101 resources
+• Batch 45: Retrieved 101 resources
+• Batch 46: Retrieved 101 resources
+• Batch 47: Retrieved 101 resources
+• Batch 48: Retrieved 101 resources
+• Batch 49: Retrieved 101 resources
+• Batch 50: Retrieved 101 resources
+• Batch 51: Retrieved 101 resources
+• Batch 52: Retrieved 101 resources
+• Batch 53: Retrieved 101 resources
+• Batch 54: Retrieved 101 resources
+• Batch 55: Retrieved 101 resources
+• Batch 56: Retrieved 101 resources
+• Batch 57: Retrieved 101 resources
+• Batch 58: Retrieved 101 resources
+• Batch 59: Retrieved 101 resources
+• Batch 60: Retrieved 101 resources
+• Batch 61: Retrieved 101 resources
+• Batch 62: Retrieved 101 resources
+• Batch 63: Retrieved 101 resources
+• Batch 64: Retrieved 101 resources
+• Batch 65: Retrieved 101 resources
+• Batch 66: Retrieved 101 resources
+• Batch 67: Retrieved 101 resources
+• Batch 68: Retrieved 101 resources
+• Batch 69: Retrieved 101 resources
+• Batch 70: Retrieved 101 resources
+• Batch 71: Retrieved 101 resources
+• Batch 72: Retrieved 101 resources
+• Batch 73: Retrieved 101 resources
+• Batch 74: Retrieved 101 resources
+• Batch 75: Retrieved 101 resources
+• Batch 76: Retrieved 101 resources
+• Batch 77: Retrieved 101 resources
+• Batch 78: Retrieved 101 resources
+• Batch 79: Retrieved 101 resources
+• Batch 80: Retrieved 101 resources
+• Batch 81: Retrieved 101 resources
+• Batch 82: Retrieved 101 resources
+• Batch 83: Retrieved 101 resources
+• Batch 84: Retrieved 101 resources
+• Batch 85: Retrieved 101 resources
+• Batch 86: Retrieved 101 resources
+• Batch 87: Retrieved 101 resources
+• Batch 88: Retrieved 101 resources
+• Batch 89: Retrieved 101 resources
+• Batch 90: Retrieved 101 resources
+• Batch 91: Retrieved 101 resources
+• Batch 92: Retrieved 101 resources
+• Batch 93: Retrieved 101 resources
+• Batch 94: Retrieved 101 resources
+• Batch 95: Retrieved 101 resources
+• Batch 96: Retrieved 101 resources
+• Batch 97: Retrieved 101 resources
+• Batch 98: Retrieved 101 resources
+• Batch 99: Retrieved 101 resources
+• Batch 100: Retrieved 101 resources
+Successfully downloaded Observation data:
+• Total resources: 10100
+• File: fhir_Observation_erXuFYUfucBZaryVksYEcMg3_2025-01-13T03-59-43-003Z.ndjson
+• Size: 19492.48 KB
+
+Downloading Patient data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Patient_erXuFYUfucBZaryVksYEcMg3_2025-01-13T04-01-09-272Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_erXuFYUfucBZaryVksYEcMg3_2025-01-13T04-01-09-272Z.ndjson
+• Size: 3.97 KB
+
+Downloading Procedure data for patient erXuFYUfucBZaryVksYEcMg3
+• Output: fhir_Procedure_erXuFYUfucBZaryVksYEcMg3_2025-01-13T04-01-09-375Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 3 resources
+Successfully downloaded Procedure data:
+• Total resources: 3
+• File: fhir_Procedure_erXuFYUfucBZaryVksYEcMg3_2025-01-13T04-01-09-375Z.ndjson
+• Size: 4.50 KB
+
+Processing patient: Derrick Lin (eq081-VQEgP8drUUqCWzHfw3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_AllergyIntolerance_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-025Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 2
+• File: fhir_AllergyIntolerance_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-025Z.ndjson
+• Size: 1.05 KB
+
+Downloading Condition data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Condition_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-135Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 4 resources
+Successfully downloaded Condition data:
+• Total resources: 4
+• File: fhir_Condition_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-135Z.ndjson
+• Size: 4.40 KB
+
+Downloading Device data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Device_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-613Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+Successfully downloaded Device data:
+• Total resources: 1
+• File: fhir_Device_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-613Z.ndjson
+• Size: 0.60 KB
+
+Downloading DiagnosticReport data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_DiagnosticReport_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-729Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DiagnosticReport data:
+• Total resources: 1
+• File: fhir_DiagnosticReport_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-729Z.ndjson
+• Size: 0.60 KB
+
+Downloading DocumentReference data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_DocumentReference_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-859Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 21 resources
+Successfully downloaded DocumentReference data:
+• Total resources: 21
+• File: fhir_DocumentReference_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-10-859Z.ndjson
+• Size: 21.21 KB
+
+Downloading Goal data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Goal_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-11-968Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Goal data:
+• Total resources: 3
+• File: fhir_Goal_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-11-968Z.ndjson
+• Size: 1.88 KB
+
+Downloading Immunization data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Immunization_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-12-187Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Immunization data:
+• Total resources: 1
+• File: fhir_Immunization_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-12-187Z.ndjson
+• Size: 0.60 KB
+
+Downloading MedicationRequest data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_MedicationRequest_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-12-301Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded MedicationRequest data:
+• Total resources: 2
+• File: fhir_MedicationRequest_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-12-301Z.ndjson
+• Size: 3.25 KB
+
+Downloading Observation data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Observation_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-13-091Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 101 resources
+• Batch 2: Retrieved 101 resources
+• Batch 3: Retrieved 101 resources
+• Batch 4: Retrieved 101 resources
+• Batch 5: Retrieved 101 resources
+• Batch 6: Retrieved 101 resources
+• Batch 7: Retrieved 101 resources
+• Batch 8: Retrieved 101 resources
+• Batch 9: Retrieved 101 resources
+• Batch 10: Retrieved 101 resources
+• Batch 11: Retrieved 101 resources
+• Batch 12: Retrieved 101 resources
+• Batch 13: Retrieved 101 resources
+• Batch 14: Retrieved 101 resources
+• Batch 15: Retrieved 101 resources
+• Batch 16: Retrieved 101 resources
+• Batch 17: Retrieved 101 resources
+• Batch 18: Retrieved 101 resources
+• Batch 19: Retrieved 101 resources
+• Batch 20: Retrieved 101 resources
+• Batch 21: Retrieved 101 resources
+• Batch 22: Retrieved 101 resources
+• Batch 23: Retrieved 101 resources
+• Batch 24: Retrieved 101 resources
+• Batch 25: Retrieved 101 resources
+• Batch 26: Retrieved 101 resources
+• Batch 27: Retrieved 101 resources
+• Batch 28: Retrieved 101 resources
+• Batch 29: Retrieved 101 resources
+• Batch 30: Retrieved 101 resources
+• Batch 31: Retrieved 101 resources
+• Batch 32: Retrieved 101 resources
+• Batch 33: Retrieved 101 resources
+• Batch 34: Retrieved 101 resources
+• Batch 35: Retrieved 101 resources
+• Batch 36: Retrieved 101 resources
+• Batch 37: Retrieved 101 resources
+• Batch 38: Retrieved 101 resources
+• Batch 39: Retrieved 101 resources
+• Batch 40: Retrieved 101 resources
+• Batch 41: Retrieved 101 resources
+• Batch 42: Retrieved 101 resources
+• Batch 43: Retrieved 101 resources
+• Batch 44: Retrieved 101 resources
+• Batch 45: Retrieved 101 resources
+• Batch 46: Retrieved 101 resources
+• Batch 47: Retrieved 101 resources
+• Batch 48: Retrieved 101 resources
+• Batch 49: Retrieved 101 resources
+• Batch 50: Retrieved 101 resources
+• Batch 51: Retrieved 101 resources
+• Batch 52: Retrieved 101 resources
+• Batch 53: Retrieved 101 resources
+• Batch 54: Retrieved 101 resources
+• Batch 55: Retrieved 101 resources
+• Batch 56: Retrieved 101 resources
+• Batch 57: Retrieved 101 resources
+• Batch 58: Retrieved 101 resources
+• Batch 59: Retrieved 101 resources
+• Batch 60: Retrieved 101 resources
+• Batch 61: Retrieved 101 resources
+• Batch 62: Retrieved 101 resources
+• Batch 63: Retrieved 101 resources
+• Batch 64: Retrieved 101 resources
+• Batch 65: Retrieved 101 resources
+• Batch 66: Retrieved 101 resources
+• Batch 67: Retrieved 101 resources
+• Batch 68: Retrieved 101 resources
+• Batch 69: Retrieved 101 resources
+• Batch 70: Retrieved 101 resources
+• Batch 71: Retrieved 101 resources
+• Batch 72: Retrieved 101 resources
+• Batch 73: Retrieved 101 resources
+• Batch 74: Retrieved 101 resources
+• Batch 75: Retrieved 101 resources
+• Batch 76: Retrieved 101 resources
+• Batch 77: Retrieved 101 resources
+• Batch 78: Retrieved 101 resources
+• Batch 79: Retrieved 101 resources
+• Batch 80: Retrieved 101 resources
+• Batch 81: Retrieved 101 resources
+• Batch 82: Retrieved 101 resources
+• Batch 83: Retrieved 101 resources
+• Batch 84: Retrieved 101 resources
+• Batch 85: Retrieved 101 resources
+• Batch 86: Retrieved 101 resources
+• Batch 87: Retrieved 101 resources
+• Batch 88: Retrieved 101 resources
+• Batch 89: Retrieved 101 resources
+• Batch 90: Retrieved 101 resources
+• Batch 91: Retrieved 101 resources
+• Batch 92: Retrieved 101 resources
+• Batch 93: Retrieved 101 resources
+• Batch 94: Retrieved 101 resources
+• Batch 95: Retrieved 101 resources
+• Batch 96: Retrieved 101 resources
+• Batch 97: Retrieved 101 resources
+• Batch 98: Retrieved 101 resources
+• Batch 99: Retrieved 101 resources
+• Batch 100: Retrieved 101 resources
+Successfully downloaded Observation data:
+• Total resources: 10100
+• File: fhir_Observation_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-01-13-091Z.ndjson
+• Size: 19811.91 KB
+
+Downloading Patient data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Patient_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-02-37-418Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-02-37-418Z.ndjson
+• Size: 3.77 KB
+
+Downloading Procedure data for patient eq081-VQEgP8drUUqCWzHfw3
+• Output: fhir_Procedure_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-02-37-517Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+Successfully downloaded Procedure data:
+• Total resources: 1
+• File: fhir_Procedure_eq081-VQEgP8drUUqCWzHfw3_2025-01-13T04-02-37-517Z.ndjson
+• Size: 1.19 KB
+
+Processing patient: Desiree Powell (eAB3mDIBBcyUKviyzrxsnAw3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_AllergyIntolerance_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-37-694Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 2
+• File: fhir_AllergyIntolerance_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-37-694Z.ndjson
+• Size: 1.06 KB
+
+Downloading Condition data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Condition_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-37-788Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Condition data:
+• Total resources: 2
+• File: fhir_Condition_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-37-788Z.ndjson
+• Size: 1.24 KB
+
+Downloading Device data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Device_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-37-969Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Device data:
+• Total resources: 1
+• File: fhir_Device_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-37-969Z.ndjson
+• Size: 0.60 KB
+
+Downloading DiagnosticReport data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_DiagnosticReport_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-081Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DiagnosticReport data:
+• Total resources: 1
+• File: fhir_DiagnosticReport_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-081Z.ndjson
+• Size: 0.60 KB
+
+Downloading DocumentReference data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_DocumentReference_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-180Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 14 resources
+Successfully downloaded DocumentReference data:
+• Total resources: 14
+• File: fhir_DocumentReference_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-180Z.ndjson
+• Size: 12.64 KB
+
+Downloading Goal data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Goal_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-563Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Goal data:
+• Total resources: 1
+• File: fhir_Goal_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-563Z.ndjson
+• Size: 0.60 KB
+
+Downloading Immunization data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Immunization_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-685Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 8 resources
+Successfully downloaded Immunization data:
+• Total resources: 8
+• File: fhir_Immunization_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-685Z.ndjson
+• Size: 7.37 KB
+
+Downloading MedicationRequest data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_MedicationRequest_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-873Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 3 resources
+Successfully downloaded MedicationRequest data:
+• Total resources: 3
+• File: fhir_MedicationRequest_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-38-873Z.ndjson
+• Size: 6.06 KB
+
+Downloading Observation data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Observation_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-39-195Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 101 resources
+• Batch 2: Retrieved 101 resources
+• Batch 3: Retrieved 101 resources
+• Batch 4: Retrieved 101 resources
+• Batch 5: Retrieved 101 resources
+• Batch 6: Retrieved 101 resources
+• Batch 7: Retrieved 101 resources
+• Batch 8: Retrieved 101 resources
+• Batch 9: Retrieved 101 resources
+• Batch 10: Retrieved 101 resources
+• Batch 11: Retrieved 101 resources
+• Batch 12: Retrieved 101 resources
+• Batch 13: Retrieved 101 resources
+• Batch 14: Retrieved 101 resources
+• Batch 15: Retrieved 101 resources
+• Batch 16: Retrieved 101 resources
+• Batch 17: Retrieved 101 resources
+• Batch 18: Retrieved 101 resources
+• Batch 19: Retrieved 101 resources
+• Batch 20: Retrieved 101 resources
+• Batch 21: Retrieved 101 resources
+• Batch 22: Retrieved 101 resources
+• Batch 23: Retrieved 101 resources
+• Batch 24: Retrieved 101 resources
+• Batch 25: Retrieved 101 resources
+• Batch 26: Retrieved 101 resources
+• Batch 27: Retrieved 101 resources
+• Batch 28: Retrieved 101 resources
+• Batch 29: Retrieved 101 resources
+• Batch 30: Retrieved 101 resources
+• Batch 31: Retrieved 101 resources
+• Batch 32: Retrieved 101 resources
+• Batch 33: Retrieved 101 resources
+• Batch 34: Retrieved 101 resources
+• Batch 35: Retrieved 101 resources
+• Batch 36: Retrieved 101 resources
+• Batch 37: Retrieved 101 resources
+• Batch 38: Retrieved 101 resources
+• Batch 39: Retrieved 101 resources
+• Batch 40: Retrieved 101 resources
+• Batch 41: Retrieved 101 resources
+• Batch 42: Retrieved 101 resources
+• Batch 43: Retrieved 101 resources
+• Batch 44: Retrieved 101 resources
+• Batch 45: Retrieved 101 resources
+• Batch 46: Retrieved 101 resources
+• Batch 47: Retrieved 101 resources
+• Batch 48: Retrieved 101 resources
+• Batch 49: Retrieved 101 resources
+• Batch 50: Retrieved 101 resources
+• Batch 51: Retrieved 101 resources
+• Batch 52: Retrieved 101 resources
+• Batch 53: Retrieved 101 resources
+• Batch 54: Retrieved 101 resources
+• Batch 55: Retrieved 101 resources
+• Batch 56: Retrieved 101 resources
+• Batch 57: Retrieved 101 resources
+• Batch 58: Retrieved 101 resources
+• Batch 59: Retrieved 101 resources
+• Batch 60: Retrieved 101 resources
+• Batch 61: Retrieved 101 resources
+• Batch 62: Retrieved 101 resources
+• Batch 63: Retrieved 101 resources
+• Batch 64: Retrieved 101 resources
+• Batch 65: Retrieved 101 resources
+• Batch 66: Retrieved 101 resources
+• Batch 67: Retrieved 101 resources
+• Batch 68: Retrieved 101 resources
+• Batch 69: Retrieved 101 resources
+• Batch 70: Retrieved 101 resources
+• Batch 71: Retrieved 101 resources
+• Batch 72: Retrieved 101 resources
+• Batch 73: Retrieved 101 resources
+• Batch 74: Retrieved 101 resources
+• Batch 75: Retrieved 101 resources
+• Batch 76: Retrieved 101 resources
+• Batch 77: Retrieved 101 resources
+• Batch 78: Retrieved 101 resources
+• Batch 79: Retrieved 101 resources
+• Batch 80: Retrieved 101 resources
+• Batch 81: Retrieved 101 resources
+• Batch 82: Retrieved 101 resources
+• Batch 83: Retrieved 101 resources
+• Batch 84: Retrieved 101 resources
+• Batch 85: Retrieved 101 resources
+• Batch 86: Retrieved 101 resources
+• Batch 87: Retrieved 101 resources
+• Batch 88: Retrieved 101 resources
+• Batch 89: Retrieved 101 resources
+• Batch 90: Retrieved 101 resources
+• Batch 91: Retrieved 101 resources
+• Batch 92: Retrieved 101 resources
+• Batch 93: Retrieved 101 resources
+• Batch 94: Retrieved 101 resources
+• Batch 95: Retrieved 101 resources
+• Batch 96: Retrieved 101 resources
+• Batch 97: Retrieved 101 resources
+• Batch 98: Retrieved 101 resources
+• Batch 99: Retrieved 101 resources
+• Batch 100: Retrieved 101 resources
+Successfully downloaded Observation data:
+• Total resources: 10100
+• File: fhir_Observation_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-02-39-195Z.ndjson
+• Size: 20082.52 KB
+
+Downloading Patient data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Patient_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-04-02-350Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-04-02-350Z.ndjson
+• Size: 3.97 KB
+
+Downloading Procedure data for patient eAB3mDIBBcyUKviyzrxsnAw3
+• Output: fhir_Procedure_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-04-02-454Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+Successfully downloaded Procedure data:
+• Total resources: 1
+• File: fhir_Procedure_eAB3mDIBBcyUKviyzrxsnAw3_2025-01-13T04-04-02-454Z.ndjson
+• Size: 1.19 KB
+
+Processing patient: Elijah Davis (egqBHVfQlt4Bw3XGXoxVxHg3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_AllergyIntolerance_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-02-586Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 3 resources
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 3
+• File: fhir_AllergyIntolerance_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-02-586Z.ndjson
+• Size: 3.04 KB
+
+Downloading Condition data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Condition_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-02-729Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 5 resources
+Successfully downloaded Condition data:
+• Total resources: 5
+• File: fhir_Condition_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-02-729Z.ndjson
+• Size: 5.34 KB
+
+Downloading Device data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Device_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-082Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Device data:
+• Total resources: 1
+• File: fhir_Device_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-082Z.ndjson
+• Size: 0.60 KB
+
+Downloading DiagnosticReport data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_DiagnosticReport_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-168Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DiagnosticReport data:
+• Total resources: 1
+• File: fhir_DiagnosticReport_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-168Z.ndjson
+• Size: 0.60 KB
+
+Downloading DocumentReference data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_DocumentReference_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-264Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 18 resources
+Successfully downloaded DocumentReference data:
+• Total resources: 18
+• File: fhir_DocumentReference_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-264Z.ndjson
+• Size: 19.05 KB
+
+Downloading Goal data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Goal_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-817Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Goal data:
+• Total resources: 1
+• File: fhir_Goal_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-817Z.ndjson
+• Size: 0.60 KB
+
+Downloading Immunization data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Immunization_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-921Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Immunization data:
+• Total resources: 1
+• File: fhir_Immunization_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-03-921Z.ndjson
+• Size: 0.60 KB
+
+Downloading MedicationRequest data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_MedicationRequest_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-012Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded MedicationRequest data:
+• Total resources: 2
+• File: fhir_MedicationRequest_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-012Z.ndjson
+• Size: 3.83 KB
+
+Downloading Observation data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Observation_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-312Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Observation data:
+• Total resources: 1
+• File: fhir_Observation_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-312Z.ndjson
+• Size: 0.60 KB
+
+Downloading Patient data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Patient_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-556Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-556Z.ndjson
+• Size: 3.87 KB
+
+Downloading Procedure data for patient egqBHVfQlt4Bw3XGXoxVxHg3
+• Output: fhir_Procedure_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-686Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Procedure data:
+• Total resources: 1
+• File: fhir_Procedure_egqBHVfQlt4Bw3XGXoxVxHg3_2025-01-13T04-04-04-686Z.ndjson
+• Size: 1.19 KB
+
+Processing patient: Linda Ross (eIXesllypH3M9tAA5WdJftQ3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_AllergyIntolerance_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-04-799Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 2
+• File: fhir_AllergyIntolerance_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-04-799Z.ndjson
+• Size: 1.06 KB
+
+Downloading Condition data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Condition_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-04-881Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Condition data:
+• Total resources: 3
+• File: fhir_Condition_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-04-881Z.ndjson
+• Size: 2.89 KB
+
+Downloading Device data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Device_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-051Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Device data:
+• Total resources: 1
+• File: fhir_Device_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-051Z.ndjson
+• Size: 0.60 KB
+
+Downloading DiagnosticReport data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_DiagnosticReport_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-129Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DiagnosticReport data:
+• Total resources: 1
+• File: fhir_DiagnosticReport_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-129Z.ndjson
+• Size: 0.60 KB
+
+Downloading DocumentReference data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_DocumentReference_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-207Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 14 resources
+Successfully downloaded DocumentReference data:
+• Total resources: 14
+• File: fhir_DocumentReference_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-207Z.ndjson
+• Size: 15.35 KB
+
+Downloading Goal data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Goal_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-513Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Goal data:
+• Total resources: 1
+• File: fhir_Goal_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-513Z.ndjson
+• Size: 0.60 KB
+
+Downloading Immunization data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Immunization_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-605Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Immunization data:
+• Total resources: 1
+• File: fhir_Immunization_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-605Z.ndjson
+• Size: 0.60 KB
+
+Downloading MedicationRequest data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_MedicationRequest_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-684Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded MedicationRequest data:
+• Total resources: 3
+• File: fhir_MedicationRequest_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-684Z.ndjson
+• Size: 6.60 KB
+
+Downloading Observation data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Observation_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-869Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 10 resources
+Successfully downloaded Observation data:
+• Total resources: 10
+• File: fhir_Observation_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-05-869Z.ndjson
+• Size: 15.59 KB
+
+Downloading Patient data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Patient_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-06-051Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-06-051Z.ndjson
+• Size: 3.51 KB
+
+Downloading Procedure data for patient eIXesllypH3M9tAA5WdJftQ3
+• Output: fhir_Procedure_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-06-148Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Procedure data:
+• Total resources: 1
+• File: fhir_Procedure_eIXesllypH3M9tAA5WdJftQ3_2025-01-13T04-04-06-148Z.ndjson
+• Size: 1.19 KB
+
+Processing patient: Olivia Roberts (eh2xYHuzl9nkSFVvV3osUHg3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_AllergyIntolerance_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-242Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 2
+• File: fhir_AllergyIntolerance_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-242Z.ndjson
+• Size: 1.06 KB
+
+Downloading Condition data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Condition_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-321Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Condition data:
+• Total resources: 3
+• File: fhir_Condition_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-321Z.ndjson
+• Size: 3.31 KB
+
+Downloading Device data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Device_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-489Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Device data:
+• Total resources: 3
+• File: fhir_Device_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-489Z.ndjson
+• Size: 3.69 KB
+
+Downloading DiagnosticReport data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_DiagnosticReport_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-643Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DiagnosticReport data:
+• Total resources: 1
+• File: fhir_DiagnosticReport_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-643Z.ndjson
+• Size: 0.60 KB
+
+Downloading DocumentReference data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_DocumentReference_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-725Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 4 resources
+Successfully downloaded DocumentReference data:
+• Total resources: 4
+• File: fhir_DocumentReference_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-725Z.ndjson
+• Size: 5.72 KB
+
+Downloading Goal data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Goal_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-959Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Goal data:
+• Total resources: 1
+• File: fhir_Goal_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-06-959Z.ndjson
+• Size: 0.60 KB
+
+Downloading Immunization data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Immunization_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-056Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Immunization data:
+• Total resources: 1
+• File: fhir_Immunization_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-056Z.ndjson
+• Size: 0.60 KB
+
+Downloading MedicationRequest data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_MedicationRequest_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-143Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded MedicationRequest data:
+• Total resources: 1
+• File: fhir_MedicationRequest_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-143Z.ndjson
+• Size: 0.60 KB
+
+Downloading Observation data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Observation_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-220Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 8 resources
+Successfully downloaded Observation data:
+• Total resources: 8
+• File: fhir_Observation_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-220Z.ndjson
+• Size: 10.61 KB
+
+Downloading Patient data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Patient_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-370Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 2 resources
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-370Z.ndjson
+• Size: 3.42 KB
+
+Downloading Procedure data for patient eh2xYHuzl9nkSFVvV3osUHg3
+• Output: fhir_Procedure_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-469Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Procedure data:
+• Total resources: 1
+• File: fhir_Procedure_eh2xYHuzl9nkSFVvV3osUHg3_2025-01-13T04-04-07-469Z.ndjson
+• Size: 1.19 KB
+
+Processing patient: Warren McGinnis (e0w0LEDCYtfckT6N.CkJKCw3)
+--------------------------------------------------
+Downloading AllergyIntolerance data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_AllergyIntolerance_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-567Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded AllergyIntolerance data:
+• Total resources: 3
+• File: fhir_AllergyIntolerance_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-567Z.ndjson
+• Size: 5.63 KB
+
+Downloading Condition data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Condition_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-696Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 3 resources
+Successfully downloaded Condition data:
+• Total resources: 3
+• File: fhir_Condition_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-696Z.ndjson
+• Size: 2.65 KB
+
+Downloading Device data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Device_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-847Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 1 resources
+Successfully downloaded Device data:
+• Total resources: 1
+• File: fhir_Device_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-847Z.ndjson
+• Size: 0.60 KB
+
+Downloading DiagnosticReport data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_DiagnosticReport_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-921Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DiagnosticReport data:
+• Total resources: 3
+• File: fhir_DiagnosticReport_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-07-921Z.ndjson
+• Size: 3.94 KB
+
+Downloading DocumentReference data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_DocumentReference_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-208Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded DocumentReference data:
+• Total resources: 18
+• File: fhir_DocumentReference_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-208Z.ndjson
+• Size: 26.18 KB
+
+Downloading Goal data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Goal_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-545Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Goal data:
+• Total resources: 1
+• File: fhir_Goal_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-545Z.ndjson
+• Size: 0.60 KB
+
+Downloading Immunization data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Immunization_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-630Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Immunization data:
+• Total resources: 1
+• File: fhir_Immunization_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-630Z.ndjson
+• Size: 0.60 KB
+
+Downloading MedicationRequest data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_MedicationRequest_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-708Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded MedicationRequest data:
+• Total resources: 1
+• File: fhir_MedicationRequest_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-708Z.ndjson
+• Size: 0.60 KB
+
+Downloading Observation data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Observation_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-795Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+• Batch 1: Retrieved 74 resources
+Successfully downloaded Observation data:
+• Total resources: 74
+• File: fhir_Observation_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-08-795Z.ndjson
+• Size: 118.14 KB
+
+Downloading Patient data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Patient_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-09-518Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Patient data:
+• Total resources: 2
+• File: fhir_Patient_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-09-518Z.ndjson
+• Size: 3.72 KB
+
+Downloading Procedure data for patient e0w0LEDCYtfckT6N.CkJKCw3
+• Output: fhir_Procedure_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-09-644Z.ndjson
+• Format: application/fhir+json
+• Batch size: 100
+
+Successfully downloaded Procedure data:
+• Total resources: 2
+• File: fhir_Procedure_e0w0LEDCYtfckT6N.CkJKCw3_2025-01-13T04-04-09-644Z.ndjson
+• Size: 2.40 KB
+
+STEP 3: DATA PROCESSING
+---------------------
+Processing downloaded data...
+
+PROCESSING OBSERVATION DATA
+-------------------------
+Processing files for 7 patients
+
+STEP 4: REPORT GENERATION
+----------------------
+Generating analysis report...
+
+Report generated successfully:
+• File: observation_report_2025-01-13T04-04-10-309Z.txt
+• Size: 3.24 KB
+
+================================================================================
+                               PROCESS COMPLETE                                  
+================================================================================
+Summary:
+• Successfully retrieved data using individual queries
+• Processed 11 resource types
+• Generated observation analysis report
+Files Generated:
+• AllergyIntolerance: 7 files
+• Condition: 7 files
+• Device: 7 files
+• DiagnosticReport: 7 files
+• DocumentReference: 7 files
+• Goal: 7 files
+• Immunization: 7 files
+• MedicationRequest: 7 files
+• Observation: 7 files
+• Patient: 7 files
+• Procedure: 7 files
+• Report: observation_report_2025-01-13T04-04-10-309Z.txt
+All files can be found in:
+  C:\FHIR\BackendEpic\epic_data_export
+Note: Compare these results with the bulk export method to understand:
+• Performance differences
+• Resource usage
+• Error handling approaches
+• Data consistency
+================================================================================
 
 === End of Session ===
