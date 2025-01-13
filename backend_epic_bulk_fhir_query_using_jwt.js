@@ -262,32 +262,44 @@ async function downloadExportFiles(outputFiles, accessToken, exportDir, logger) 
 
             // Use pipe to handle the streaming data
             await new Promise((resolve, reject) => {
-                response.data.pipe(writer);
-                response.data.on('end', resolve);
-                response.data.on('error', reject);
+                writer.on('finish', resolve);
                 writer.on('error', reject);
+                response.data.pipe(writer);
             });
 
+            // Wait a moment for the file system to catch up
+            await new Promise(resolve => setTimeout(resolve, 100));
+
             // Verify file was created and has content
-            const stats = await fs.promises.stat(filepath);
-            if (stats.size === 0) {
-                // For FHIR bulk exports, empty responses are valid (means no data of this type)
+            try {
+                const stats = await fs.promises.stat(filepath);
+                if (stats.size === 0) {
+                    // For FHIR bulk exports, empty responses are valid (means no data of this type)
+                    logger.writeLog('INFO', [
+                        `• No data available for ${file.type}`,
+                        `• This is normal - it means there are no ${file.type} resources for the requested patients`,
+                        ''
+                    ]);
+                    // Remove empty file
+                    await fs.promises.unlink(filepath);
+                    continue;
+                }
+
                 logger.writeLog('INFO', [
-                    `• No data available for ${file.type}`,
-                    `• This is normal - it means there are no ${file.type} resources for the requested patients`,
+                    `• Successfully downloaded ${file.type || 'file'} data`,
+                    `• Saved to: ${filepath}`,
+                    `• File size: ${(stats.size / 1024 / 1024).toFixed(2)} MB`,
                     ''
                 ]);
-                // Remove empty file
-                await fs.promises.unlink(filepath);
+            } catch (error) {
+                logger.writeLog('ERROR', [
+                    `Failed to verify file ${filepath}:`,
+                    `• Error: ${error.message}`,
+                    'Continuing with next file...',
+                    ''
+                ]);
                 continue;
             }
-
-            logger.writeLog('INFO', [
-                `• Successfully downloaded ${file.type || 'file'} data`,
-                `• Saved to: ${filepath}`,
-                `• File size: ${(stats.size / 1024 / 1024).toFixed(2)} MB`,
-                ''
-            ]);
         } catch (error) {
             const errorDetails = error.response ? {
                 status: error.response.status,

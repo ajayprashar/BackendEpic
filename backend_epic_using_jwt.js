@@ -248,18 +248,18 @@ class JWTManager {
             .digest('hex')
             .toUpperCase();
         
-        const currentTime = Math.floor(Date.now() / 1000);
-        const expiryTime = currentTime + (this.expiryMinutes * 60);
-        
-        const claims = {
-            iss: this.clientId,
-            sub: this.clientId,
-            aud: this.tokenEndpoint,
-            jti: uuidv4(),
-            exp: expiryTime,
-            nbf: currentTime,
-            iat: currentTime
-        };
+                const currentTime = Math.floor(Date.now() / 1000);
+                const expiryTime = currentTime + (this.expiryMinutes * 60);
+                
+                const claims = {
+                    iss: this.clientId,
+                    sub: this.clientId,
+                    aud: this.tokenEndpoint,
+                    jti: uuidv4(),
+                    exp: expiryTime,
+                    nbf: currentTime,
+                    iat: currentTime
+                };
 
         const header = {
             alg: this.algorithm,
@@ -440,9 +440,40 @@ class EpicClient {
         }
     }
 
+    async cleanupExportDirectory() {
+        const logger = Logger.getInstance();
+        logger.writeLog('INFO', [
+            'Cleaning up export directory...',
+            `Directory: ${this.exportDir}`,
+            ''
+        ]);
+
+        try {
+            const files = await fs.promises.readdir(this.exportDir);
+            for (const file of files) {
+                if (file.startsWith('single_patient_fhir_') || file.startsWith('single_patient_observation_report_')) {
+                    await fs.promises.unlink(path.join(this.exportDir, file));
+                }
+            }
+            logger.writeLog('INFO', [
+                'Export directory cleaned successfully',
+                ''
+            ]);
+        } catch (error) {
+            logger.writeLog('ERROR', [
+                'Failed to clean export directory:',
+                error.message,
+                ''
+            ]);
+        }
+    }
+
     async getAllResourceData(accessToken) {
         const logger = Logger.getInstance();
         try {
+            // Clean up old files before starting
+            await this.cleanupExportDirectory();
+            
             this.exportedFiles = [];
             
             // Load data sources using the function defined above
@@ -681,7 +712,7 @@ async function downloadResourceData(resourceType, accessToken, exportDir, logger
         }
 
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const filename = `fhir_${resourceType}_${patientId}_${timestamp}.ndjson`;
+        const filename = `single_patient_fhir_${resourceType}_${patientId}_${timestamp}.ndjson`;
         const filepath = path.join(exportDir, filename);
         
         // Build query parameters based on resource type
@@ -731,7 +762,7 @@ async function downloadResourceData(resourceType, accessToken, exportDir, logger
 
                 if (response.data.entry && response.data.entry.length > 0) {
                     batches.push(...response.data.entry.map(e => e.resource));
-                    logger.writeLog('INFO', [
+        logger.writeLog('INFO', [
                         `• Batch ${page}: Retrieved ${response.data.entry.length} resources`
                     ]);
                 }
@@ -741,7 +772,7 @@ async function downloadResourceData(resourceType, accessToken, exportDir, logger
                 hasMore = !!nextLink;
                 page++;
 
-            } catch (error) {
+    } catch (error) {
                 logger.writeLog('ERROR', [
                     `Failed to retrieve batch ${page} for ${resourceType}:`,
                     error.response?.data?.issue?.[0]?.diagnostics || error.message,
@@ -899,103 +930,112 @@ async function processObservationData(observations, roster, logger) {
  */
 async function generateReport(observationStats, exportDir, logger) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const reportPath = path.join(exportDir, `observation_report_${timestamp}.txt`);
+    const reportPath = path.join(exportDir, `single_patient_observation_report_${timestamp}.txt`);
     const reportLines = [];
 
-    // Add report header
+    // Add report header with new title
     reportLines.push(
-        '================================================================================',
-        '                           OBSERVATION ANALYSIS REPORT                           ',
-        '================================================================================',
+        'EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT',
+        '==============================================================',
         '',
-        'OVERVIEW',
-        '--------',
-        `Total Readings: ${observationStats.totalReadings}`,
-        `Normal Readings: ${observationStats.normalReadings}`,
-        `Abnormal Readings: ${observationStats.abnormalReadings}`,
+        'Summary:',
+        '---------',
+        `Total Observations: ${observationStats.totalReadings}`,
+        `Total Normal Readings: ${observationStats.normalReadings}`,
+        `Total Abnormal Readings: ${observationStats.abnormalReadings}`,
         '',
-        'OBSERVATION CATEGORIES',
-        '---------------------'
+        'Detailed Observations:',
+        '--------------------',
+        'Date | Patient Name | Patient ID | Observation Type | Value | Reference Range | Status',
+        '-----|--------------|------------|------------------|--------|----------------|--------'
     );
 
-    // Add category analysis
-    for (const [category, stats] of Object.entries(observationStats.byCategory)) {
-        reportLines.push(
-            `Category: ${category}`,
-            `• Total Observations: ${stats.total}`,
-            `• Observation Types: ${Array.from(stats.types).join(', ')}`,
-            ''
-        );
-    }
-
-    // Add type analysis
-    reportLines.push(
-        'OBSERVATION TYPES',
-        '-----------------'
-    );
-
-    for (const [type, stats] of Object.entries(observationStats.byType)) {
-        const values = stats.values;
-        const avg = values.reduce((a, b) => a + b, 0) / values.length;
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-        
-        reportLines.push(
-            `Type: ${type}`,
-            `• Total: ${stats.total}`,
-            `• Normal: ${stats.normal}`,
-            `• Abnormal: ${stats.abnormal}`,
-            `• Units: ${Array.from(stats.units).join(', ')}`,
-            `• Reference Ranges: ${Array.from(stats.referenceRanges).join(', ')}`,
-            `• Value Range: ${min.toFixed(2)} - ${max.toFixed(2)}`,
-            `• Average: ${avg.toFixed(2)}`,
-            ''
-        );
-    }
-
-    // Add patient analysis
-    reportLines.push(
-        'PATIENT ANALYSIS',
-        '----------------'
-    );
-
-    for (const [patientId, stats] of Object.entries(observationStats.byPatient)) {
-        reportLines.push(
-            `Patient: ${stats.name} (${patientId})`,
-            `• Total Readings: ${stats.total}`,
-            `• Normal: ${stats.normal}`,
-            `• Abnormal: ${stats.abnormal}`,
-            '',
-            'Observation Types:'
-        );
-
-        for (const [type, typeStats] of Object.entries(stats.byType)) {
-            const values = typeStats.values;
-            const avg = values.reduce((a, b) => a + b, 0) / values.length;
-            
-            reportLines.push(
-                `  ${type}:`,
-                `  • Total: ${typeStats.total}`,
-                `  • Normal: ${typeStats.normal}`,
-                `  • Abnormal: ${typeStats.abnormal}`,
-                `  • Average: ${avg.toFixed(2)}`,
-                ''
-            );
+    // Add detailed observations in tabular format
+    for (const [patientId, patientStats] of Object.entries(observationStats.byPatient)) {
+        for (const [type, typeStats] of Object.entries(patientStats.byType)) {
+            for (let i = 0; i < typeStats.values.length; i++) {
+                const value = typeStats.values[i];
+                const status = i < typeStats.normal ? 'NORMAL' : 'ABNORMAL';
+                const date = new Date().toISOString().split('T')[0]; // You might want to get this from the observation
+                
+                reportLines.push(
+                    `${date} | ${patientStats.name} | ${patientId} | ${type} | ${value} | No range specified | ${status}`
+                );
+            }
         }
-        reportLines.push('');
     }
 
     // Write report to file
     await fs.promises.writeFile(reportPath, reportLines.join('\n'));
 
+    // Send email with report
+    const emailSent = await sendReportEmail(reportPath, observationStats, logger);
+
     logger.writeLog('INFO', [
-        'Report generated successfully:',
+        emailSent ? 'Report generated and email sent successfully:' : 'Report generated (email sending failed):',
         `• File: ${path.basename(reportPath)}`,
         `• Size: ${(fs.statSync(reportPath).size / 1024).toFixed(2)} KB`,
         ''
     ]);
 
     return reportPath;
+}
+
+async function sendReportEmail(reportPath, stats, logger) {
+    try {
+        const config = await configManager.loadConfig();
+        const emailSettings = config.email;
+        
+        if (!emailSettings) {
+            logger.writeLog('ERROR', [
+                'Email settings not found in INI file.',
+                'Please check the [email] section in backend_epic_using_jwt.ini',
+                ''
+            ]);
+            return false;
+        }
+
+        const transporter = nodemailer.createTransport({
+            host: emailSettings.smtp_host,
+            port: parseInt(emailSettings.smtp_port),
+            secure: emailSettings.smtp_secure === 'true',
+            auth: {
+                user: emailSettings.smtp_user,
+                pass: emailSettings.smtp_pass
+            },
+            tls: {
+                // Allow self-signed certificates and disable certificate verification
+                rejectUnauthorized: false
+            }
+        });
+
+        const reportContent = await fs.promises.readFile(reportPath, 'utf8');
+        
+        const mailOptions = {
+            from: emailSettings.notification_from,
+            to: emailSettings.notification_to,
+            subject: 'EPIC SINGLE PATIENT FHIR DATA EXPORT - OBSERVATION ANALYSIS REPORT',
+            text: reportContent
+        };
+
+        await transporter.sendMail(mailOptions);
+        
+        logger.writeLog('INFO', [
+            'Email notification sent successfully:',
+            `• From: ${emailSettings.notification_from}`,
+            `• To: ${emailSettings.notification_to}`,
+            `• SMTP Server: ${emailSettings.smtp_host}:${emailSettings.smtp_port}`,
+            ''
+        ]);
+        return true;
+    } catch (error) {
+        logger.writeLog('ERROR', [
+            'Failed to send email notification:',
+            error.message,
+            ''
+        ]);
+        return false;
+    }
 }
 
 /**
@@ -1026,7 +1066,7 @@ async function main() {
         // Initialize key manager and generate/verify keys
         const keyManager = new KeyManager(config);
         await keyManager.generateKeyPair();
-
+        
         // Initialize JWT manager
         const jwtManager = new JWTManager(config);
 
@@ -1035,10 +1075,10 @@ async function main() {
 
         // Initialize Epic client
         const epicClient = new EpicClient(config);
-
+        
         // Get all resource data
         await epicClient.getAllResourceData(accessToken);
-
+        
     } catch (error) {
         logger.writeLog('ERROR', [
             'Process failed:',
@@ -1046,7 +1086,7 @@ async function main() {
             error.stack,
             ''
         ], console.error);
-        process.exit(1);
+                process.exit(1);
     }
 }
 
